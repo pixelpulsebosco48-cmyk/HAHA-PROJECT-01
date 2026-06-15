@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecom Launch Pad - 1-Click Page Generator</title>
+    <style>
+        :root {
+            --bg-main: #f9f6f0;       /* Soft premium warm beige */
+            --bg-card: #ffffff;       /* Pure white card */
+            --text-main: #2b2927;     /* Deep earth black */
+            --text-muted: #8c857b;    /* Pencil gray */
+            --border-color: #e8e2d5;  /* Light beige border */
+            --accent-color: #4a3e3d;  /* Rich mocha brown */
+            --accent-hover: #362d2c;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* View mode toggle core styles */
+        body.view-mode .sidebar {
+            display: none !important;
+        }
+        body.view-mode .preview-container {
+            width: 100% !important;
+            flex: 1;
+            padding: 60px 20px;
+        }
+        body.view-mode .preview-badge {
+            display: none !important;
+        }
+
+        /* Control panel */
+        .sidebar {
+            width: 450px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .sidebar-header { padding: 24px; border-bottom: 1px solid var(--border-color); }
+        .sidebar-header h1 { font-size: 20px; font-weight: 700; }
+        .sidebar-header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+        .form-container { padding: 24px; overflow-y: auto; flex: 1; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+        
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: calc(var(--radius) - 4px);
+            background-color: #faf9f6;
+            font-size: 14px;
+        }
+        .payment-highlight { border: 1px dashed #d0c4b2 !important; background: #fdfbf7 !important;}
+
+        .btn-publish {
+            display: block; width: 100%; padding: 16px;
+            background-color: var(--accent-color); color: #ffffff;
+            border: none; border-radius: var(--radius);
+            font-size: 15px; font-weight: 600; cursor: pointer;
+        }
+
+        /* Link output box */
+        .output-box {
+            margin-top: 15px; padding: 12px;
+            background: #f4efe6; border-radius: var(--radius);
+            display: none; font-size: 13px; word-break: break-all;
+        }
+
+        /* Preview area */
+        .preview-container {
+            flex: 1; height: 100%; padding: 40px;
+            display: flex; flex-direction: column; align-items: center; overflow-y: auto;
+        }
+        .preview-badge {
+            align-self: flex-start; font-size: 11px; font-weight: 700;
+            color: var(--text-muted); margin-bottom: 16px;
+            background: rgba(74, 62, 61, 0.05); padding: 4px 12px; border-radius: 20px;
+        }
+
+        /* Rendered generated independent website styles */
+        .live-site {
+            width: 100%; max-width: 700px; background: var(--bg-card);
+            border: 1px solid var(--border-color); border-radius: var(--radius);
+            padding: 60px 50px; box-shadow: 0 20px 40px rgba(74, 62, 61, 0.03);
+        }
+        .site-header { text-align: center; margin-bottom: 48px; }
+        .site-header h2 { font-size: 36px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+        .site-header .subtitle { font-size: 18px; color: var(--text-muted); line-height: 1.5; }
+        .site-feature-box { border-top: 1px solid var(--border-color); padding: 32px 0; }
+        .site-feature-box h3 { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 1px;}
+        .feature-item { font-size: 16px; line-height: 1.6; margin-bottom: 12px; display: flex; }
+        .feature-item::before { content: "•"; color: var(--text-muted); display: inline-block; width: 20px; }
+        
+        .site-faq-box { border-top: 1px solid var(--border-color); padding: 32px 0; margin-bottom: 24px; }
+        .site-faq-box h3 { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; letter-spacing: 1px;}
+        .faq-item { margin-bottom: 18px; }
+        .faq-q { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+        .faq-a { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+        
+        .site-cta-area { text-align: center; padding-top: 20px; }
+        .btn-site-cta {
+            display: inline-block; padding: 16px 40px;
+            background-color: var(--text-main); color: var(--bg-card);
+            text-decoration: none; border-radius: 30px; font-size: 16px; font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left control panel: Customer fills in -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1>Ecom Launch Pad</h1>
+            <p>Paste AI prompt content, generate your exclusive monetization landing page with one click</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label for="input-link">🔗 Your Payment Link (Gumroad / Stripe)</label>
+                <input type="url" id="input-link" class="payment-highlight" placeholder="https://gumroad.com/l/..." value="https://gumroad.com">
+            </div>
+            <div class="form-group">
+                <label for="input-hook">✨ Website Main Headline (Hook)</label>
+                <textarea id="input-hook" rows="2" placeholder="Copy main headline from Prompt 3..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="input-subtitle">📝 Subtitle / Solution</label>
+                <textarea id="input-subtitle" rows="3" placeholder="Copy subtitle from Prompt 3..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="input-benefits">🎯 Core Benefits (One per line)</label>
+                <textarea id="input-benefits" rows="3" placeholder="Core benefit point one&#10;Clear value proposition point two"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="input-faq">💬 FAQ (Format: Q: Question \n A: Answer)</label>
+                <textarea id="input-faq" rows="4" placeholder="Q: Do I need prior experience?&#10;A: Not at all."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="input-cta">🔘 Button Text (CTA)</label>
+                <input type="text" id="input-cta" value="Get Product Now">
+            </div>
+
+            <button class="btn-publish" onclick="generateMagicLink()">✨ Generate My Sales Page</button>
+            
+            <div id="output-area" class="output-box">
+                <strong>Your exclusive landing page is ready! Copy and share with your customers:</strong><br>
+                <input type="text" id="share-url" style="width:100%; margin-top:5px; padding:5px;" readonly onclick="this.select()">
+            </div>
+        </div>
+    </div>
+
+    <!-- Right control panel: Live preview & final customer landing page -->
+    <div class="preview-container">
+        <div class="preview-badge">Live Preview</div>
+        
+        <div class="live-site">
+            <div class="site-header">
+                <h2 id="view-hook">Your High-Converting Landing Page Headline</h2>
+                <div id="view-subtitle" class="subtitle">Display your core product promise and value proposition here.</div>
+            </div>
+            <div class="site-feature-box">
+                <h3>What You'll Get</h3>
+                <div id="view-benefits">
+                    <div class="feature-item">Core value point one</div>
+                    <div class="feature-item">Key benefit point two</div>
+                </div>
+            </div>
+            <div class="site-faq-box">
+                <h3>Frequently Asked Questions</h3>
+                <div id="view-faq">
+                    <div class="faq-item">
+                        <div class="faq-q">What is the most common question before purchase?</div>
+                        <div class="faq-a">Here is a clear and authentic answer.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="site-cta-area">
+                <a href="https://gumroad.com" id="view-cta-btn" class="btn-site-cta" target="_blank">Get Product Now</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const elements = {
+            link: document.getElementById('input-link'),
+            hook: document.getElementById('input-hook'),
+            subtitle: document.getElementById('input-subtitle'),
+            benefits: document.getElementById('input-benefits'),
+            faq: document.getElementById('input-faq'),
+            cta: document.getElementById('input-cta')
+        };
+
+        const views = {
+            hook: document.getElementById('view-hook'),
+            subtitle: document.getElementById('view-subtitle'),
+            benefits: document.getElementById('view-benefits'),
+            faq: document.getElementById('view-faq'),
+            btn: document.getElementById('view-cta-btn')
+        };
+
+        function updatePreview() {
+            views.btn.href = elements.link.value || '#';
+            views.hook.innerText = elements.hook.value || 'Your High-Converting Landing Page Headline';
+            views.subtitle.innerText = elements.subtitle.value || 'Display your core product promise and value proposition here.';
+            views.btn.innerText = elements.cta.value || 'Get Product Now';
+
+            if (elements.benefits.value.trim()) {
+                views.benefits.innerHTML = elements.benefits.value.split('\n')
+                    .filter(l => l.trim()).map(l => `<div class="feature-item">${l}</div>`).join('');
+            }
+            if (elements.faq.value.trim()) {
+                const lines = elements.faq.value.split('\n').filter(l => l.trim());
+                let html = '';
+                for(let i=0; i<lines.length; i++) {
+                    if(lines[i].startsWith('Q:')) {
+                        const q = lines[i].substring(2).trim();
+                        const a = (lines[i+1] && lines[i+1].startsWith('A:')) ? lines[i+1].substring(2).trim() : 'No answer provided';
+                        html += `<div class="faq-item"><div class="faq-q">${q}</div><div class="faq-a">${a}</div></div>`;
+                    }
+                }
+                if(html) views.faq.innerHTML = html;
+            }
+        }
+
+        // Bind input sync
+        Object.values(elements).forEach(el => el.addEventListener('input', updatePreview));
+
+        // Core feature: Generate magic link (embed data into URL)
+        function generateMagicLink() {
+            const baseUrl = window.location.origin + window.location.pathname;
+            const params = new URLSearchParams();
+            params.append('mode', 'view');
+            params.append('link', elements.link.value);
+            params.append('hook', elements.hook.value);
+            params.append('sub', elements.subtitle.value);
+            params.append('ben', elements.benefits.value);
+            params.append('faq', elements.faq.value);
+            params.append('cta', elements.cta.value);
+
+            document.getElementById('share-url').value = `${baseUrl}?${params.toString()}`;
+            document.getElementById('output-area').style.display = 'block';
+        }
+
+        // Core feature: Detect if customer opens link, hide control panel, enter pure sales mode
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('mode') === 'view') {
+                document.body.classList.add('view-mode');
+                
+                // Decode and render directly
+                views.btn.href = urlParams.get('link') || '#';
+                views.hook.innerText = urlParams.get('hook') || '';
+                views.subtitle.innerText = urlParams.get('sub') || '';
+                views.btn.innerText = urlParams.get('cta') || 'Get Product Now';
+
+                const benData = urlParams.get('ben');
+                if(benData) {
+                    views.benefits.innerHTML = benData.split('\n').filter(l => l.trim()).map(l => `<div class="feature-item">${l}</div>`).join('');
+                }
+                const faqData = urlParams.get('faq');
+                if(faqData) {
+                    const lines = faqData.split('\n').filter(l => l.trim());
+                    let html = '';
+                    for(let i=0; i<lines.length; i++) {
+                        if(lines[i].startsWith('Q:')) {
+                            const q = lines[i].substring(2).trim();
+                            const a = (lines[i+1] && lines[i+1].startsWith('A:')) ? lines[i+1].substring(2).trim() : '';
+                            html += `<div class="faq-item"><div class="faq-q">${q}</div><div class="faq-a">${a}</div></div>`;
+                        }
+                    }
+                    if(html) views.faq.innerHTML = html;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
