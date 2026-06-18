@@ -3,294 +3,992 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecom Launch Pad - 1-Click Page Generator</title>
+    <title>THE ATELIER | Luxury Portfolio, Database Connector & AI Engine</title>
+    <!-- Google Fonts: Syne for bold fashion headers, Space Grotesk for sleek text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js for high-end luxury datavisualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Tailwind CSS for styling and premium layouts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        knightBlue: '#0038ff',
+                        electricYellow: '#d4ff00',
+                        luxuryDark: '#0a0a0a',
+                        luxuryGray: '#f5f5f7'
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        syne: ['Syne', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --bg-main: #f9f6f0;       /* Soft premium warm beige */
-            --bg-card: #ffffff;       /* Pure white card */
-            --text-main: #2b2927;     /* Deep earth black */
-            --text-muted: #8c857b;    /* Pencil gray */
-            --border-color: #e8e2d5;  /* Light beige border */
-            --accent-color: #4a3e3d;  /* Rich mocha brown */
-            --accent-hover: #362d2c;
-            --radius: 12px;
+        ::-webkit-scrollbar {
+            width: 6px;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
         }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
+        ::-webkit-scrollbar-thumb {
+            background: #0038ff;
         }
-
-        /* View mode toggle core styles */
-        body.view-mode .sidebar {
-            display: none !important;
+        @keyframes highlightPulse {
+            0% { outline: 2px solid #0038ff; }
+            50% { outline: 2px solid #d4ff00; }
+            100% { outline: 2px solid #0038ff; }
         }
-        body.view-mode .preview-container {
-            width: 100% !important;
-            flex: 1;
-            padding: 60px 20px;
-        }
-        body.view-mode .preview-badge {
-            display: none !important;
-        }
-
-        /* Control panel */
-        .sidebar {
-            width: 450px;
-            background: var(--bg-card);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            z-index: 10;
-        }
-
-        .sidebar-header { padding: 24px; border-bottom: 1px solid var(--border-color); }
-        .sidebar-header h1 { font-size: 20px; font-weight: 700; }
-        .sidebar-header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
-        .form-container { padding: 24px; overflow-y: auto; flex: 1; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
-        
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: calc(var(--radius) - 4px);
-            background-color: #faf9f6;
-            font-size: 14px;
-        }
-        .payment-highlight { border: 1px dashed #d0c4b2 !important; background: #fdfbf7 !important;}
-
-        .btn-publish {
-            display: block; width: 100%; padding: 16px;
-            background-color: var(--accent-color); color: #ffffff;
-            border: none; border-radius: var(--radius);
-            font-size: 15px; font-weight: 600; cursor: pointer;
-        }
-
-        /* Link output box */
-        .output-box {
-            margin-top: 15px; padding: 12px;
-            background: #f4efe6; border-radius: var(--radius);
-            display: none; font-size: 13px; word-break: break-all;
-        }
-
-        /* Preview area */
-        .preview-container {
-            flex: 1; height: 100%; padding: 40px;
-            display: flex; flex-direction: column; align-items: center; overflow-y: auto;
-        }
-        .preview-badge {
-            align-self: flex-start; font-size: 11px; font-weight: 700;
-            color: var(--text-muted); margin-bottom: 16px;
-            background: rgba(74, 62, 61, 0.05); padding: 4px 12px; border-radius: 20px;
-        }
-
-        /* Rendered generated independent website styles */
-        .live-site {
-            width: 100%; max-width: 700px; background: var(--bg-card);
-            border: 1px solid var(--border-color); border-radius: var(--radius);
-            padding: 60px 50px; box-shadow: 0 20px 40px rgba(74, 62, 61, 0.03);
-        }
-        .site-header { text-align: center; margin-bottom: 48px; }
-        .site-header h2 { font-size: 36px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
-        .site-header .subtitle { font-size: 18px; color: var(--text-muted); line-height: 1.5; }
-        .site-feature-box { border-top: 1px solid var(--border-color); padding: 32px 0; }
-        .site-feature-box h3 { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 1px;}
-        .feature-item { font-size: 16px; line-height: 1.6; margin-bottom: 12px; display: flex; }
-        .feature-item::before { content: "•"; color: var(--text-muted); display: inline-block; width: 20px; }
-        
-        .site-faq-box { border-top: 1px solid var(--border-color); padding: 32px 0; margin-bottom: 24px; }
-        .site-faq-box h3 { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; letter-spacing: 1px;}
-        .faq-item { margin-bottom: 18px; }
-        .faq-q { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
-        .faq-a { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
-        
-        .site-cta-area { text-align: center; padding-top: 20px; }
-        .btn-site-cta {
-            display: inline-block; padding: 16px 40px;
-            background-color: var(--text-main); color: var(--bg-card);
-            text-decoration: none; border-radius: 30px; font-size: 16px; font-weight: 600;
+        .live-updating {
+            animation: highlightPulse 1.5s infinite;
         }
     </style>
 </head>
-<body>
+<body class="bg-white font-sans text-luxuryDark overflow-x-hidden">
 
-    <!-- Left control panel: Customer fills in -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h1>Ecom Launch Pad</h1>
-            <p>Paste AI prompt content, generate your exclusive monetization landing page with one click</p>
+    <nav class="fixed top-0 left-0 w-full bg-white border-b-2 border-luxuryDark z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="logo">
+                <a href="#" onclick="switchTab('home')" class="text-2xl font-syne font-extrabold tracking-widest text-luxuryDark uppercase hover:text-knightBlue transition-colors duration-300">
+                    <span id="brand-logo-text">ATELIER</span>
+                </a>
+            </div>
+            <!-- Nav Menu -->
+            <ul class="hidden md:flex items-center space-x-12">
+                <li><button onclick="switchTab('home')" class="nav-btn font-bold tracking-widest text-xs uppercase hover:text-knightBlue transition-colors py-2 border-b-2 border-transparent hover:border-knightBlue text-knightBlue border-knightBlue">Home</button></li>
+                <li><button onclick="switchTab('catalog')" class="nav-btn font-bold tracking-widest text-xs uppercase hover:text-knightBlue transition-colors py-2 border-b-2 border-transparent hover:border-knightBlue">The Collection</button></li>
+                <li><button onclick="switchTab('analytics')" class="nav-btn font-bold tracking-widest text-xs uppercase hover:text-knightBlue transition-colors py-2 border-b-2 border-transparent hover:border-knightBlue">Database Hub</button></li>
+                <li><button onclick="switchTab('about')" class="nav-btn font-bold tracking-widest text-xs uppercase hover:text-knightBlue transition-colors py-2 border-b-2 border-transparent hover:border-knightBlue">About</button></li>
+                <li><button onclick="switchTab('contact')" class="nav-btn font-bold tracking-widest text-xs uppercase hover:text-knightBlue transition-colors py-2 border-b-2 border-transparent hover:border-knightBlue">Contact</button></li>
+            </ul>
+            <!-- Floating Customizer Toggle -->
+            <div class="flex items-center space-x-4">
+                <button id="customizer-nav-btn" onclick="toggleCustomizer()" class="bg-knightBlue text-white font-bold text-xs uppercase tracking-widest py-3 px-6 hover:bg-luxuryDark hover:text-electricYellow border-2 border-luxuryDark transition-all duration-300 shadow-[4px_4px_0px_#000]">
+                    Customize Studio
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="customizer-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-luxuryDark text-white z-50 border-l-4 border-luxuryDark shadow-2xl transform translate-x-full transition-transform duration-500 flex flex-col">
+        <div class="p-6 border-b-2 border-zinc-800 flex justify-between items-center bg-knightBlue">
+            <h3 class="font-syne font-extrabold text-lg uppercase tracking-wider text-white">Design Workspace</h3>
+            <button onclick="toggleCustomizer()" class="text-white hover:text-electricYellow text-2xl font-bold">&times;</button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6 space-y-8">
+            <!-- Brand Identity -->
+            <div>
+                <p class="text-xs text-zinc-400 uppercase tracking-widest mb-4">Edit Global Identity</p>
+                <label class="block text-xs uppercase tracking-widest text-electricYellow font-bold mb-2">Brand Title</label>
+                <input type="text" id="custom-brand" value="ATELIER" oninput="updateBrandName(this.value)" class="w-full bg-zinc-900 border-2 border-zinc-700 p-3 text-white focus:border-electricYellow outline-none font-bold">
+            </div>
+
+            <hr class="border-zinc-800">
+
+            <!-- Color Palette -->
+            <div>
+                <p class="text-xs text-zinc-400 uppercase tracking-widest mb-4">Select Editorial Palette</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="setTheme('knightBlue', '#0038ff', '#d4ff00')" class="p-3 text-xs uppercase font-bold tracking-widest border-2 border-white bg-knightBlue text-white hover:opacity-90">Knight Blue</button>
+                    <button onclick="setTheme('electricYellow', '#d4ff00', '#0038ff')" class="p-3 text-xs uppercase font-bold tracking-widest border-2 border-zinc-700 bg-electricYellow text-luxuryDark hover:border-white">Neon Yellow</button>
+                    <button onclick="setTheme('crimson', '#ff0055', '#ffffff')" class="p-3 text-xs uppercase font-bold tracking-widest border-2 border-zinc-700 bg-red-600 text-white hover:border-white">Velvet Rose</button>
+                    <button onclick="setTheme('nordic', '#000000', '#ffffff')" class="p-3 text-xs uppercase font-bold tracking-widest border-2 border-zinc-700 bg-black text-white hover:border-white">Pure Noir</button>
+                </div>
+            </div>
+
+            <hr class="border-zinc-800">
+
+            <!-- Hero Headline Customization -->
+            <div>
+                <p class="text-xs text-zinc-400 uppercase tracking-widest mb-4">Edit Hero Showcase</p>
+                <label class="block text-xs uppercase tracking-widest text-electricYellow font-bold mb-2">Main Headline</label>
+                <input type="text" id="custom-headline" value="The Summer Collection" oninput="updateHeadline(this.value)" class="w-full bg-zinc-900 border-2 border-zinc-700 p-3 text-white focus:border-electricYellow outline-none mb-4">
+                <label class="block text-xs uppercase tracking-widest text-electricYellow font-bold mb-2">Sub-Headline Text</label>
+                <input type="text" id="custom-subhead" value="Bespoke luxury built by modern algorithmic engineering." oninput="updateSubhead(this.value)" class="w-full bg-zinc-900 border-2 border-zinc-700 p-3 text-white focus:border-electricYellow outline-none">
+            </div>
+
+            <hr class="border-zinc-800">
+
+            <!-- Database Custom API Connection -->
+            <div>
+                <p class="text-xs text-zinc-400 uppercase tracking-widest mb-4">Live Database API Integration</p>
+                <label class="block text-xs uppercase tracking-widest text-electricYellow font-bold mb-2">Dynamic JSON Endpoint</label>
+                <input type="text" id="custom-db-api" placeholder="https://api.yourbrand.com/v1/metrics" class="w-full bg-zinc-900 border-2 border-zinc-700 p-3 text-white focus:border-electricYellow outline-none mb-3 text-xs">
+                <button onclick="connectCustomAPI()" class="w-full bg-zinc-800 text-electricYellow font-bold text-xs uppercase tracking-widest py-2.5 border-2 border-zinc-700 hover:bg-zinc-700 transition-colors">
+                    Establish API Link
+                </button>
+            </div>
+
+            <hr class="border-zinc-800">
+
+            <div>
+                <p class="text-xs text-zinc-400 uppercase tracking-widest mb-4">Custom Products & Payment Routes</p>
+                
+                <!-- Product 1 Configuration -->
+                <div class="mb-6 p-4 border border-zinc-800 rounded bg-zinc-950">
+                    <p class="text-xs text-knightBlue uppercase font-bold mb-2">Product One</p>
+                    <label class="block text-[10px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Title</label>
+                    <input type="text" id="custom-prod1-title" value="Bespoke Overcoat" oninput="updateProduct(1, 'title', this.value)" class="w-full bg-zinc-900 border border-zinc-700 p-2 text-white outline-none text-sm mb-2">
+                    
+                    <label class="block text-[10px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Price</label>
+                    <input type="text" id="custom-prod1-price" value="$2,450" oninput="updateProduct(1, 'price', this.value)" class="w-full bg-zinc-900 border border-zinc-700 p-2 text-white outline-none text-sm mb-2">
+                    
+                    <label class="block text-[10px] uppercase tracking-widest text-electricYellow font-bold mb-1">Stripe / Paypal Payment Link</label>
+                    <input type="text" id="custom-prod1-link" value="#" oninput="updateProduct(1, 'link', this.value)" placeholder="https://buy.stripe.com/..." class="w-full bg-zinc-900 border border-zinc-700 p-2 text-white outline-none text-xs">
+                </div>
+
+                <!-- Product 2 Configuration -->
+                <div class="p-4 border border-zinc-800 rounded bg-zinc-950">
+                    <p class="text-xs text-knightBlue uppercase font-bold mb-2">Product Two</p>
+                    <label class="block text-[10px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Title</label>
+                    <input type="text" id="custom-prod2-title" value="Utility Tote Shield" oninput="updateProduct(2, 'title', this.value)" class="w-full bg-zinc-900 border border-zinc-700 p-2 text-white outline-none text-sm mb-2">
+                    
+                    <label class="block text-[10px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Price</label>
+                    <input type="text" id="custom-prod2-price" value="$1,100" oninput="updateProduct(2, 'price', this.value)" class="w-full bg-zinc-900 border border-zinc-700 p-2 text-white outline-none text-sm mb-2">
+                    
+                    <label class="block text-[10px] uppercase tracking-widest text-electricYellow font-bold mb-1">Stripe / Paypal Payment Link</label>
+                    <input type="text" id="custom-prod2-link" value="#" oninput="updateProduct(2, 'link', this.value)" placeholder="https://buy.stripe.com/..." class="w-full bg-zinc-900 border border-zinc-700 p-2 text-white outline-none text-xs">
+                </div>
+            </div>
+
+            <hr class="border-zinc-800">
+
+            <!-- About / Portfolio Bio Configuration -->
+            <div>
+                <p class="text-xs text-zinc-400 uppercase tracking-widest mb-4">About / Portfolio Bio</p>
+                <label class="block text-xs uppercase tracking-widest text-electricYellow font-bold mb-2">Portfolio Description</label>
+                <textarea id="custom-bio" rows="4" oninput="updateBio(this.value)" class="w-full bg-zinc-900 border-2 border-zinc-700 p-3 text-white focus:border-electricYellow outline-none text-sm">Operating at the absolute intersections of digital craftsmanship and physical perfection, our platform has been meticulously constructed to allow client-led curation.</textarea>
+            </div>
         </div>
         
-        <div class="form-container">
-            <div class="form-group">
-                <label for="input-link">🔗 Your Payment Link (Gumroad / Stripe)</label>
-                <input type="url" id="input-link" class="payment-highlight" placeholder="https://gumroad.com/l/..." value="https://gumroad.com">
-            </div>
-            <div class="form-group">
-                <label for="input-hook">✨ Website Main Headline (Hook)</label>
-                <textarea id="input-hook" rows="2" placeholder="Copy main headline from Prompt 3..."></textarea>
-            </div>
-            <div class="form-group">
-                <label for="input-subtitle">📝 Subtitle / Solution</label>
-                <textarea id="input-subtitle" rows="3" placeholder="Copy subtitle from Prompt 3..."></textarea>
-            </div>
-            <div class="form-group">
-                <label for="input-benefits">🎯 Core Benefits (One per line)</label>
-                <textarea id="input-benefits" rows="3" placeholder="Core benefit point one&#10;Clear value proposition point two"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="input-faq">💬 FAQ (Format: Q: Question \n A: Answer)</label>
-                <textarea id="input-faq" rows="4" placeholder="Q: Do I need prior experience?&#10;A: Not at all."></textarea>
-            </div>
-            <div class="form-group">
-                <label for="input-cta">🔘 Button Text (CTA)</label>
-                <input type="text" id="input-cta" value="Get Product Now">
-            </div>
-
-            <button class="btn-publish" onclick="generateMagicLink()">✨ Generate My Sales Page</button>
-            
-            <div id="output-area" class="output-box">
-                <strong>Your exclusive landing page is ready! Copy and share with your customers:</strong><br>
-                <input type="text" id="share-url" style="width:100%; margin-top:5px; padding:5px;" readonly onclick="this.select()">
-            </div>
+        <div class="p-6 border-t-2 border-zinc-800 bg-black flex flex-col gap-3">
+            <button onclick="downloadPortfolio()" class="w-full bg-electricYellow text-luxuryDark font-bold text-xs uppercase tracking-widest py-4 border-2 border-transparent hover:border-white transition-all shadow-[0_4px_12px_rgba(212,255,0,0.2)]">
+                Download Standalone Portfolio
+            </button>
+            <p class="text-[10px] text-zinc-400 text-center">Generates a clean HTML file with your custom links and active embedded data snapshot!</p>
         </div>
     </div>
 
-    <!-- Right control panel: Live preview & final customer landing page -->
-    <div class="preview-container">
-        <div class="preview-badge">Live Preview</div>
-        
-        <div class="live-site">
-            <div class="site-header">
-                <h2 id="view-hook">Your High-Converting Landing Page Headline</h2>
-                <div id="view-subtitle" class="subtitle">Display your core product promise and value proposition here.</div>
-            </div>
-            <div class="site-feature-box">
-                <h3>What You'll Get</h3>
-                <div id="view-benefits">
-                    <div class="feature-item">Core value point one</div>
-                    <div class="feature-item">Key benefit point two</div>
+    <div id="tab-home" class="tab-content pt-20 transition-all duration-500">
+        <!-- Hero Header -->
+        <header id="theme-header-bg" class="bg-knightBlue text-white border-b-4 border-luxuryDark transition-all duration-500">
+            <div class="max-w-7xl mx-auto px-6 py-24 md:py-36 text-center">
+                <div class="inline-block border-2 border-white px-4 py-1.5 mb-8 text-xs tracking-[5px] uppercase font-bold" id="badge-top-tag">
+                    Now Live
+                </div>
+                <h1 id="hero-headline" class="font-syne font-extrabold text-5xl md:text-8xl tracking-tight uppercase leading-none mb-6">
+                    The Summer Collection
+                </h1>
+                <p id="hero-subhead" class="max-w-2xl mx-auto text-base md:text-xl font-medium tracking-wide" style="color: var(--theme-secondary-color, #d4ff00);">
+                    Bespoke luxury built by modern algorithmic engineering.
+                </p>
+                <div class="mt-12 flex flex-wrap justify-center gap-6">
+                    <button onclick="switchTab('catalog')" id="cta-button-1" class="bg-luxuryDark text-white hover:bg-white hover:text-luxuryDark border-2 border-luxuryDark font-bold text-xs uppercase tracking-widest py-4 px-10 transition-all duration-300 shadow-[5px_5px_0px_#fff]">
+                        Explore Runway Catalog
+                    </button>
+                    <button onclick="switchTab('analytics')" class="bg-transparent text-white hover:bg-white hover:text-luxuryDark border-2 border-white font-bold text-xs uppercase tracking-widest py-4 px-10 transition-all duration-300">
+                        Launch Analysis Hub
+                    </button>
                 </div>
             </div>
-            <div class="site-faq-box">
-                <h3>Frequently Asked Questions</h3>
-                <div id="view-faq">
-                    <div class="faq-item">
-                        <div class="faq-q">What is the most common question before purchase?</div>
-                        <div class="faq-a">Here is a clear and authentic answer.</div>
+        </header>
+
+        <!-- Live Vector Atelier Interactive Canvas -->
+        <section class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <div class="inline-block bg-knightBlue text-white text-xs font-bold uppercase tracking-widest px-3 py-1" id="section-badge-1">
+                    Atelier Configurator
+                </div>
+                <h2 class="font-syne font-extrabold text-3xl md:text-5xl uppercase tracking-tight">Interactive Silhouette Sandbox</h2>
+                <p class="text-zinc-600 leading-relaxed">
+                    Test your selected colorways live on our digital architecture model. Change color profiles in the slide-out Design Workspace to view immediate visual translations on our vector assets.
+                </p>
+                <div class="pt-4">
+                    <button onclick="toggleCustomizer()" class="bg-luxuryDark text-white hover:bg-knightBlue font-bold text-xs uppercase tracking-widest py-4 px-8 border-2 border-luxuryDark transition-all duration-300 shadow-[4px_4px_0px_#d4ff00]">
+                        Open Controls
+                    </button>
+                </div>
+            </div>
+            <!-- Canvas Simulation Box -->
+            <div class="border-4 border-luxuryDark p-8 flex flex-col items-center justify-center bg-luxuryGray relative shadow-[8px_8px_0px_#0a0a0a]">
+                <div class="absolute top-4 left-4 bg-luxuryDark text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1">Interactive Canvas Mode</div>
+                
+                <!-- SVG Vector of a Customizable Fashion Trench Outline / Geometric Shield -->
+                <svg id="vector-model" class="w-72 h-72 transition-colors duration-500" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Core Silhouette Block -->
+                    <path d="M50 30 L150 30 L170 180 L30 180 Z" id="svg-body" fill="#0038ff" stroke="#0a0a0a" stroke-width="4" class="transition-colors duration-500" />
+                    <!-- Lapel / Collar Accents -->
+                    <path d="M50 30 L100 90 L150 30 L100 50 Z" id="svg-collar" fill="#d4ff00" stroke="#0a0a0a" stroke-width="3" class="transition-colors duration-500" />
+                    <!-- Geometric Signature Crest -->
+                    <circle cx="100" cy="130" r="18" id="svg-accent" fill="#0a0a0a" stroke="#fff" stroke-width="2" class="transition-all duration-500" />
+                    <line x1="100" y1="112" x2="100" y2="148" stroke="#fff" stroke-width="2" />
+                    <line x1="82" y1="130" x2="118" y2="130" stroke="#fff" stroke-width="2" />
+                </svg>
+                
+                <p class="text-xs uppercase tracking-wider font-bold text-zinc-500 mt-6 text-center">Interactive Vector Color Blueprint Preview</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- The Runway Catalog Tab -->
+    <div id="tab-catalog" class="tab-content hidden pt-32 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6 pb-24">
+            <div class="text-center mb-16">
+                <h1 class="font-syne font-extrabold text-4xl md:text-6xl uppercase tracking-tight mb-4">Runway Showcase</h1>
+                <p class="text-zinc-600 uppercase tracking-widest text-sm font-bold">Customize checkout routes and product values live in your workspace</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Custom Card 1 -->
+                <div class="border-2 border-luxuryDark bg-white overflow-hidden transition-all duration-300 shadow-[6px_6px_0px_#0a0a0a] hover:-translate-y-2 hover:shadow-[12px_12px_0px_#0038ff] flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="text-[10px] tracking-widest uppercase font-bold text-zinc-400 mb-4">Design Item 01</div>
+                        <h3 id="product-title-1" class="font-syne font-extrabold text-2xl uppercase mb-3">Bespoke Overcoat</h3>
+                        <p class="text-zinc-600 text-sm mb-6">Tailored structured silhouette utilizing modern tech-wool with high performance digital custom shielding.</p>
+                    </div>
+                    <div class="p-8 border-t-2 border-luxuryDark bg-luxuryGray flex justify-between items-center">
+                        <span id="product-price-1" class="font-bold text-xl tracking-tight text-luxuryDark">$2,450</span>
+                        <a id="product-link-btn-1" href="#" target="_blank" class="bg-luxuryDark text-white text-xs uppercase font-bold tracking-widest py-3 px-6 hover:bg-knightBlue transition-colors">Inquire</a>
+                    </div>
+                </div>
+
+                <!-- Custom Card 2 -->
+                <div class="border-2 border-luxuryDark bg-white overflow-hidden transition-all duration-300 shadow-[6px_6px_0px_#0a0a0a] hover:-translate-y-2 hover:shadow-[12px_12px_0px_#0038ff] flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="text-[10px] tracking-widest uppercase font-bold text-zinc-400 mb-4">Design Item 02</div>
+                        <h3 id="product-title-2" class="font-syne font-extrabold text-2xl uppercase mb-3">Utility Tote Shield</h3>
+                        <p class="text-zinc-600 text-sm mb-6">Saturated nylon tote system featuring dual configuration handles and heavy brass geometric accents.</p>
+                    </div>
+                    <div class="p-8 border-t-2 border-luxuryDark bg-luxuryGray flex justify-between items-center">
+                        <span id="product-price-2" class="font-bold text-xl tracking-tight text-luxuryDark">$1,100</span>
+                        <a id="product-link-btn-2" href="#" target="_blank" class="bg-luxuryDark text-white text-xs uppercase font-bold tracking-widest py-3 px-6 hover:bg-knightBlue transition-colors">Inquire</a>
+                    </div>
+                </div>
+
+                <!-- Custom Card 3 (Default Luxury Accent) -->
+                <div class="border-2 border-luxuryDark bg-white overflow-hidden transition-all duration-300 shadow-[6px_6px_0px_#0a0a0a] hover:-translate-y-2 hover:shadow-[12px_12px_0px_#0038ff] flex flex-col justify-between">
+                    <div class="p-8">
+                        <div class="text-[10px] tracking-widest uppercase font-bold text-zinc-400 mb-4">Design Item 03</div>
+                        <h3 class="font-syne font-extrabold text-2xl uppercase mb-3">Tonal Car Coat</h3>
+                        <p class="text-zinc-600 text-sm mb-6">The signature classic silhouette updated with modern high-vibrancy Knight Blue under-collar piping.</p>
+                    </div>
+                    <div class="p-8 border-t-2 border-luxuryDark bg-luxuryGray flex justify-between items-center">
+                        <span class="font-bold text-xl tracking-tight text-luxuryDark">$1,850</span>
+                        <a href="#" onclick="switchTab('contact')" class="bg-luxuryDark text-white text-xs uppercase font-bold tracking-widest py-3 px-6 hover:bg-knightBlue transition-colors">Inquire</a>
                     </div>
                 </div>
             </div>
-            <div class="site-cta-area">
-                <a href="https://gumroad.com" id="view-cta-btn" class="btn-site-cta" target="_blank">Get Product Now</a>
+        </div>
+    </div>
+
+    <!-- The Analytics & Database Tab -->
+    <div id="tab-analytics" class="tab-content hidden pt-32 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-6 pb-24">
+            <div class="text-center mb-12">
+                <h1 class="font-syne font-extrabold text-4xl md:text-6xl uppercase tracking-tight mb-4">Intelligence & Analytics</h1>
+                <p class="text-zinc-500 uppercase tracking-widest text-xs font-bold">Link databases, parse metrics and leverage real-time business AI models</p>
+            </div>
+
+            <!-- Database Connection Panel -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                
+                <!-- Database Link Input Controls -->
+                <div class="border-2 border-luxuryDark bg-white p-6 shadow-[6px_6px_0px_#0a0a0a] flex flex-col justify-between h-full">
+                    <div>
+                        <h3 class="font-syne font-bold text-lg uppercase tracking-wide mb-3 text-knightBlue">1. Connect Database</h3>
+                        <p class="text-zinc-600 text-xs mb-4">Select and link any enterprise data source instantly. Support for dynamic CSV uploads or live web API endpoints.</p>
+                        
+                        <!-- CSV File Upload Widget -->
+                        <div class="mb-4">
+                            <label class="block text-[10px] uppercase tracking-widest font-bold text-zinc-500 mb-1.5">Upload Spreadsheet (CSV)</label>
+                            <input type="file" id="db-csv-file" accept=".csv" class="hidden" onchange="handleCSVUpload(this)">
+                            <button onclick="document.getElementById('db-csv-file').click()" class="w-full bg-luxuryGray text-luxuryDark border border-luxuryDark hover:bg-zinc-200 transition-colors py-3 text-xs uppercase font-bold tracking-widest flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                Upload CSV File
+                            </button>
+                        </div>
+
+                        <!-- Direct API paste -->
+                        <div class="mb-4">
+                            <label class="block text-[10px] uppercase tracking-widest font-bold text-zinc-500 mb-1.5">Direct Database Link (JSON API)</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="analytics-db-api" placeholder="Enter API query route" class="flex-1 text-xs border border-luxuryDark p-3 outline-none">
+                                <button onclick="triggerAPILoad()" class="bg-luxuryDark text-white px-4 text-xs font-bold uppercase tracking-widest hover:bg-knightBlue transition-colors">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preset Mock Database selectors -->
+                    <div class="border-t border-zinc-200 pt-4">
+                        <span class="block text-[10px] uppercase tracking-widest font-bold text-zinc-400 mb-2">Simulate Business Data</span>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="loadMockDataset('ecommerce')" class="bg-zinc-900 text-white hover:bg-knightBlue transition-colors py-2 px-3 text-[10px] uppercase font-bold tracking-widest">E-commerce Sales</button>
+                            <button onclick="loadMockDataset('saas')" class="bg-zinc-900 text-white hover:bg-knightBlue transition-colors py-2 px-3 text-[10px] uppercase font-bold tracking-widest">User Growth</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Auto-Calculated Data Metrics -->
+                <div class="border-2 border-luxuryDark bg-white p-6 shadow-[6px_6px_0px_#0a0a0a] flex flex-col justify-between h-full">
+                    <div>
+                        <h3 class="font-syne font-bold text-lg uppercase tracking-wide mb-3 text-knightBlue">2. Live Analytical Audit</h3>
+                        <p class="text-zinc-600 text-xs mb-6">These core key metrics are parsed and re-calculated dynamically based on your loaded database schema.</p>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="border border-zinc-200 p-3 bg-luxuryGray">
+                                <span class="block text-[9px] text-zinc-400 font-bold uppercase tracking-wider">Gross Value</span>
+                                <span id="data-metric-gross" class="font-bold text-lg tracking-tight">$0</span>
+                            </div>
+                            <div class="border border-zinc-200 p-3 bg-luxuryGray">
+                                <span class="block text-[9px] text-zinc-400 font-bold uppercase tracking-wider">Average Unit</span>
+                                <span id="data-metric-avg" class="font-bold text-lg tracking-tight">0</span>
+                            </div>
+                            <div class="border border-zinc-200 p-3 bg-luxuryGray">
+                                <span class="block text-[9px] text-zinc-400 font-bold uppercase tracking-wider">Transaction Count</span>
+                                <span id="data-metric-count" class="font-bold text-lg tracking-tight">0</span>
+                            </div>
+                            <div class="border border-zinc-200 p-3 bg-luxuryGray">
+                                <span class="block text-[9px] text-zinc-400 font-bold uppercase tracking-wider">Trend Delta</span>
+                                <span id="data-metric-trend" class="font-bold text-lg tracking-tight text-green-600">--</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-[10px] text-zinc-500 font-bold uppercase tracking-wider border-t border-zinc-200 pt-4 mt-4">
+                        Status: <span id="db-status-badge" class="text-red-600 font-bold">Unlinked (Awaiting Data)</span>
+                    </div>
+                </div>
+
+                <!-- ATELIER AI Analyst Engine -->
+                <div class="border-2 border-luxuryDark bg-white p-6 shadow-[6px_6px_0px_#0a0a0a] flex flex-col justify-between h-full">
+                    <div>
+                        <h3 class="font-syne font-bold text-lg uppercase tracking-wide mb-2 text-knightBlue">3. ATELIER Business AI</h3>
+                        <p class="text-zinc-600 text-xs mb-4">Run real-time predictive analytical modeling on your linked database metrics via custom AI.</p>
+                        
+                        <!-- AI Prompt instructions -->
+                        <div id="ai-insight-output" class="bg-luxuryDark text-white p-4 font-mono text-[10px] leading-relaxed h-32 overflow-y-auto border border-zinc-800">
+                            SYSTEM: Select or connect a database, then hit "Generate Executive Analysis" to trigger our custom enterprise Gemini analyst...
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <button onclick="triggerGeminiAnalysis()" id="run-ai-btn" class="w-full bg-knightBlue text-white hover:bg-electricYellow hover:text-luxuryDark transition-all py-3.5 text-xs font-bold uppercase tracking-widest border border-luxuryDark">
+                            Generate Executive Analysis
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Beautiful Live Charting Area -->
+            <div class="border-2 border-luxuryDark bg-white p-8 shadow-[8px_8px_0px_#0a0a0a] relative mb-12">
+                <div class="absolute top-4 left-4 bg-luxuryDark text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1">Interactive Data Visualization Grid</div>
+                
+                <div class="w-full h-80 mt-6 flex items-center justify-center">
+                    <canvas id="luxuryAnalyticsChart" class="w-full max-h-full"></canvas>
+                </div>
+            </div>
+
+            <!-- Raw Data Grid Display -->
+            <div class="border-2 border-luxuryDark bg-white p-6 shadow-[6px_6px_0px_#0a0a0a]">
+                <h3 class="font-syne font-bold text-lg uppercase tracking-wide mb-3">Database Raw View</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="border-b-2 border-luxuryDark uppercase tracking-widest font-bold" id="db-table-headers">
+                                <th class="py-2">Load your spreadsheet to preview rows...</th>
+                            </tr>
+                        </thead>
+                        <tbody id="db-table-body" class="divide-y divide-zinc-200">
+                            <!-- Populated on database link -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- The About Page Tab -->
+    <div id="tab-about" class="tab-content hidden pt-32 transition-all duration-500">
+        <div class="max-w-4xl mx-auto px-6 pb-24 text-center">
+            <h1 class="font-syne font-extrabold text-4xl md:text-6xl uppercase tracking-tight mb-8">Brand Identity</h1>
+            <div class="w-24 h-1 bg-knightBlue mx-auto mb-12" id="about-line-indicator"></div>
+            <p class="font-syne text-2xl md:text-3xl leading-relaxed text-luxuryDark mb-8">
+                "We synthesize luxury custom heritage with modern algorithmic frameworks."
+            </p>
+            <div id="about-bio-display" class="text-zinc-600 space-y-6 text-base md:text-lg leading-relaxed text-left max-w-2xl mx-auto">
+                <p>
+                    Operating at the absolute intersections of digital craftsmanship and physical perfection, our platform has been meticulously constructed to allow client-led curation.
+                </p>
             </div>
         </div>
     </div>
 
+    <!-- The Contact Page Tab -->
+    <div id="tab-contact" class="tab-content hidden pt-32 transition-all duration-500">
+        <div class="max-w-2xl mx-auto px-6 pb-24">
+            <div class="text-center mb-12">
+                <h1 class="font-syne font-extrabold text-4xl md:text-6xl uppercase tracking-tight mb-4">Client Inquiries</h1>
+                <p class="text-zinc-500 uppercase tracking-widest text-xs font-bold">Secure customized support channels</p>
+            </div>
+
+            <!-- Custom Interactive Submission Form -->
+            <form onsubmit="handleFormSubmit(event)" class="border-2 border-luxuryDark bg-white p-8 md:p-12 shadow-[8px_8px_0px_#0a0a0a]">
+                <div class="mb-6">
+                    <label class="block text-xs uppercase tracking-widest font-bold mb-2">Customer Profile Name</label>
+                    <input type="text" placeholder="Identify credentials" required class="w-full border-2 border-luxuryDark p-3 outline-none focus:bg-zinc-50 text-sm font-bold">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-xs uppercase tracking-widest font-bold mb-2">Secure Communication Route</label>
+                    <input type="email" placeholder="Enter contact email address" required class="w-full border-2 border-luxuryDark p-3 outline-none focus:bg-zinc-50 text-sm font-bold">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-xs uppercase tracking-widest font-bold mb-2">Project Specification Notes</label>
+                    <textarea rows="4" placeholder="Describe requested customizations and sizing specifications..." required class="w-full border-2 border-luxuryDark p-3 outline-none focus:bg-zinc-50 text-sm font-bold"></textarea>
+                </div>
+                <button type="submit" id="submit-form-btn" class="w-full bg-knightBlue text-white hover:bg-luxuryDark font-bold text-xs uppercase tracking-widest py-4 transition-all duration-300">
+                    Deploy Secure Transmission
+                </button>
+            </form>
+            <div id="submission-confirmation" class="hidden mt-6 p-4 border-2 border-green-600 bg-green-50 text-green-800 font-bold text-xs uppercase tracking-wider text-center">
+                Transmission Securely Received and Cached
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Alerts Custom UI -->
+    <div id="custom-toast" class="fixed bottom-6 right-6 bg-luxuryDark text-white border-2 border-electricYellow p-4 font-bold text-xs uppercase tracking-widest hidden z-50 shadow-[4px_4px_0px_#0038ff]">
+        Action Executed Successfully
+    </div>
+
+    <footer class="border-t-2 border-luxuryDark bg-white mt-12">
+        <div class="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+                &copy; 2026 <span id="footer-brand-text">ATELIER</span>. All Rights Reserved.
+            </p>
+            <p class="text-xs uppercase tracking-widest font-bold text-knightBlue" id="footer-version-tag">
+                Digital Studio Blueprint Version 4.0.0
+            </p>
+        </div>
+    </footer>
+
     <script>
-        const elements = {
-            link: document.getElementById('input-link'),
-            hook: document.getElementById('input-hook'),
-            subtitle: document.getElementById('input-subtitle'),
-            benefits: document.getElementById('input-benefits'),
-            faq: document.getElementById('input-faq'),
-            cta: document.getElementById('input-cta')
-        };
+        // Global system state
+        let currentDataset = [];
+        let globalChartInstance = null;
+        let selectedPrimaryColor = '#0038ff';
+        let selectedSecondaryColor = '#d4ff00';
 
-        const views = {
-            hook: document.getElementById('view-hook'),
-            subtitle: document.getElementById('view-subtitle'),
-            benefits: document.getElementById('view-benefits'),
-            faq: document.getElementById('view-faq'),
-            btn: document.getElementById('view-cta-btn')
-        };
+        // Tab switching controller
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+            });
 
-        function updatePreview() {
-            views.btn.href = elements.link.value || '#';
-            views.hook.innerText = elements.hook.value || 'Your High-Converting Landing Page Headline';
-            views.subtitle.innerText = elements.subtitle.value || 'Display your core product promise and value proposition here.';
-            views.btn.innerText = elements.cta.value || 'Get Product Now';
-
-            if (elements.benefits.value.trim()) {
-                views.benefits.innerHTML = elements.benefits.value.split('\n')
-                    .filter(l => l.trim()).map(l => `<div class="feature-item">${l}</div>`).join('');
+            const target = document.getElementById('tab-' + tabId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            if (elements.faq.value.trim()) {
-                const lines = elements.faq.value.split('\n').filter(l => l.trim());
-                let html = '';
-                for(let i=0; i<lines.length; i++) {
-                    if(lines[i].startsWith('Q:')) {
-                        const q = lines[i].substring(2).trim();
-                        const a = (lines[i+1] && lines[i+1].startsWith('A:')) ? lines[i+1].substring(2).trim() : 'No answer provided';
-                        html += `<div class="faq-item"><div class="faq-q">${q}</div><div class="faq-a">${a}</div></div>`;
+
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('text-knightBlue', 'border-knightBlue');
+            });
+            
+            // Find trigger button and highlight
+            const eventTrigger = Array.from(document.querySelectorAll('.nav-btn')).find(btn => btn.innerText.toLowerCase().includes(tabId === 'catalog' ? 'collection' : tabId));
+            if (eventTrigger) {
+                eventTrigger.classList.add('text-knightBlue', 'border-knightBlue');
+            }
+        }
+
+        // Customizer slide-out toggle
+        function toggleCustomizer() {
+            const drawer = document.getElementById('customizer-drawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        // Live Brand Name Synchronizer
+        function updateBrandName(value) {
+            const cleanVal = value.trim() === "" ? "ATELIER" : value.toUpperCase();
+            document.getElementById('brand-logo-text').innerText = cleanVal;
+            document.getElementById('footer-brand-text').innerText = cleanVal;
+        }
+
+        // Live Hero Text Synchronizers
+        function updateHeadline(value) {
+            document.getElementById('hero-headline').innerText = value;
+        }
+
+        function updateSubhead(value) {
+            document.getElementById('hero-subhead').innerText = value;
+        }
+
+        // Live About Biography Editor
+        function updateBio(value) {
+            const bioDisplay = document.getElementById('about-bio-display');
+            bioDisplay.innerHTML = `<p>${value}</p>`;
+        }
+
+        // Live Product Details, Price and Checkout Custom Link Setup
+        function updateProduct(index, field, value) {
+            if (field === 'link') {
+                const btn = document.getElementById(`product-link-btn-${index}`);
+                if (btn) {
+                    if (value.trim() !== "" && value !== "#") {
+                        btn.href = value;
+                        btn.innerText = "Buy Now";
+                        btn.classList.remove('bg-luxuryDark');
+                        btn.classList.add('bg-knightBlue');
+                    } else {
+                        btn.href = "#";
+                        btn.innerText = "Inquire";
+                        btn.classList.add('bg-luxuryDark');
+                        btn.classList.remove('bg-knightBlue');
                     }
                 }
-                if(html) views.faq.innerHTML = html;
+            } else {
+                const displayEl = document.getElementById(`product-${field}-${index}`);
+                if (displayEl) {
+                    displayEl.innerText = value;
+                    displayEl.classList.add('text-knightBlue');
+                    setTimeout(() => {
+                        displayEl.classList.remove('text-knightBlue');
+                    }, 300);
+                }
             }
         }
 
-        // Bind input sync
-        Object.values(elements).forEach(el => el.addEventListener('input', updatePreview));
+        // Interactive Editorial Theme & Color Swapper
+        function setTheme(themeId, primaryColor, secondaryColor) {
+            selectedPrimaryColor = primaryColor;
+            selectedSecondaryColor = secondaryColor;
 
-        // Core feature: Generate magic link (embed data into URL)
-        function generateMagicLink() {
-            const baseUrl = window.location.origin + window.location.pathname;
-            const params = new URLSearchParams();
-            params.append('mode', 'view');
-            params.append('link', elements.link.value);
-            params.append('hook', elements.hook.value);
-            params.append('sub', elements.subtitle.value);
-            params.append('ben', elements.benefits.value);
-            params.append('faq', elements.faq.value);
-            params.append('cta', elements.cta.value);
+            document.documentElement.style.setProperty('--theme-primary-color', primaryColor);
+            document.documentElement.style.setProperty('--theme-secondary-color', secondaryColor);
 
-            document.getElementById('share-url').value = `${baseUrl}?${params.toString()}`;
-            document.getElementById('output-area').style.display = 'block';
+            const headerBg = document.getElementById('theme-header-bg');
+            const svgBody = document.getElementById('svg-body');
+            const svgCollar = document.getElementById('svg-collar');
+
+            if (headerBg) {
+                headerBg.style.backgroundColor = primaryColor;
+                headerBg.style.color = themeId === 'electricYellow' ? '#0a0a0a' : '#ffffff';
+            }
+            
+            if (svgBody) svgBody.setAttribute('fill', primaryColor);
+            if (svgCollar) svgCollar.setAttribute('fill', secondaryColor);
+
+            const badge = document.getElementById('badge-top-tag');
+            if (badge) {
+                badge.style.borderColor = themeId === 'electricYellow' ? '#0a0a0a' : '#ffffff';
+            }
+
+            // Global color updates on layout buttons
+            const primaryBtns = document.querySelectorAll('.bg-knightBlue, #submit-form-btn');
+            primaryBtns.forEach(btn => {
+                btn.style.backgroundColor = primaryColor;
+                if(themeId === 'electricYellow') {
+                    btn.style.color = '#000000';
+                } else {
+                    btn.style.color = '#ffffff';
+                }
+            });
+
+            // Update loaded charts if they exist
+            if (globalChartInstance) {
+                globalChartInstance.data.datasets[0].backgroundColor = primaryColor;
+                globalChartInstance.data.datasets[0].borderColor = primaryColor;
+                globalChartInstance.update();
+            }
+
+            showToast(`Applied Theme: ${themeId.toUpperCase()}`);
         }
 
-        // Core feature: Detect if customer opens link, hide control panel, enter pure sales mode
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('mode') === 'view') {
-                document.body.classList.add('view-mode');
-                
-                // Decode and render directly
-                views.btn.href = urlParams.get('link') || '#';
-                views.hook.innerText = urlParams.get('hook') || '';
-                views.subtitle.innerText = urlParams.get('sub') || '';
-                views.btn.innerText = urlParams.get('cta') || 'Get Product Now';
+        // Notification Engine
+        function showToast(message) {
+            const toast = document.getElementById('custom-toast');
+            toast.innerText = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
 
-                const benData = urlParams.get('ben');
-                if(benData) {
-                    views.benefits.innerHTML = benData.split('\n').filter(l => l.trim()).map(l => `<div class="feature-item">${l}</div>`).join('');
+        // Form Submission Interactivity
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const confirmationBox = document.getElementById('submission-confirmation');
+            confirmationBox.classList.remove('hidden');
+            setTimeout(() => {
+                confirmationBox.classList.add('hidden');
+                event.target.reset();
+            }, 3000);
+        }
+
+        // Auto database parsing logic (CSV)
+        function handleCSVUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const data = parseCSVToJSON(text);
+                if (data && data.length > 0) {
+                    processDatabase(data, `Uploaded File: ${file.name}`);
+                } else {
+                    showToast("Error parsing CSV data. Please check structure.");
                 }
-                const faqData = urlParams.get('faq');
-                if(faqData) {
-                    const lines = faqData.split('\n').filter(l => l.trim());
-                    let html = '';
-                    for(let i=0; i<lines.length; i++) {
-                        if(lines[i].startsWith('Q:')) {
-                            const q = lines[i].substring(2).trim();
-                            const a = (lines[i+1] && lines[i+1].startsWith('A:')) ? lines[i+1].substring(2).trim() : '';
-                            html += `<div class="faq-item"><div class="faq-q">${q}</div><div class="faq-a">${a}</div></div>`;
+            };
+            reader.readAsText(file);
+        }
+
+        function parseCSVToJSON(text) {
+            const lines = text.split('\n').map(l => l.trim()).filter(l => l !== '');
+            if (lines.length < 2) return null;
+            
+            const headers = lines[0].split(',').map(h => h.replace(/['"]/g, '').trim());
+            const rows = [];
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.replace(/['"]/g, '').trim());
+                if (values.length === headers.length) {
+                    const obj = {};
+                    headers.forEach((h, index) => {
+                        obj[h] = values[index];
+                    });
+                    rows.push(obj);
+                }
+            }
+            return rows;
+        }
+
+        // Fetching Custom API Link
+        async function triggerAPILoad() {
+            const urlInput = document.getElementById('analytics-db-api');
+            const url = urlInput.value.trim();
+            if (!url) {
+                showToast("Please enter a valid API URL.");
+                return;
+            }
+            showToast("Connecting to live dataset...");
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const cleanArray = Array.isArray(data) ? data : (data.data || Object.values(data)[0]);
+                if (Array.isArray(cleanArray)) {
+                    processDatabase(cleanArray, `Live Link: ${url}`);
+                } else {
+                    showToast("API did not return a standardized JSON array.");
+                }
+            } catch (err) {
+                showToast("Failed to connect. Ensure CORS is enabled on endpoint.");
+            }
+        }
+
+        // Preset Simulated Databases
+        const mockPresets = {
+            ecommerce: [
+                { Month: "Jan", Sales: 12000, Orders: 140, Location: "London" },
+                { Month: "Feb", Sales: 18500, Orders: 210, Location: "Paris" },
+                { Month: "Mar", Sales: 24000, Orders: 280, Location: "Milan" },
+                { Month: "Apr", Sales: 22000, Orders: 240, Location: "New York" },
+                { Month: "May", Sales: 31000, Orders: 390, Location: "Tokyo" },
+                { Month: "Jun", Sales: 45000, Orders: 510, Location: "Shanghai" }
+            ],
+            saas: [
+                { Month: "Jan", Signups: 120, ActiveUsers: 110, Growth: "10%" },
+                { Month: "Feb", Signups: 240, ActiveUsers: 220, Growth: "20%" },
+                { Month: "Mar", Signups: 450, ActiveUsers: 410, Growth: "45%" },
+                { Month: "Apr", Signups: 700, ActiveUsers: 640, Growth: "30%" },
+                { Month: "May", Signups: 1100, ActiveUsers: 990, Growth: "57%" },
+                { Month: "Jun", Signups: 1600, ActiveUsers: 1450, Growth: "45%" }
+            ]
+        };
+
+        function loadMockDataset(presetName) {
+            const dataset = mockPresets[presetName];
+            if (dataset) {
+                processDatabase(dataset, `Mock Preset: ${presetName.toUpperCase()}`);
+                showToast(`Loaded ${presetName.toUpperCase()} Data`);
+            }
+        }
+
+        // Automatic Analytical Core Parsing Engine
+        function processDatabase(data, label) {
+            currentDataset = data;
+            
+            // 1. Update Status Badge
+            const badge = document.getElementById('db-status-badge');
+            badge.innerText = `LINKED (${label})`;
+            badge.className = "text-green-600 font-bold";
+
+            // 2. Clear & rebuild raw previews
+            const headersRow = document.getElementById('db-table-headers');
+            const tbody = document.getElementById('db-table-body');
+            headersRow.innerHTML = '';
+            tbody.innerHTML = '';
+
+            const keys = Object.keys(data[0]);
+            keys.forEach(key => {
+                const th = document.createElement('th');
+                th.className = "py-2 px-3 text-[10px] text-zinc-500";
+                th.innerText = key;
+                headersRow.appendChild(th);
+            });
+
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-zinc-50 transition-colors";
+                keys.forEach(key => {
+                    const td = document.createElement('td');
+                    td.className = "py-2 px-3 font-medium";
+                    td.innerText = row[key];
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+
+            // 3. Automated Metric Audit Calculations
+            // Identify numeric keys for parsing
+            let numericKey = null;
+            keys.forEach(k => {
+                if (!isNaN(parseFloat(data[0][k])) && k.toLowerCase() !== 'id' && k.toLowerCase() !== 'year') {
+                    numericKey = k;
+                }
+            });
+
+            if (numericKey) {
+                const total = data.reduce((sum, row) => sum + parseFloat(row[numericKey] || 0), 0);
+                const avg = total / data.length;
+                
+                document.getElementById('data-metric-gross').innerText = `$${total.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+                document.getElementById('data-metric-avg').innerText = avg.toLocaleString(undefined, {maximumFractionDigits: 1});
+                document.getElementById('data-metric-count').innerText = data.length;
+
+                // Simple calculated trend
+                if (data.length >= 2) {
+                    const first = parseFloat(data[0][numericKey]);
+                    const last = parseFloat(data[data.length - 1][numericKey]);
+                    const pct = ((last - first) / first) * 100;
+                    const sign = pct >= 0 ? '+' : '';
+                    document.getElementById('data-metric-trend').innerText = `${sign}${pct.toFixed(1)}%`;
+                    document.getElementById('data-metric-trend').className = pct >= 0 ? "font-bold text-green-600" : "font-bold text-red-600";
+                }
+            } else {
+                document.getElementById('data-metric-gross').innerText = 'N/A';
+                document.getElementById('data-metric-avg').innerText = 'N/A';
+                document.getElementById('data-metric-count').innerText = data.length;
+                document.getElementById('data-metric-trend').innerText = '--';
+            }
+
+            // 4. Update the chart visuals
+            updateAnalyticsChart(data, keys, numericKey);
+        }
+
+        // Drawing custom themed luxury Chart.js instance
+        function updateAnalyticsChart(data, keys, yKey) {
+            const ctx = document.getElementById('luxuryAnalyticsChart').getContext('2d');
+            
+            // Find appropriate categories (typically first column or string elements)
+            const labelKey = keys[0];
+            const labels = data.map(r => r[labelKey]);
+            const chartDataValues = yKey ? data.map(r => parseFloat(r[yKey] || 0)) : Array(data.length).fill(10);
+
+            if (globalChartInstance) {
+                globalChartInstance.destroy();
+            }
+
+            globalChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: yKey || 'Quantity',
+                        data: chartDataValues,
+                        backgroundColor: selectedPrimaryColor,
+                        borderColor: selectedPrimaryColor,
+                        borderWidth: 2,
+                        borderRadius: 4,
+                        barThickness: 32
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                borderDash: [4, 4],
+                                color: '#e5e5e5'
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Space Grotesk',
+                                    size: 10
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    family: 'Space Grotesk',
+                                    size: 10
+                                }
+                            }
                         }
                     }
-                    if(html) views.faq.innerHTML = html;
+                }
+            });
+        }
+
+        // ATELIER AI Gemini Analysis Connector
+        async function triggerGeminiAnalysis() {
+            if (currentDataset.length === 0) {
+                showToast("Please load a database first before querying the AI engine.");
+                return;
+            }
+
+            const aiOutput = document.getElementById('ai-insight-output');
+            aiOutput.innerText = "QUERYING GEMINI CORE MODEL... (PLEASE STAND BY)";
+            
+            // Package active metric snapshot to feed model context
+            const brandName = document.getElementById('custom-brand').value;
+            const grossVal = document.getElementById('data-metric-gross').innerText;
+            const avgVal = document.getElementById('data-metric-avg').innerText;
+            const countVal = document.getElementById('data-metric-count').innerText;
+            const trendVal = document.getElementById('data-metric-trend').innerText;
+
+            const userQuery = `Analyze these business stats for our high-end luxury brand "${brandName}":
+            - Total Audited Gross Revenue Value: ${grossVal}
+            - Average Transaction Performance Value: ${avgVal}
+            - Completed Client Event Count: ${countVal}
+            - Active Momentum Delta trend: ${trendVal}
+            
+            Provide a razor-sharp, ultra-professional 2-paragraph corporate intelligence analysis matching the prestigious voice of Burberry and McKinsey corporate consultants. Speak directly about optimization routes, performance opportunities, and brand perception.`;
+
+            const systemPrompt = "You are a senior elite strategist working directly for the creative director of a global luxury fashion house. Use sleek, sophisticated vocabulary. Keep explanations punchy and actionable.";
+            
+            const apiKey = ""; // Canvas handles key inject dynamically
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            // Implement simple exponential backoff wrapper
+            async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        if (response.status === 429 && retries > 0) {
+                            await new Promise(res => setTimeout(res, delay));
+                            return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                        }
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return response;
+                } catch (error) {
+                    if (retries > 0) {
+                        await new Promise(res => setTimeout(res, delay));
+                        return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                    }
+                    throw error;
                 }
             }
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) {
+                    aiOutput.innerText = text;
+                } else {
+                    aiOutput.innerText = "Error parsing AI response structure. Ensure system configuration is correct.";
+                }
+            } catch (error) {
+                aiOutput.innerText = "Connection timeout. Please double check connectivity options.";
+            }
         }
+
+        // Automated file generator function
+        function downloadPortfolio() {
+            // Clone current live document
+            const clone = document.documentElement.cloneNode(true);
+            
+            // Preserve the active parsed dataset embedded directly inside the compiled download
+            const dataScript = clone.createElement('script');
+            dataScript.innerText = `
+                window.onload = function() {
+                    const savedData = ${JSON.stringify(currentDataset)};
+                    if (savedData && savedData.length > 0) {
+                        processDatabase(savedData, "Embedded Portfolio Database");
+                    }
+                }
+            `;
+            clone.body.appendChild(dataScript);
+
+            // Remove developer customization elements to give their clients a clean interface
+            const drawer = clone.querySelector('#customizer-drawer');
+            const toggleBtn = clone.querySelector('#customizer-nav-btn');
+            if (drawer) drawer.remove();
+            if (toggleBtn) toggleBtn.remove();
+
+            // Strip current Toast alert container out of compiled site
+            const toast = clone.querySelector('#custom-toast');
+            if (toast) toast.remove();
+
+            // Prepare serialized clean HTML document
+            const finalHtml = "<!DOCTYPE html>\n" + clone.outerHTML;
+            
+            // Generate clean Blob for download
+            const blob = new Blob([finalHtml], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            const filename = document.getElementById('custom-brand').value.toLowerCase().replace(/\s+/g, '-');
+            a.download = `${filename || 'atelier'}-portfolio-intelligence.html`;
+            document.body.appendChild(a);
+            a.click();
+            
+            // Cleanup references
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast("Dynamic Data Portfolio Exported!");
+        }
+
+        // Initialize with standard E-commerce dataset on first load
+        window.onload = function() {
+            loadMockDataset('ecommerce');
+        };
     </script>
 </body>
 </html>
