@@ -302,6 +302,31 @@
 
             <hr class="border-heritageCharcoal">
 
+            <!-- Homepage Stats -->
+            <div class="reveal reveal-delay-1">
+                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Homepage Stats</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Bespoke Pieces</label>
+                        <input type="text" id="stat-pieces" value="12+" oninput="updateStat('pieces', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm font-serif">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Global Clients</label>
+                        <input type="text" id="stat-clients" value="500+" oninput="updateStat('clients', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm font-serif">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Data Points</label>
+                        <input type="text" id="stat-data" value="2.4M" oninput="updateStat('data', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm font-serif">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Accuracy</label>
+                        <input type="text" id="stat-accuracy" value="99.7%" oninput="updateStat('accuracy', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm font-serif">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-heritageCharcoal">
+
             <!-- Color Palette -->
             <div class="reveal reveal-delay-1">
                 <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Editorial Palette</p>
@@ -327,7 +352,21 @@
                 <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Main Headline</label>
                 <input type="text" id="custom-headline" value="The Heritage Collection" oninput="updateHeadline(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-white focus:border-heritageRed outline-none mb-3 font-serif">
                 <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Sub-Headline</label>
-                <input type="text" id="custom-subhead" value="Bespoke luxury engineered with algorithmic precision." oninput="updateSubhead(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-white focus:border-heritageRed outline-none text-sm">
+                <input type="text" id="custom-subhead" value="Bespoke luxury engineered with algorithmic precision." oninput="updateSubhead(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-white focus:border-heritageRed outline-none text-sm mb-4">
+                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Signature Product Image</label>
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-14 h-14 border border-zinc-700 bg-zinc-900 flex items-center justify-center overflow-hidden flex-shrink-0">
+                        <span id="hero-img-thumb" class="text-zinc-600 text-[9px] uppercase tracking-widest text-center leading-tight">SVG<br>Model</span>
+                    </div>
+                    <div class="flex flex-col gap-1.5 flex-1">
+                        <input type="file" id="hero-product-img" accept="image/*" class="hidden" onchange="handleHeroImageUpload(this)">
+                        <button onclick="document.getElementById('hero-product-img').click()" id="hero-img-btn" class="text-[9px] text-heritageCream hover:text-heritageRed uppercase tracking-widest font-bold border border-zinc-700 px-3 py-1.5 hover:border-heritageRed transition-colors text-left w-full">
+                            Upload Image
+                        </button>
+                        <button onclick="removeHeroImage()" id="hero-img-remove-btn" class="text-[9px] text-zinc-500 hover:text-red-500 uppercase tracking-widest font-bold hidden">Remove & Use SVG</button>
+                    </div>
+                </div>
+                <p class="text-[9px] text-zinc-500 leading-relaxed">Replaces the SVG trench silhouette on the homepage with your own product photo.</p>
             </div>
 
             <hr class="border-heritageCharcoal">
@@ -362,7 +401,9 @@
 
             <!-- About / Bio -->
             <div class="reveal reveal-delay-4">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Brand Narrative</p>
+                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Brand Philosophy</p>
+                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Philosophy Tagline</label>
+                <input type="text" id="custom-tagline" value="Where sartorial heritage meets algorithmic precision." oninput="updateTagline(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2.5 text-white focus:border-heritageRed outline-none text-sm mb-3 font-serif italic">
                 <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Heritage Statement</label>
                 <textarea id="custom-bio" rows="4" oninput="updateBio(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-white focus:border-heritageRed outline-none text-sm leading-relaxed">Crafted at the intersection of sartorial heritage and digital innovation, our atelier delivers bespoke excellence through algorithmic precision and artisanal mastery.</textarea>
             </div>
@@ -442,20 +483,23 @@
                     <span class="text-[9px] text-heritageCharcoal uppercase tracking-widest font-medium">Live</span>
                 </div>
 
-                <svg id="vector-model" class="w-72 h-72 md:w-80 md:h-80" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Trench Coat Body -->
-                    <path d="M45 28 L155 28 L175 185 L25 185 Z" id="svg-body" fill="#8B0000" stroke="#121212" stroke-width="3" />
-                    <!-- Lapel Collar -->
-                    <path d="M45 28 L100 85 L155 28 L100 48 Z" id="svg-collar" fill="#B89A7B" stroke="#121212" stroke-width="2.5" />
-                    <!-- Belt -->
-                    <rect x="35" y="110" width="130" height="8" fill="#121212" opacity="0.3" />
-                    <!-- Signature Crest -->
-                    <circle cx="100" cy="140" r="16" id="svg-accent" fill="#121212" stroke="#F5EDE0" stroke-width="2" />
-                    <path d="M100 128 L100 152 M88 140 L112 140" stroke="#F5EDE0" stroke-width="1.5" />
-                    <!-- Shoulder Epaulets -->
-                    <path d="M45 28 L35 38 L55 42 Z" fill="#121212" opacity="0.2" />
-                    <path d="M155 28 L165 38 L145 42 Z" fill="#121212" opacity="0.2" />
-                </svg>
+                <div id="hero-visual-container" class="w-72 h-72 md:w-80 md:h-80 flex items-center justify-center overflow-hidden">
+                    <svg id="vector-model" class="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Trench Coat Body -->
+                        <path d="M45 28 L155 28 L175 185 L25 185 Z" id="svg-body" fill="#8B0000" stroke="#121212" stroke-width="3" />
+                        <!-- Lapel Collar -->
+                        <path d="M45 28 L100 85 L155 28 L100 48 Z" id="svg-collar" fill="#B89A7B" stroke="#121212" stroke-width="2.5" />
+                        <!-- Belt -->
+                        <rect x="35" y="110" width="130" height="8" fill="#121212" opacity="0.3" />
+                        <!-- Signature Crest -->
+                        <circle cx="100" cy="140" r="16" id="svg-accent" fill="#121212" stroke="#F5EDE0" stroke-width="2" />
+                        <path d="M100 128 L100 152 M88 140 L112 140" stroke="#F5EDE0" stroke-width="1.5" />
+                        <!-- Shoulder Epaulets -->
+                        <path d="M45 28 L35 38 L55 42 Z" fill="#121212" opacity="0.2" />
+                        <path d="M155 28 L165 38 L145 42 Z" fill="#121212" opacity="0.2" />
+                    </svg>
+                    <img id="hero-product-image-display" class="w-full h-full object-cover hidden" alt="Signature Product">
+                </div>
 
                 <p class="text-xs uppercase tracking-[0.2em] font-medium text-heritageCharcoal mt-8 text-center">
                     Signature Trench — Color Blueprint
@@ -669,7 +713,7 @@
             <p class="text-[10px] text-heritageRed uppercase tracking-[0.3em] font-bold mb-4 reveal">— Our Heritage —</p>
             <h1 class="font-serif font-bold text-4xl md:text-6xl tracking-tight mb-8 reveal reveal-delay-1">Brand Philosophy</h1>
             <div class="w-16 h-px bg-heritageRed mx-auto mb-12 reveal reveal-delay-2"></div>
-            <p class="font-serif text-2xl md:text-3xl leading-relaxed text-heritageBlack mb-10 italic reveal reveal-delay-2">
+            <p id="about-tagline" class="font-serif text-2xl md:text-3xl leading-relaxed text-heritageBlack mb-10 italic reveal reveal-delay-2">
                 "Where sartorial heritage meets algorithmic precision."
             </p>
             <div id="about-bio-display" class="text-heritageCharcoal space-y-6 text-base md:text-lg leading-relaxed text-left max-w-2xl mx-auto reveal reveal-delay-3">
@@ -743,6 +787,7 @@
         let currentChartType = 'bar';
         let selectedMetricColumn = '';
         let currencySymbol = '$';
+        let heroProductImage = '';
 
         // Product data store
         let products = [
@@ -752,7 +797,8 @@
                 price: '$2,850',
                 description: 'Signature water-resistant cotton gabardine with hand-finished topstitching and iconic check lining.',
                 link: '#',
-                tag: 'Signature Piece'
+                tag: 'Signature Piece',
+                image: ''
             },
             {
                 id: 2,
@@ -760,7 +806,8 @@
                 price: '$680',
                 description: '100% Scottish cashmere in heritage camel. Woven on traditional looms with hand-rolled edges.',
                 link: '#',
-                tag: 'Accessory'
+                tag: 'Accessory',
+                image: ''
             },
             {
                 id: 3,
@@ -768,7 +815,8 @@
                 price: '$590',
                 description: 'Handcrafted calfskin leather boots with signature check detail and durable rubber soles.',
                 link: '#',
-                tag: 'Footwear'
+                tag: 'Footwear',
+                image: ''
             },
             {
                 id: 4,
@@ -776,7 +824,8 @@
                 price: '$1,450',
                 description: 'Italian virgin wool blazer featuring the iconic house check motif. Fully canvassed construction.',
                 link: '#',
-                tag: 'Tailoring'
+                tag: 'Tailoring',
+                image: ''
             }
         ];
 
@@ -836,6 +885,24 @@
             document.getElementById('footer-brand-text').innerText = cleanVal;
         }
 
+        function updateStat(statKey, value) {
+            const idMap = {
+                'pieces': 'stat-products',
+                'clients': 'stat-clients',
+                'data': 'stat-data',
+                'accuracy': 'stat-accuracy'
+            };
+            const elementId = idMap[statKey];
+            if (elementId) {
+                const el = document.getElementById(elementId);
+                if (el) {
+                    el.innerText = value || '0';
+                    el.classList.add('live-updating');
+                    setTimeout(() => el.classList.remove('live-updating'), 1500);
+                }
+            }
+        }
+
         function updateHeadline(value) {
             document.getElementById('hero-headline').innerText = value;
         }
@@ -848,6 +915,16 @@
             const bioDisplay = document.getElementById('about-bio-display');
             const paragraphs = value.split('\n').filter(p => p.trim());
             bioDisplay.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+        }
+
+        function updateTagline(value) {
+            const taglineEl = document.getElementById('about-tagline');
+            const cleanVal = value.trim() === "" ? "Your brand philosophy goes here" : value;
+            // Add quotes if not already present
+            const quoted = cleanVal.startsWith('"') && cleanVal.endsWith('"')
+                ? cleanVal
+                : `"${cleanVal}"`;
+            taglineEl.innerText = quoted;
         }
 
         function updateCurrency(symbol) {
@@ -868,8 +945,23 @@
                         <p class="text-[10px] text-heritageRed uppercase font-bold tracking-widest">Item ${idx + 1}</p>
                         <button onclick="removeProduct(${p.id})" class="text-zinc-500 hover:text-red-500 text-xs font-bold">&times;</button>
                     </div>
+                    <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Product Image</label>
+                    <div class="mb-3 flex items-center gap-3">
+                        <div class="w-14 h-14 border border-zinc-700 bg-zinc-900 flex items-center justify-center overflow-hidden flex-shrink-0">
+                            ${p.image ? `<img src="${p.image}" class="w-full h-full object-cover" alt="${p.title}">` : '<span class="text-zinc-600 text-[10px] uppercase tracking-widest">IMG</span>'}
+                        </div>
+                        <div class="flex flex-col gap-1.5 flex-1">
+                            <input type="file" id="prod-img-${p.id}" accept="image/*" class="hidden" onchange="handleProductImageUpload(${p.id}, this)">
+                            <button onclick="document.getElementById('prod-img-${p.id}').click()" class="text-[9px] text-heritageCream hover:text-heritageRed uppercase tracking-widest font-bold border border-zinc-700 px-3 py-1.5 hover:border-heritageRed transition-colors text-left w-full">
+                                ${p.image ? 'Change Image' : 'Upload Image'}
+                            </button>
+                            ${p.image ? `<button onclick="removeProductImage(${p.id})" class="text-[9px] text-zinc-500 hover:text-red-500 uppercase tracking-widest font-bold">Remove</button>` : ''}
+                        </div>
+                    </div>
                     <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Title</label>
                     <input type="text" value="${p.title}" oninput="updateProductField(${p.id}, 'title', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm mb-2">
+                    <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Description</label>
+                    <textarea rows="3" oninput="updateProductField(${p.id}, 'description', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-xs leading-relaxed mb-2 resize-none">${p.description}</textarea>
                     <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Price</label>
                     <input type="text" value="${p.price}" oninput="updateProductField(${p.id}, 'price', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm mb-2">
                     <label class="block text-[9px] uppercase tracking-widest text-heritageTan font-bold mb-1">Payment Link (Stripe/PayPal)</label>
@@ -882,8 +974,20 @@
             const grid = document.getElementById('product-grid');
             grid.innerHTML = products.map((p, idx) => `
                 <div class="product-card border-2 border-heritageBlack bg-heritageIvory overflow-hidden shadow-[6px_6px_0px_#121212] hover:shadow-[12px_12px_0px_#8B0000] flex flex-col justify-between reveal" style="transition-delay: ${idx * 0.08}s">
+                    <div class="relative">
+                        <div class="h-56 bg-heritageCream relative overflow-hidden border-b-2 border-heritageBlack">
+                            ${p.image
+                                ? `<img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">`
+                                : `<div class="w-full h-full burberry-check-bg opacity-20 flex items-center justify-center">
+                                     <span class="font-serif text-5xl font-bold text-heritageBlack/15">${p.title.charAt(0)}</span>
+                                   </div>`
+                            }
+                        </div>
+                        <div class="absolute top-3 left-3">
+                            <span class="bg-heritageBlack/85 text-heritageCream text-[8px] tracking-[0.2em] uppercase font-bold px-2.5 py-1 backdrop-blur-sm">${p.tag}</span>
+                        </div>
+                    </div>
                     <div class="p-8">
-                        <div class="text-[9px] tracking-[0.2em] uppercase font-bold text-heritageTan mb-4">${p.tag}</div>
                         <h3 class="font-serif font-bold text-2xl mb-3 text-heritageBlack">${p.title}</h3>
                         <p class="text-heritageCharcoal text-sm leading-relaxed mb-6">${p.description}</p>
                     </div>
@@ -912,7 +1016,8 @@
                 price: '$0',
                 description: 'Describe your custom product here...',
                 link: '#',
-                tag: 'New Arrival'
+                tag: 'New Arrival',
+                image: ''
             });
             renderProductConfigs();
             renderProductCards();
@@ -928,6 +1033,112 @@
             renderProductConfigs();
             renderProductCards();
             showToast('Product Removed');
+        }
+
+        // ==========================================
+        // HERO PRODUCT IMAGE UPLOAD
+        // ==========================================
+        function handleHeroImageUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                showToast('Please upload an image file');
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Image must be under 5MB');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                heroProductImage = e.target.result;
+
+                // Update display
+                const imgEl = document.getElementById('hero-product-image-display');
+                const svgEl = document.getElementById('vector-model');
+                const thumbEl = document.getElementById('hero-img-thumb');
+                const btnEl = document.getElementById('hero-img-btn');
+                const removeBtn = document.getElementById('hero-img-remove-btn');
+
+                imgEl.src = heroProductImage;
+                imgEl.classList.remove('hidden');
+                svgEl.classList.add('hidden');
+
+                // Update thumbnail
+                thumbEl.outerHTML = `<img src="${heroProductImage}" class="w-full h-full object-cover" id="hero-img-thumb">`;
+
+                btnEl.innerText = 'Change Image';
+                removeBtn.classList.remove('hidden');
+
+                showToast('Hero image updated');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeHeroImage() {
+            heroProductImage = '';
+
+            const imgEl = document.getElementById('hero-product-image-display');
+            const svgEl = document.getElementById('vector-model');
+            const thumbEl = document.getElementById('hero-img-thumb');
+            const btnEl = document.getElementById('hero-img-btn');
+            const removeBtn = document.getElementById('hero-img-remove-btn');
+
+            imgEl.classList.add('hidden');
+            svgEl.classList.remove('hidden');
+
+            // Restore thumbnail placeholder
+            thumbEl.outerHTML = `<span id="hero-img-thumb" class="text-zinc-600 text-[9px] uppercase tracking-widest text-center leading-tight">SVG<br>Model</span>`;
+
+            btnEl.innerText = 'Upload Image';
+            removeBtn.classList.add('hidden');
+
+            showToast('Reverted to SVG model');
+        }
+
+        // ==========================================
+        // PRODUCT IMAGE UPLOAD
+        // ==========================================
+        function handleProductImageUpload(productId, input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                showToast('Please upload an image file');
+                return;
+            }
+
+            // Limit file size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Image must be under 5MB');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const product = products.find(p => p.id === productId);
+                if (product) {
+                    product.image = e.target.result; // base64 data URL
+                    renderProductConfigs();
+                    renderProductCards();
+                    showToast('Image uploaded');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeProductImage(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                product.image = '';
+                renderProductConfigs();
+                renderProductCards();
+                showToast('Image removed');
+            }
         }
 
         // ==========================================
@@ -1565,6 +1776,7 @@ Bottom line: ${trendVal.startsWith('+') ? 'Green light. Invest.' : 'Red flag. Ac
                 window.onload = function() {
                     const savedData = ${JSON.stringify(currentDataset)};
                     const savedProducts = ${JSON.stringify(products)};
+                    const savedHeroImage = '${heroProductImage}';
                     const savedPrimary = '${selectedPrimaryColor}';
                     const savedSecondary = '${selectedSecondary}';
                     const savedBrand = '${document.getElementById('custom-brand').value}';
@@ -1572,6 +1784,15 @@ Bottom line: ${trendVal.startsWith('+') ? 'Green light. Invest.' : 'Red flag. Ac
                     // Restore state
                     if (savedData && savedData.length > 0) {
                         processDatabase(savedData, "Embedded Data");
+                    }
+                    if (savedHeroImage) {
+                        const heroImg = document.getElementById('hero-product-image-display');
+                        const heroSvg = document.getElementById('vector-model');
+                        if (heroImg) {
+                            heroImg.src = savedHeroImage;
+                            heroImg.classList.remove('hidden');
+                        }
+                        if (heroSvg) heroSvg.classList.add('hidden');
                     }
                 }
             `;
@@ -1645,3 +1866,4 @@ Bottom line: ${trendVal.startsWith('+') ? 'Green light. Invest.' : 'Red flag. Ac
     </script>
 </body>
 </html>
+       
