@@ -1769,34 +1769,79 @@ Bottom line: ${trendVal.startsWith('+') ? 'Green light. Invest.' : 'Red flag. Ac
         // ==========================================
         function downloadPortfolio() {
             const clone = document.documentElement.cloneNode(true);
+            const cloneBody = clone.querySelector('body');
 
             // Embed current data
-            const dataScript = clone.createElement('script');
+            const dataScript = document.createElement('script');
             dataScript.innerText = `
-                window.onload = function() {
+                (function() {
                     const savedData = ${JSON.stringify(currentDataset)};
                     const savedProducts = ${JSON.stringify(products)};
-                    const savedHeroImage = '${heroProductImage}';
+                    const savedHeroImage = ${JSON.stringify(heroProductImage)};
                     const savedPrimary = '${selectedPrimaryColor}';
-                    const savedSecondary = '${selectedSecondary}';
+                    const savedSecondary = '${selectedSecondaryColor}';
                     const savedBrand = '${document.getElementById('custom-brand').value}';
+                    const savedChartType = '${currentChartType}';
+                    const savedCurrency = '${currencySymbol}';
+                    const savedMetric = '${selectedMetricColumn}';
+                    const savedHeadline = '${document.getElementById('custom-headline').value}';
+                    const savedSubhead = '${document.getElementById('custom-subhead').value}';
+                    const savedTagline = '${document.getElementById('custom-tagline').value}';
+                    const savedBio = ${JSON.stringify(document.getElementById('custom-bio').value)};
 
-                    // Restore state
-                    if (savedData && savedData.length > 0) {
-                        processDatabase(savedData, "Embedded Data");
-                    }
-                    if (savedHeroImage) {
-                        const heroImg = document.getElementById('hero-product-image-display');
-                        const heroSvg = document.getElementById('vector-model');
-                        if (heroImg) {
-                            heroImg.src = savedHeroImage;
-                            heroImg.classList.remove('hidden');
+                    function restoreState() {
+                        // Restore products
+                        if (typeof savedProducts !== 'undefined' && savedProducts.length > 0) {
+                            products = savedProducts;
+                            if (typeof renderProductCards === 'function') {
+                                renderProductCards();
+                            }
                         }
-                        if (heroSvg) heroSvg.classList.add('hidden');
+
+                        // Restore data
+                        if (typeof savedData !== 'undefined' && savedData.length > 0) {
+                            if (typeof processDatabase === 'function') {
+                                processDatabase(savedData, "Embedded Data");
+                            }
+                        }
+
+                        // Restore hero image
+                        if (savedHeroImage) {
+                            const heroImg = document.getElementById('hero-product-image-display');
+                            const heroSvg = document.getElementById('vector-model');
+                            if (heroImg) {
+                                heroImg.src = savedHeroImage;
+                                heroImg.classList.remove('hidden');
+                            }
+                            if (heroSvg) heroSvg.classList.add('hidden');
+                        }
+
+                        // Restore theme
+                        if (typeof setTheme === 'function') {
+                            setTheme('custom', savedPrimary, savedSecondary);
+                        }
+
+                        // Restore chart type
+                        if (savedChartType && typeof setChartType === 'function') {
+                            currentChartType = savedChartType;
+                        }
+
+                        // Restore currency
+                        if (savedCurrency) {
+                            currencySymbol = savedCurrency;
+                        }
                     }
-                }
+
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', function() {
+                            setTimeout(restoreState, 300);
+                        });
+                    } else {
+                        setTimeout(restoreState, 300);
+                    }
+                })();
             `;
-            clone.body.appendChild(dataScript);
+            cloneBody.appendChild(dataScript);
 
             // Remove customizer for clean client version
             const drawer = clone.querySelector('#customizer-drawer');
@@ -1866,3 +1911,4 @@ Bottom line: ${trendVal.startsWith('+') ? 'Green light. Invest.' : 'Red flag. Ac
     </script>
 </body>
 </html>
+
