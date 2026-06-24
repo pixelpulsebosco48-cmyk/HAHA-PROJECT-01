@@ -124,12 +124,160 @@
             background-clip: text;
         }
 
-        /* Reveal Animation Classes */
+        /* 3D Tilt Effect (C4D Style) */
+        .tilt-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .tilt-card-inner {
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .tilt-card:hover .tilt-card-inner {
+            transform: translateZ(20px);
+        }
+        .tilt-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .tilt-card:hover .tilt-shine {
+            opacity: 1;
+        }
+
+        /* Luxury Gold Border Effect */
+        .gold-border {
+            position: relative;
+        }
+        .gold-border::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #C9A96E, #8B0000, #C9A96E, #B89A7B);
+            background-size: 300% 300%;
+            z-index: -1;
+            animation: goldShimmer 4s ease infinite;
+        }
+        @keyframes goldShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Glassmorphism Navigation */
+        .glass-nav {
+            background: rgba(253, 248, 242, 0.85) !important;
+            backdrop-filter: blur(20px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+            border-bottom: 1px solid rgba(184, 154, 123, 0.3) !important;
+            box-shadow: 0 4px 30px rgba(139, 0, 0, 0.05);
+        }
+
+        /* Luxury Button with Depth */
+        .btn-luxury-premium {
+            position: relative;
+            background: linear-gradient(180deg, #8B0000 0%, #6B0000 100%);
+            border: 1px solid rgba(201, 169, 110, 0.5);
+            box-shadow: 
+                0 4px 15px rgba(139, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-luxury-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(139, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+        }
+        .btn-luxury-premium:active {
+            transform: translateY(0);
+            box-shadow: 
+                0 2px 8px rgba(139, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section Luxury Gradient */
+        .hero-luxury-bg {
+            background: 
+                radial-gradient(ellipse at top, rgba(201, 169, 110, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
+                linear-gradient(180deg, #8B0000 0%, #6B0000 100%);
+        }
+
+        /* Card Luxury Shadow */
+        .shadow-luxury {
+            box-shadow: 
+                0 1px 2px rgba(18, 18, 18, 0.05),
+                0 4px 12px rgba(18, 18, 18, 0.08),
+                0 16px 40px rgba(18, 18, 18, 0.06);
+        }
+
+        /* Subtle Noise Texture for Premium Feel */
+        .noise-overlay {
+            position: relative;
+        }
+        .noise-overlay::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        /* Animated Gradient Border */
+        .animated-border {
+            position: relative;
+            background: #FDF8F2;
+        }
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(90deg, #C9A96E, #8B0000, #B89A7B, #C9A96E);
+            background-size: 300% 100%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: borderFlow 8s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes borderFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        /* Metric Card Hover Lift */
+        .metric-card {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(139, 0, 0, 0.1);
+        }
+
+        /* Improved Scroll Reveal */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
@@ -139,6 +287,7 @@
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
         .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
 
         /* Live Update Pulse */
         @keyframes highlightPulse {
@@ -251,12 +400,98 @@
             border-color: #8B0000 !important;
             box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.08);
         }
+
+        /* ============================================
+           LUXURY CUSTOM CURSOR
+           ============================================ */
+        .custom-cursor {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #C9A96E;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                        height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                        background-color 0.3s ease,
+                        border-color 0.3s ease,
+                        opacity 0.3s ease;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: difference;
+        }
+        .custom-cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: #C9A96E;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.2s ease;
+        }
+        .custom-cursor.hover {
+            width: 40px;
+            height: 40px;
+            background: rgba(201, 169, 110, 0.1);
+            border-color: #8B0000;
+        }
+        .custom-cursor.click {
+            width: 20px;
+            height: 20px;
+            background: rgba(139, 0, 0, 0.3);
+        }
+        @media (hover: none) and (pointer: coarse) {
+            .custom-cursor, .custom-cursor-dot {
+                display: none;
+            }
+        }
+
+        /* ============================================
+           SCROLL PROGRESS BAR
+           ============================================ */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #C9A96E, #8B0000);
+            z-index: 9999;
+            transition: width 0.1s linear;
+        }
+
+        /* ============================================
+           TEXT SELECTION STYLE
+           ============================================ */
+        ::selection {
+            background: #8B0000;
+            color: #FDF8F2;
+        }
+        ::-moz-selection {
+            background: #8B0000;
+            color: #FDF8F2;
+        }
+
+        /* ============================================
+           SMOOTH SCROLL
+           ============================================ */
+        html {
+            scroll-behavior: smooth;
+        }
     </style>
 </head>
 <body class="bg-brightBase font-sans text-heritageBlack overflow-x-hidden burberry-check-subtle">
 
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress" style="width: 0%"></div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="custom-cursor-dot" id="custom-cursor-dot"></div>
+
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full bg-heritageIvory/95 backdrop-blur-sm border-b border-heritageStone z-50">
+    <nav class="fixed top-0 left-0 w-full glass-nav z-50">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
             <div class="logo">
                 <a href="#" onclick="switchTab('home')" class="text-2xl font-serif font-bold tracking-[0.15em] text-heritageBlack hover:text-heritageRed transition-colors duration-300">
@@ -271,7 +506,7 @@
                 <li><button onclick="switchTab('contact')" class="nav-btn font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed transition-colors py-2 border-b border-transparent hover:border-heritageRed">Atelier</button></li>
             </ul>
             <div class="flex items-center space-x-4">
-                <button id="customizer-nav-btn" onclick="toggleCustomizer()" class="btn-luxury bg-heritageBlack text-heritageCream font-bold text-xs uppercase tracking-[0.15em] py-3 px-6 hover:bg-heritageRed border border-heritageBlack transition-all duration-300 shadow-[3px_3px_0px_#B89A7B]">
+                <button id="customizer-nav-btn" onclick="toggleCustomizer()" class="btn-luxury-premium text-heritageCream font-bold text-xs uppercase tracking-[0.15em] py-3 px-6 hover:bg-heritageRed transition-all duration-300 rounded-sm">
                     Design Studio
                 </button>
             </div>
@@ -432,9 +667,12 @@
     <!-- HOME TAB -->
     <div id="tab-home" class="tab-content pt-20">
         <!-- Hero Section -->
-        <header id="theme-header-bg" class="bg-heritageRed text-white border-b-4 border-heritageBlack transition-all duration-700 relative overflow-hidden">
+        <header id="theme-header-bg" class="hero-luxury-bg text-white border-b-4 border-heritageBlack transition-all duration-700 relative overflow-hidden noise-overlay">
             <!-- Subtle Check Pattern Overlay -->
             <div class="absolute inset-0 opacity-5 burberry-check-bg"></div>
+            <!-- Decorative Gold Lines -->
+            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-heritageCamel to-transparent opacity-40"></div>
+            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-heritageCamel to-transparent opacity-40"></div>
             <div class="max-w-7xl mx-auto px-6 py-28 md:py-40 text-center relative z-10">
                 <div class="inline-block border border-white/40 px-5 py-1.5 mb-8 text-[10px] tracking-[0.3em] uppercase font-medium reveal" id="badge-top-tag">
                     Autumn / Winter 2026
@@ -446,10 +684,10 @@
                     Bespoke luxury engineered with algorithmic precision.
                 </p>
                 <div class="mt-12 flex flex-wrap justify-center gap-6 reveal reveal-delay-3">
-                    <button onclick="switchTab('catalog')" id="cta-button-1" class="btn-luxury bg-heritageBlack text-white hover:bg-white hover:text-heritageBlack border border-heritageBlack font-bold text-xs uppercase tracking-[0.2em] py-4 px-10 transition-all duration-300 shadow-[4px_4px_0px_rgba(255,255,255,0.3)]">
+                    <button onclick="switchTab('catalog')" id="cta-button-1" class="btn-luxury-premium text-white font-bold text-xs uppercase tracking-[0.2em] py-4 px-10 transition-all duration-300 rounded-sm">
                         Explore Collection
                     </button>
-                    <button onclick="switchTab('analytics')" class="btn-luxury bg-transparent text-white hover:bg-white hover:text-heritageBlack border border-white/60 font-bold text-xs uppercase tracking-[0.2em] py-4 px-10 transition-all duration-300">
+                    <button onclick="switchTab('analytics')" class="btn-luxury bg-transparent text-white hover:bg-white hover:text-heritageBlack border border-white/60 font-bold text-xs uppercase tracking-[0.2em] py-4 px-10 transition-all duration-300 rounded-sm">
                         Intelligence Hub
                     </button>
                 </div>
@@ -513,21 +751,21 @@
         </section>
 
         <!-- Feature Strip -->
-        <section class="bg-heritageCream border-y border-heritageStone py-12">
+        <section class="bg-heritageCream border-y border-heritageStone py-16">
             <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div class="text-center reveal">
+                <div class="text-center reveal metric-card p-6 rounded-lg bg-heritageIvory/50 border border-heritageStone/50">
                     <div class="font-serif text-3xl md:text-4xl font-bold text-heritageRed mb-2 metric-value" id="stat-products">12+</div>
                     <p class="text-[10px] uppercase tracking-[0.2em] text-heritageCharcoal font-medium">Bespoke Pieces</p>
                 </div>
-                <div class="text-center reveal reveal-delay-1">
+                <div class="text-center reveal reveal-delay-1 metric-card p-6 rounded-lg bg-heritageIvory/50 border border-heritageStone/50">
                     <div class="font-serif text-3xl md:text-4xl font-bold text-heritageRed mb-2 metric-value" id="stat-clients">500+</div>
                     <p class="text-[10px] uppercase tracking-[0.2em] text-heritageCharcoal font-medium">Global Clients</p>
                 </div>
-                <div class="text-center reveal reveal-delay-2">
+                <div class="text-center reveal reveal-delay-2 metric-card p-6 rounded-lg bg-heritageIvory/50 border border-heritageStone/50">
                     <div class="font-serif text-3xl md:text-4xl font-bold text-heritageRed mb-2 metric-value" id="stat-data">2.4M</div>
                     <p class="text-[10px] uppercase tracking-[0.2em] text-heritageCharcoal font-medium">Data Points Analyzed</p>
                 </div>
-                <div class="text-center reveal reveal-delay-3">
+                <div class="text-center reveal reveal-delay-3 metric-card p-6 rounded-lg bg-heritageIvory/50 border border-heritageStone/50">
                     <div class="font-serif text-3xl md:text-4xl font-bold text-heritageRed mb-2 metric-value" id="stat-accuracy">99.7%</div>
                     <p class="text-[10px] uppercase tracking-[0.2em] text-heritageCharcoal font-medium">Predictive Accuracy</p>
                 </div>
@@ -844,6 +1082,10 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 // Re-trigger reveal animations
                 setTimeout(() => initRevealAnimations(), 100);
+                // Re-init tilt effect for product cards
+                if (tabId === 'catalog') {
+                    setTimeout(() => initTiltEffect(), 150);
+                }
             }
 
             const navButtons = document.querySelectorAll('.nav-btn');
@@ -973,32 +1215,38 @@
         function renderProductCards() {
             const grid = document.getElementById('product-grid');
             grid.innerHTML = products.map((p, idx) => `
-                <div class="product-card border-2 border-heritageBlack bg-heritageIvory overflow-hidden shadow-[6px_6px_0px_#121212] hover:shadow-[12px_12px_0px_#8B0000] flex flex-col justify-between reveal" style="transition-delay: ${idx * 0.08}s">
-                    <div class="relative">
-                        <div class="h-56 bg-heritageCream relative overflow-hidden border-b-2 border-heritageBlack">
-                            ${p.image
-                                ? `<img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">`
-                                : `<div class="w-full h-full burberry-check-bg opacity-20 flex items-center justify-center">
-                                     <span class="font-serif text-5xl font-bold text-heritageBlack/15">${p.title.charAt(0)}</span>
-                                   </div>`
-                            }
+                <div class="tilt-card reveal" style="transition-delay: ${idx * 0.08}s" data-tilt>
+                    <div class="tilt-card-inner product-card border-2 border-heritageBlack bg-heritageIvory overflow-hidden shadow-[6px_6px_0px_#121212] hover:shadow-[12px_12px_0px_#8B0000] flex flex-col justify-between">
+                        <div class="tilt-shine"></div>
+                        <div class="relative">
+                            <div class="h-56 bg-heritageCream relative overflow-hidden border-b-2 border-heritageBlack">
+                                ${p.image
+                                    ? `<img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">`
+                                    : `<div class="w-full h-full burberry-check-bg opacity-20 flex items-center justify-center">
+                                         <span class="font-serif text-5xl font-bold text-heritageBlack/15">${p.title.charAt(0)}</span>
+                                       </div>`
+                                }
+                            </div>
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-heritageBlack/85 text-heritageCream text-[8px] tracking-[0.2em] uppercase font-bold px-2.5 py-1 backdrop-blur-sm">${p.tag}</span>
+                            </div>
                         </div>
-                        <div class="absolute top-3 left-3">
-                            <span class="bg-heritageBlack/85 text-heritageCream text-[8px] tracking-[0.2em] uppercase font-bold px-2.5 py-1 backdrop-blur-sm">${p.tag}</span>
+                        <div class="p-8">
+                            <h3 class="font-serif font-bold text-2xl mb-3 text-heritageBlack">${p.title}</h3>
+                            <p class="text-heritageCharcoal text-sm leading-relaxed mb-6">${p.description}</p>
                         </div>
-                    </div>
-                    <div class="p-8">
-                        <h3 class="font-serif font-bold text-2xl mb-3 text-heritageBlack">${p.title}</h3>
-                        <p class="text-heritageCharcoal text-sm leading-relaxed mb-6">${p.description}</p>
-                    </div>
-                    <div class="p-6 border-t-2 border-heritageBlack bg-heritageCream flex justify-between items-center">
-                        <span class="font-serif font-bold text-2xl text-heritageBlack">${p.price}</span>
-                        <a href="${p.link}" target="_blank" class="btn-luxury bg-heritageBlack text-white text-[10px] uppercase font-bold tracking-[0.2em] py-2.5 px-5 hover:bg-heritageRed transition-colors border border-heritageBlack">
-                            ${p.link && p.link !== '#' ? 'Buy Now' : 'Inquire'}
-                        </a>
+                        <div class="p-6 border-t-2 border-heritageBlack bg-heritageCream flex justify-between items-center">
+                            <span class="font-serif font-bold text-2xl text-heritageBlack">${p.price}</span>
+                            <a href="${p.link}" target="_blank" class="btn-luxury bg-heritageBlack text-white text-[10px] uppercase font-bold tracking-[0.2em] py-2.5 px-5 hover:bg-heritageRed transition-colors border border-heritageBlack">
+                                ${p.link && p.link !== '#' ? 'Buy Now' : 'Inquire'}
+                            </a>
+                        </div>
                     </div>
                 </div>
             `).join('');
+            
+            // Re-init tilt effect
+            initTiltEffect();
         }
 
         function updateProductField(id, field, value) {
@@ -1154,7 +1402,12 @@
             // Header
             const headerBg = document.getElementById('theme-header-bg');
             if (headerBg) {
-                headerBg.style.backgroundColor = primaryColor;
+                // Update luxury gradient hero
+                headerBg.style.background = `
+                    radial-gradient(ellipse at top, ${hexToRgba(secondaryColor, 0.15)} 0%, transparent 50%),
+                    radial-gradient(ellipse at bottom right, ${hexToRgba(primaryColor, 0.1)} 0%, transparent 50%),
+                    linear-gradient(180deg, ${primaryColor} 0%, ${adjustBrightness(primaryColor, -20)} 100%)
+                `;
                 const isLight = isLightColor(primaryColor);
                 headerBg.style.color = isLight ? '#121212' : '#ffffff';
             }
@@ -1216,6 +1469,23 @@
             const b = parseInt(hex.slice(5, 7), 16);
             const brightness = (r * 299 + g * 587 + b * 114) / 1000;
             return brightness > 155;
+        }
+
+        function adjustBrightness(hex, percent) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            
+            const adjust = (c) => {
+                const adjusted = Math.round(c * (100 + percent) / 100);
+                return Math.min(255, Math.max(0, adjusted));
+            };
+            
+            const newR = adjust(r).toString(16).padStart(2, '0');
+            const newG = adjust(g).toString(16).padStart(2, '0');
+            const newB = adjust(b).toString(16).padStart(2, '0');
+            
+            return `#${newR}${newG}${newB}`;
         }
 
         // ==========================================
@@ -1860,14 +2130,277 @@ Bottom line: ${trendVal.startsWith('+') ? 'Green light. Invest.' : 'Red flag. Ac
 
             const a = document.createElement('a');
             a.href = url;
-            const filename = document.getElementById('custom-brand').value.toLowerCase().replace(/\s+/g, '-');
-            a.download = `${filename || 'atelier'}-portfolio.html`;
+            const brandName = document.getElementById('custom-brand').value.toLowerCase().replace(/\s+/g, '-');
+            a.download = `${brandName || 'portfolio'}.html`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
             showToast("Portfolio Exported ✓");
+        }
+
+        // ==========================================
+        // 3D TILT EFFECT (C4D Style)
+        // ==========================================
+        function initTiltEffect() {
+            const cards = document.querySelectorAll('[data-tilt]');
+            
+            cards.forEach(card => {
+                const inner = card.querySelector('.tilt-card-inner');
+                const shine = card.querySelector('.tilt-shine');
+                
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -8;
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    
+                    if (inner) {
+                        inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px) scale(1.02)`;
+                    }
+                    
+                    if (shine) {
+                        const shineX = (x / rect.width) * 100;
+                        const shineY = (y / rect.height) * 100;
+                        shine.style.background = `radial-gradient(circle at ${shineX}% ${shineY}%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)`;
+                    }
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    if (inner) {
+                        inner.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0) scale(1)';
+                    }
+                    if (shine) {
+                        shine.style.background = 'linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%)';
+                    }
+                });
+            });
+        }
+
+        // ==========================================
+        // 3D TILT EFFECT (C4D Style)
+        // ==========================================
+        function initTiltEffect() {
+            const cards = document.querySelectorAll('[data-tilt]');
+            cards.forEach(card => {
+                const inner = card.querySelector('.tilt-card-inner');
+                const shine = card.querySelector('.tilt-shine');
+                
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / centerY * -8;
+                    const rotateY = (x - centerX) / centerX * 8;
+                    
+                    if (inner) {
+                        inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px) scale(1.02)`;
+                    }
+                    
+                    if (shine) {
+                        const shineX = (x / rect.width) * 100;
+                        const shineY = (y / rect.height) * 100;
+                        shine.style.background = `radial-gradient(circle at ${shineX}% ${shineY}%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)`;
+                    }
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    if (inner) {
+                        inner.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0) scale(1)';
+                    }
+                    if (shine) {
+                        shine.style.background = 'linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%)';
+                    }
+                });
+            });
+        }
+
+        // ==========================================
+        // LUXURY CUSTOM CURSOR
+        // ==========================================
+        function initCustomCursor() {
+            const cursor = document.getElementById('custom-cursor');
+            const cursorDot = document.getElementById('custom-cursor-dot');
+            
+            if (!cursor || !cursorDot) return;
+            
+            // Skip on touch devices
+            if ('ontouchstart' in window) return;
+            
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+            let dotX = 0, dotY = 0;
+            
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+            
+            function animate() {
+                // Outer ring — smooth follow
+                cursorX += (mouseX - cursorX) * 0.15;
+                cursorY += (mouseY - cursorY) * 0.15;
+                cursor.style.left = cursorX + 'px';
+                cursor.style.top = cursorY + 'px';
+                
+                // Inner dot — tighter follow
+                dotX += (mouseX - dotX) * 0.35;
+                dotY += (mouseY - dotY) * 0.35;
+                cursorDot.style.left = dotX + 'px';
+                cursorDot.style.top = dotY + 'px';
+                
+                requestAnimationFrame(animate);
+            }
+            animate();
+            
+            // Hover effect on interactive elements
+            const hoverElements = document.querySelectorAll('a, button, input, textarea, select, [data-tilt], .product-card');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+            
+            // Click effect
+            document.addEventListener('mousedown', () => cursor.classList.add('click'));
+            document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+            
+            // Hide when leaving window
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+                cursorDot.style.opacity = '0';
+            });
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+                cursorDot.style.opacity = '1';
+            });
+        }
+
+        // ==========================================
+        // SCROLL PROGRESS BAR
+        // ==========================================
+        function initScrollProgress() {
+            const progressBar = document.getElementById('scroll-progress');
+            if (!progressBar) return;
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = (scrollTop / docHeight) * 100;
+                progressBar.style.width = progress + '%';
+            });
+        }
+
+        // ==========================================
+        // PARALLAX SCROLL EFFECT
+        // ==========================================
+        function initParallax() {
+            const heroSection = document.getElementById('theme-header-bg');
+            const heroHeadline = document.getElementById('hero-headline');
+            const heroSubhead = document.getElementById('hero-subhead');
+            const heroVisual = document.getElementById('hero-visual-container');
+            
+            if (!heroSection) return;
+            
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const heroHeight = heroSection.offsetHeight;
+                
+                if (scrollY < heroHeight + 200) {
+                    // Background parallax (slow)
+                    const bgOffset = scrollY * 0.3;
+                    heroSection.style.backgroundPositionY = bgOffset + 'px';
+                    
+                    // Headline parallax (medium)
+                    if (heroHeadline) {
+                        heroHeadline.style.transform = `translateY(${scrollY * 0.15}px)`;
+                        heroHeadline.style.opacity = Math.max(0, 1 - scrollY / 500);
+                    }
+                    
+                    // Subhead parallax (faster)
+                    if (heroSubhead) {
+                        heroSubhead.style.transform = `translateY(${scrollY * 0.25}px)`;
+                        heroSubhead.style.opacity = Math.max(0, 1 - scrollY / 400);
+                    }
+                    
+                    // Visual parallax (slowest, 3D depth)
+                    if (heroVisual) {
+                        heroVisual.style.transform = `translateY(${scrollY * 0.1}px) scale(${1 - scrollY * 0.0003})`;
+                    }
+                }
+            }, { passive: true });
+        }
+
+        // ==========================================
+        // NUMBER COUNTER ANIMATION
+        // ==========================================
+        function initNumberCounters() {
+            const counters = document.querySelectorAll('.metric-value');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.dataset.counted) {
+                        entry.target.dataset.counted = 'true';
+                        animateCounter(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        function animateCounter(element) {
+            const targetText = element.innerText;
+            const numericValue = parseFloat(targetText.replace(/[^0-9.]/g, ''));
+            const suffix = targetText.replace(/[0-9.]/g, '');
+            const prefix = targetText.match(/^[^0-9]*/)?.[0] || '';
+            
+            if (isNaN(numericValue) || numericValue === 0) return;
+            
+            const duration = 1500;
+            const startTime = performance.now();
+            const hasDecimal = targetText.includes('.');
+            const decimalPlaces = hasDecimal ? (targetText.split('.')[1]?.match(/\d/)?.length || 1) : 0;
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Ease out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                
+                const currentValue = numericValue * eased;
+                
+                let formatted;
+                if (numericValue >= 1000000) {
+                    formatted = (currentValue / 1000000).toFixed(1) + 'M';
+                } else if (numericValue >= 1000) {
+                    formatted = Math.floor(currentValue).toLocaleString();
+                } else if (hasDecimal) {
+                    formatted = currentValue.toFixed(decimalPlaces);
+                } else {
+                    formatted = Math.floor(currentValue).toString();
+                }
+                
+                element.innerText = prefix + formatted + suffix.replace(prefix, '');
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    element.innerText = targetText;
+                }
+            }
+            
+            requestAnimationFrame(update);
         }
 
         // ==========================================
@@ -1907,8 +2440,38 @@ Bottom line: ${trendVal.startsWith('+') ? 'Green light. Invest.' : 'Red flag. Ac
         // Also init on load for safety
         window.onload = function() {
             initRevealAnimations();
+            if (typeof initTiltEffect === 'function') {
+                initTiltEffect();
+            }
+            // Add glass effect to nav
+            const nav = document.querySelector('nav');
+            if (nav) nav.classList.add('glass-nav');
+            // Add luxury hero background
+            const heroHeader = document.getElementById('theme-header-bg');
+            if (heroHeader) {
+                heroHeader.classList.add('hero-luxury-bg', 'noise-overlay');
+            }
+            // Add metric card hover effects
+            document.querySelectorAll('.metric-card').forEach(card => {
+                card.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-4px)';
+                    this.style.boxShadow = '0 12px 30px rgba(139, 0, 0, 0.1)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '';
+                });
+            });
+            // Init new premium effects
+            if (typeof initCustomCursor === 'function') initCustomCursor();
+            if (typeof initScrollProgress === 'function') initScrollProgress();
+            if (typeof initParallax === 'function') initParallax();
+            if (typeof initNumberCounters === 'function') initNumberCounters();
         };
     </script>
 </body>
 </html>
 
+                  
+                       
