@@ -6,7 +6,7 @@
     <meta name="description" content="ATELIER — Bespoke Luxury Portfolio, Intelligent Database Connector & Executive Analytics Engine">
     <title>THE ATELIER | Luxury Portfolio, Database Connector & AI Engine</title>
 
-    <!-- Cross-Platform Optimized Font Loading (Win + Mac Render Consistency) -->
+    <!-- Cross-Platform Optimized Font Loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
@@ -21,7 +21,6 @@
             theme: {
                 extend: {
                     colors: {
-                        // Burberry Heritage Palette
                         heritageTan: '#B89A7B',
                         heritageCamel: '#C9A96E',
                         heritageCream: '#F5EDE0',
@@ -30,48 +29,12 @@
                         heritageCharcoal: '#2A2A2A',
                         heritageIvory: '#FDF8F2',
                         heritageStone: '#E8DFD0',
-                        // Signature Accents
-                        knightBlue: '#0038ff',
-                        electricYellow: '#d4ff00',
-                        luxuryDark: '#0a0a0a',
-                        luxuryGray: '#f5f5f7',
                         brightBase: '#FDF8F2',
                     },
                     fontFamily: {
-                        sans: ['Space Grotesk', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-                        syne: ['Syne', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-                        serif: ['Playfair Display', 'Georgia', 'Times New Roman', 'serif']
-                    },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 0.7s ease-out forwards',
-                        'fade-in': 'fadeIn 0.5s ease-out forwards',
-                        'slide-in-right': 'slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'pulse-soft': 'pulseSoft 2.5s ease-in-out infinite',
-                        'shimmer': 'shimmer 2s linear infinite',
-                        'count-up': 'countUp 1.2s ease-out forwards',
-                        'draw-line': 'drawLine 1.5s ease-out forwards',
-                    },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(24px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' }
-                        },
-                        slideInRight: {
-                            '0%': { transform: 'translateX(100%)' },
-                            '100%': { transform: 'translateX(0)' }
-                        },
-                        pulseSoft: {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '0.6' }
-                        },
-                        shimmer: {
-                            '0%': { backgroundPosition: '-200% 0' },
-                            '100%': { backgroundPosition: '200% 0' }
-                        }
+                        sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
+                        syne: ['Syne', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
                     }
                 }
             }
@@ -79,412 +42,48 @@
     </script>
 
     <style>
-        /* Cross-Platform Scrollbar Normalization */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FDF8F2;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #B89A7B;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #8B0000;
-        }
-        html {
-            scrollbar-width: thin;
-            scrollbar-color: #B89A7B #FDF8F2;
-        }
-
-        /* Burberry Signature Check Pattern (Subtle Background) */
-        .burberry-check-bg {
-            background-color: #C9A96E;
-            background-image:
-                linear-gradient(90deg, rgba(139,0,0,0.15) 1px, transparent 1px),
-                linear-gradient(rgba(18,18,18,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
-            background-size: 24px 24px, 24px 24px, 8px 8px;
-        }
-
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #FDF8F2; }
+        ::-webkit-scrollbar-thumb { background: #B89A7B; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8B0000; }
+        
         .burberry-check-subtle {
-            background-image:
-                linear-gradient(90deg, rgba(184,154,123,0.08) 1px, transparent 1px),
-                linear-gradient(rgba(184,154,123,0.08) 1px, transparent 1px);
+            background-image: linear-gradient(90deg, rgba(184,154,123,0.08) 1px, transparent 1px), linear-gradient(rgba(184,154,123,0.08) 1px, transparent 1px);
             background-size: 40px 40px;
         }
-
-        /* Luxury Text Gradient */
-        .text-luxury-gradient {
-            background: linear-gradient(135deg, #121212 0%, #B89A7B 50%, #121212 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* 3D Tilt Effect (C4D Style) */
-        .tilt-card {
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .tilt-card-inner {
-            transform-style: preserve-3d;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .tilt-card:hover .tilt-card-inner {
-            transform: translateZ(20px);
-        }
-        .tilt-shine {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                135deg,
-                rgba(255,255,255,0) 0%,
-                rgba(255,255,255,0.1) 50%,
-                rgba(255,255,255,0) 100%
-            );
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .tilt-card:hover .tilt-shine {
-            opacity: 1;
-        }
-
-        /* Luxury Gold Border Effect */
-        .gold-border {
-            position: relative;
-        }
-        .gold-border::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(135deg, #C9A96E, #8B0000, #C9A96E, #B89A7B);
-            background-size: 300% 300%;
-            z-index: -1;
-            animation: goldShimmer 4s ease infinite;
-        }
-        @keyframes goldShimmer {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        /* Glassmorphism Navigation */
         .glass-nav {
             background: rgba(253, 248, 242, 0.85) !important;
             backdrop-filter: blur(20px) saturate(180%) !important;
             -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
             border-bottom: 1px solid rgba(184, 154, 123, 0.3) !important;
-            box-shadow: 0 4px 30px rgba(139, 0, 0, 0.05);
         }
-
-        /* Luxury Button with Depth */
         .btn-luxury-premium {
-            position: relative;
             background: linear-gradient(180deg, #8B0000 0%, #6B0000 100%);
             border: 1px solid rgba(201, 169, 110, 0.5);
-            box-shadow: 
-                0 4px 15px rgba(139, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .btn-luxury-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 
-                0 8px 25px rgba(139, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-        }
-        .btn-luxury-premium:active {
-            transform: translateY(0);
-            box-shadow: 
-                0 2px 8px rgba(139, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        /* Hero Section Luxury Gradient */
-        .hero-luxury-bg {
-            background: 
-                radial-gradient(ellipse at top, rgba(201, 169, 110, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(139, 0, 0, 0.1) 0%, transparent 50%),
-                linear-gradient(180deg, #8B0000 0%, #6B0000 100%);
-        }
-
-        /* Card Luxury Shadow */
-        .shadow-luxury {
-            box-shadow: 
-                0 1px 2px rgba(18, 18, 18, 0.05),
-                0 4px 12px rgba(18, 18, 18, 0.08),
-                0 16px 40px rgba(18, 18, 18, 0.06);
-        }
-
-        /* Subtle Noise Texture for Premium Feel */
-        .noise-overlay {
-            position: relative;
-        }
-        .noise-overlay::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            pointer-events: none;
-            mix-blend-mode: overlay;
-        }
-
-        /* Animated Gradient Border */
-        .animated-border {
-            position: relative;
-            background: #FDF8F2;
-        }
-        .animated-border::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            padding: 2px;
-            background: linear-gradient(90deg, #C9A96E, #8B0000, #B89A7B, #C9A96E);
-            background-size: 300% 100%;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: borderFlow 8s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes borderFlow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 300% 50%; }
-        }
-
-        /* Metric Card Hover Lift */
-        .metric-card {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .metric-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(139, 0, 0, 0.1);
-        }
-
-        /* Improved Scroll Reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-        .reveal-delay-5 { transition-delay: 0.5s; }
-
-        /* Live Update Pulse */
-        @keyframes highlightPulse {
-            0% { box-shadow: 0 0 0 0 rgba(139, 0, 0, 0.4); }
-            70% { box-shadow: 0 0 0 8px rgba(139, 0, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(139, 0, 0, 0); }
-        }
-        .live-updating {
-            animation: highlightPulse 1.5s ease-out;
-        }
-
-        /* Shimmer Loading Effect */
-        .shimmer-effect {
-            background: linear-gradient(90deg, #f0ebe0 25%, #f8f4eb 50%, #f0ebe0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-
-        /* Custom Select Styling */
-        .custom-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23B89A7B' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            padding-right: 36px;
-        }
-
-        /* Tab Transition */
-        .tab-content {
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        /* Product Card Hover Lift */
-        .product-card {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .product-card:hover {
-            transform: translateY(-6px);
-        }
-
-        /* Button Luxury Press Effect */
-        .btn-luxury {
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .btn-luxury:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #121212 !important;
-        }
-
-        /* SVG Vector Smooth Transition */
-        #vector-model path,
-        #vector-model circle,
-        #vector-model line {
-            transition: fill 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                        stroke 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Number Counter Animation */
-        .metric-value {
-            transition: color 0.3s ease;
-        }
-
-        /* Custom Checkbox */
-        .custom-checkbox {
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border: 2px solid #B89A7B;
-            border-radius: 2px;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-        .custom-checkbox:checked {
-            background-color: #8B0000;
-            border-color: #8B0000;
-        }
-        .custom-checkbox:checked::after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 2px;
-            width: 4px;
-            height: 8px;
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-        }
-
-        /* Drawer Overlay */
-        .drawer-overlay {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .drawer-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Hero Parallax Subtle */
-        .hero-parallax {
-            will-change: transform;
-        }
-
-        /* Form Input Focus Luxury */
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: #8B0000 !important;
             box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.08);
         }
-
-        /* ============================================
-           LUXURY CUSTOM CURSOR
-           ============================================ */
+        .custom-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23B89A7B' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
         .custom-cursor {
-            width: 12px;
-            height: 12px;
-            border: 2px solid #C9A96E;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                        height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                        background-color 0.3s ease,
-                        border-color 0.3s ease,
-                        opacity 0.3s ease;
-            transform: translate(-50%, -50%);
-            mix-blend-mode: difference;
+            width: 12px; height: 12px; border: 2px solid #C9A96E; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
+            mix-blend-mode: difference; transition: width 0.2s, height 0.2s;
         }
         .custom-cursor-dot {
-            width: 4px;
-            height: 4px;
-            background: #C9A96E;
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.2s ease;
-        }
-        .custom-cursor.hover {
-            width: 40px;
-            height: 40px;
-            background: rgba(201, 169, 110, 0.1);
-            border-color: #8B0000;
-        }
-        .custom-cursor.click {
-            width: 20px;
-            height: 20px;
-            background: rgba(139, 0, 0, 0.3);
-        }
-        @media (hover: none) and (pointer: coarse) {
-            .custom-cursor, .custom-cursor-dot {
-                display: none;
-            }
-        }
-
-        /* ============================================
-           SCROLL PROGRESS BAR
-           ============================================ */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #C9A96E, #8B0000);
-            z-index: 9999;
-            transition: width 0.1s linear;
-        }
-
-        /* ============================================
-           TEXT SELECTION STYLE
-           ============================================ */
-        ::selection {
-            background: #8B0000;
-            color: #FDF8F2;
-        }
-        ::-moz-selection {
-            background: #8B0000;
-            color: #FDF8F2;
-        }
-
-        /* ============================================
-           SMOOTH SCROLL
-           ============================================ */
-        html {
-            scroll-behavior: smooth;
+            width: 4px; height: 4px; background: #C9A96E; border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
         }
     </style>
 </head>
-<body class="bg-brightBase font-sans text-heritageBlack overflow-x-hidden burberry-check-subtle">
-
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress" id="scroll-progress" style="width: 0%"></div>
+<body class="bg-brightBase font-sans text-heritageBlack overflow-x-hidden burberry-check-subtle pt-24">
 
     <!-- Custom Cursor -->
     <div class="custom-cursor" id="custom-cursor"></div>
@@ -494,27 +93,117 @@
     <nav class="fixed top-0 left-0 w-full glass-nav z-50">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
             <div class="logo">
-                <a href="#" onclick="switchTab('home')" class="text-2xl font-serif font-bold tracking-[0.15em] text-heritageBlack hover:text-heritageRed transition-colors duration-300">
+                <a href="#" class="text-2xl font-serif font-bold tracking-[0.15em] text-heritageBlack">
                     <span id="brand-logo-text">ATELIER</span>
                 </a>
             </div>
             <ul class="hidden md:flex items-center space-x-10">
-                <li><button onclick="switchTab('home')" class="nav-btn font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed transition-colors py-2 border-b border-transparent hover:border-heritageRed text-heritageRed border-heritageRed">Home</button></li>
-                <li><button onclick="switchTab('catalog')" class="nav-btn font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed transition-colors py-2 border-b border-transparent hover:border-heritageRed">Collection</button></li>
-                <li><button onclick="switchTab('analytics')" class="nav-btn font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed transition-colors py-2 border-b border-transparent hover:border-heritageRed">Intelligence</button></li>
-                <li><button onclick="switchTab('about')" class="nav-btn font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed transition-colors py-2 border-b border-transparent hover:border-heritageRed">Heritage</button></li>
-                <li><button onclick="switchTab('contact')" class="nav-btn font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed transition-colors py-2 border-b border-transparent hover:border-heritageRed">Atelier</button></li>
+                <li><button class="font-medium tracking-[0.15em] text-xs uppercase text-heritageRed border-b border-heritageRed py-2">Home</button></li>
+                <li><button class="font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed py-2">Collection</button></li>
+                <li><button class="font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed py-2">Intelligence</button></li>
+                <li><button class="font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed py-2">Heritage</button></li>
+                <li><button class="font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed py-2">Atelier</button></li>
             </ul>
-            <div class="flex items-center space-x-4">
-                <button id="customizer-nav-btn" onclick="toggleCustomizer()" class="btn-luxury-premium text-heritageCream font-bold text-xs uppercase tracking-[0.15em] py-3 px-6 hover:bg-heritageRed transition-all duration-300 rounded-sm">
+            <div>
+                <button onclick="toggleCustomizer()" class="btn-luxury-premium text-heritageCream font-bold text-xs uppercase tracking-[0.15em] py-3 px-6 rounded-sm">
                     Design Studio
                 </button>
             </div>
         </div>
     </nav>
 
+    <!-- Main Dashboard Section -->
+    <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            
+            <!-- Left Column: API Endpoint Connector -->
+            <div class="border-2 border-heritageBlack p-6 bg-white shadow-[4px_4px_0px_#121212]">
+                <p class="text-[10px] text-heritageTan uppercase tracking-[0.2em] font-bold mb-2">JOIN LIVE API ENDPOINT</p>
+                <div class="flex gap-2 mb-6">
+                    <input type="text" id="api-url" placeholder="https://api.yourdomain.com/v1/sales" class="flex-1 bg-heritageIvory border border-heritageStone p-2 text-xs font-mono">
+                    <button onclick="connectAPI()" id="api-btn" class="bg-heritageBlack text-white text-xs font-bold uppercase px-4 tracking-wider hover:bg-heritageRed transition-colors whitespace-nowrap">LINK</button>
+                </div>
+
+                <p class="text-[10px] text-heritageTan uppercase tracking-[0.2em] font-bold mb-3">QUICK SIMULATION PRESETS</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="applyPreset('E-COMMERCE')" class="bg-heritageBlack text-white text-[10px] font-bold uppercase tracking-widest py-3 hover:bg-heritageRed transition-colors">E-COMMERCE</button>
+                    <button onclick="applyPreset('SAAS GROWTH')" class="bg-heritageBlack text-white text-[10px] font-bold uppercase tracking-widest py-3 hover:bg-heritageRed transition-colors">SAAS GROWTH</button>
+                    <button onclick="applyPreset('FASHION SALES')" class="bg-heritageBlack text-white text-[10px] font-bold uppercase tracking-widest py-3 hover:bg-heritageRed transition-colors">FASHION SALES</button>
+                    <button onclick="applyPreset('INVENTORY')" class="bg-heritageBlack text-white text-[10px] font-bold uppercase tracking-widest py-3 hover:bg-heritageRed transition-colors">INVENTORY</button>
+                </div>
+            </div>
+
+            <!-- Middle Column: Metrics Grid Matrix -->
+            <div class="border-2 border-heritageBlack p-6 bg-white shadow-[4px_4px_0px_#121212] space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
+                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">TOTAL</p>
+                        <p class="text-xl font-serif font-bold mt-1" id="m-total">$786,100</p>
+                    </div>
+                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
+                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">AVERAGE</p>
+                        <p class="text-xl font-serif font-bold mt-1" id="m-average">$112,300</p>
+                    </div>
+                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
+                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">RECORDS</p>
+                        <p class="text-xl font-serif font-bold mt-1" id="m-records">7</p>
+                    </div>
+                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
+                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">TREND</p>
+                        <p class="text-xl font-serif font-bold mt-1 text-heritageRed" id="m-trend">-12.5%</p>
+                    </div>
+                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
+                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">PEAK</p>
+                        <p class="text-xl font-serif font-bold mt-1" id="m-peak">$156,000</p>
+                    </div>
+                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
+                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">MEDIAN</p>
+                        <p class="text-xl font-serif font-bold mt-1" id="m-median">$112,000</p>
+                    </div>
+                </div>
+                <div class="pt-2 border-t border-heritageStone flex justify-between items-center text-[10px] font-bold tracking-wider">
+                    <span id="api-status" class="text-emerald-700 uppercase">STATUS: SYSTEM READY — NO LIVE LINK DETECTED</span>
+                </div>
+            </div>
+
+            <!-- Right Column: AI Analysis Engine -->
+            <div class="border-2 border-heritageBlack p-6 bg-white shadow-[4px_4px_0px_#121212] flex flex-col justify-between min-h-[250px]">
+                <div>
+                    <p class="text-[10px] text-heritageTan uppercase tracking-[0.2em] font-bold mb-3">AI EXECUTIVE ANALYSIS</p>
+                    <select id="ai-tone" class="w-full bg-heritageIvory border border-heritageStone p-3 text-xs uppercase font-bold tracking-wider mb-4 custom-select cursor-pointer">
+                        <option value="luxury">Luxury Brand Tone</option>
+                        <option value="avant-garde">Avant-Garde Style</option>
+                        <option value="minimalist">Minimalist Modern</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <div id="ai-output" class="mb-4 p-3 bg-heritageIvory text-xs leading-relaxed border border-dashed border-heritageTan hidden max-h-32 overflow-y-auto"></div>
+                    <button onclick="triggerAIAnalysis()" id="ai-btn" class="w-full bg-heritageRed text-white p-3 text-xs font-bold uppercase tracking-widest hover:bg-heritageBlack transition-colors">
+                        GENERATE ANALYSIS
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Chart Visualization Section -->
+        <div class="border-2 border-heritageBlack p-6 bg-white shadow-[4px_4px_0px_#121212]">
+            <div class="flex justify-between items-center mb-6">
+                <span class="bg-heritageBlack text-white text-[10px] uppercase tracking-widest px-3 py-1 font-bold">DATA VISUALIZATION</span>
+                <div class="flex space-x-1">
+                    <button onclick="changeChartType('bar')" class="border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-heritageRed text-white transition-all" id="btn-bar">BAR</button>
+                    <button onclick="changeChartType('line')" class="border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-white text-heritageBlack hover:bg-heritageCream transition-all" id="btn-line">LINE</button>
+                    <button onclick="changeChartType('doughnut')" class="border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-white text-heritageBlack hover:bg-heritageCream transition-all" id="btn-doughnut">DONUT</button>
+                </div>
+            </div>
+            <div class="h-80 w-full relative">
+                <canvas id="atelierChart"></canvas>
+            </div>
+        </div>
+    </main>
+
     <!-- Drawer Overlay -->
-    <div id="drawer-overlay" class="drawer-overlay fixed inset-0 bg-black/40 z-40" onclick="toggleCustomizer()"></div>
+    <div id="drawer-overlay" class="fixed inset-0 bg-black/40 z-40 hidden" onclick="toggleCustomizer()"></div>
 
     <!-- Customizer Drawer -->
     <div id="customizer-drawer" class="fixed top-0 right-0 h-full w-full max-w-lg bg-heritageBlack text-white z-50 border-l border-heritageCharcoal shadow-2xl transform translate-x-full transition-transform duration-500 flex flex-col">
@@ -526,1952 +215,351 @@
             <button onclick="toggleCustomizer()" class="text-heritageCream hover:text-heritageRed text-2xl font-light transition-colors">&times;</button>
         </div>
 
-        <div class="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
-
-            <!-- Brand Identity -->
-            <div class="reveal">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Global Identity</p>
+        <div class="flex-1 overflow-y-auto p-6 space-y-6">
+            <!-- Identity Section -->
+            <div>
                 <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Brand Title</label>
-                <input type="text" id="custom-brand" value="ATELIER" oninput="updateBrandName(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-heritageCream focus:border-heritageRed outline-none font-serif text-lg tracking-wider">
+                <input type="text" id="custom-brand" value="ATELIER" oninput="document.getElementById('brand-logo-text').innerText = this.value" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-heritageCream focus:border-heritageRed font-serif text-lg tracking-wider">
+            </div>
+            
+            <!-- Manual Overrides -->
+            <div>
+                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Total Metrics Manual Value</label>
+                <input type="text" id="custom-total" value="$786,100" oninput="document.getElementById('m-total').innerText = this.value" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-white text-sm font-mono">
             </div>
 
-            <hr class="border-heritageCharcoal">
-
-            <!-- Homepage Stats -->
-            <div class="reveal reveal-delay-1">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Homepage Stats</p>
+            <!-- 🔥 NEW FEATURE: NO-CODE FIELD MAPPING ENGINE PANEL -->
+            <div class="pt-4 border-t border-heritageCharcoal space-y-3">
+                <p class="text-[10px] text-heritageTan uppercase tracking-[0.2em] font-bold">🔌 NO-CODE API FIELD MAPPING</p>
+                <p class="text-[11px] text-zinc-400 leading-relaxed">不必修改原始碼。請在下方輸入您的 API JSON 回傳物件的欄位路徑（支援點擊巢狀結構，例如 <span class="text-heritageCamel font-mono">result.summary.total_revenue</span>）：</p>
+                
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Bespoke Pieces</label>
-                        <input type="text" id="stat-pieces" value="12+" oninput="updateStat('pieces', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm font-serif">
+                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Total (總額)</label>
+                        <input type="text" id="map-total" value="total" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
                     </div>
                     <div>
-                        <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Global Clients</label>
-                        <input type="text" id="stat-clients" value="500+" oninput="updateStat('clients', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm font-serif">
+                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Average (平均)</label>
+                        <input type="text" id="map-average" value="average" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
                     </div>
                     <div>
-                        <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Data Points</label>
-                        <input type="text" id="stat-data" value="2.4M" oninput="updateStat('data', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm font-serif">
+                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Records (筆數)</label>
+                        <input type="text" id="map-records" value="records" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
                     </div>
                     <div>
-                        <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Accuracy</label>
-                        <input type="text" id="stat-accuracy" value="99.7%" oninput="updateStat('accuracy', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm font-serif">
+                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Trend (趨勢%)</label>
+                        <input type="text" id="map-trend" value="trend" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Peak (峰值)</label>
+                        <input type="text" id="map-peak" value="peak" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Median (中位數)</label>
+                        <input type="text" id="map-median" value="median" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
                     </div>
                 </div>
-            </div>
-
-            <hr class="border-heritageCharcoal">
-
-            <!-- Color Palette -->
-            <div class="reveal reveal-delay-1">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Editorial Palette</p>
-                <div class="grid grid-cols-2 gap-3 mb-4">
-                    <button onclick="setTheme('heritage', '#8B0000', '#B89A7B')" class="p-3 text-[10px] uppercase font-bold tracking-[0.15em] border border-white/20 bg-heritageRed text-white hover:border-heritageCream transition-all">Heritage Red</button>
-                    <button onclick="setTheme('camel', '#C9A96E', '#121212')" class="p-3 text-[10px] uppercase font-bold tracking-[0.15em] border border-zinc-700 bg-heritageCamel text-heritageBlack hover:border-white transition-all">Camel Gold</button>
-                    <button onclick="setTheme('knightBlue', '#0038ff', '#d4ff00')" class="p-3 text-[10px] uppercase font-bold tracking-[0.15em] border border-zinc-700 bg-knightBlue text-white hover:border-white transition-all">Knight Blue</button>
-                    <button onclick="setTheme('noir', '#121212', '#B89A7B')" class="p-3 text-[10px] uppercase font-bold tracking-[0.15em] border border-zinc-700 bg-black text-white hover:border-white transition-all">Pure Noir</button>
-                </div>
-                <div class="flex items-center gap-3">
-                    <label class="text-[10px] text-zinc-400 uppercase tracking-widest font-medium">Custom:</label>
-                    <input type="color" id="custom-primary-color" value="#8B0000" onchange="applyCustomColor()" class="w-10 h-8 bg-transparent border border-zinc-700 cursor-pointer">
-                    <input type="color" id="custom-secondary-color" value="#B89A7B" onchange="applyCustomColor()" class="w-10 h-8 bg-transparent border border-zinc-700 cursor-pointer">
-                    <button onclick="applyCustomColor()" class="text-[10px] text-heritageTan hover:text-heritageCream uppercase tracking-widest font-medium">Apply</button>
+                <div class="pt-1">
+                    <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Chart Data Array Path (圖表陣列路徑)</label>
+                    <input type="text" id="map-chart" value="chartData" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
                 </div>
             </div>
 
-            <hr class="border-heritageCharcoal">
-
-            <!-- Hero Customization -->
-            <div class="reveal reveal-delay-2">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Hero Showcase</p>
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Main Headline</label>
-                <input type="text" id="custom-headline" value="The Heritage Collection" oninput="updateHeadline(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-white focus:border-heritageRed outline-none mb-3 font-serif">
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Sub-Headline</label>
-                <input type="text" id="custom-subhead" value="Bespoke luxury engineered with algorithmic precision." oninput="updateSubhead(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-white focus:border-heritageRed outline-none text-sm mb-4">
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Signature Product Image</label>
-                <div class="flex items-center gap-3 mb-2">
-                    <div class="w-14 h-14 border border-zinc-700 bg-zinc-900 flex items-center justify-center overflow-hidden flex-shrink-0">
-                        <span id="hero-img-thumb" class="text-zinc-600 text-[9px] uppercase tracking-widest text-center leading-tight">SVG<br>Model</span>
-                    </div>
-                    <div class="flex flex-col gap-1.5 flex-1">
-                        <input type="file" id="hero-product-img" accept="image/*" class="hidden" onchange="handleHeroImageUpload(this)">
-                        <button onclick="document.getElementById('hero-product-img').click()" id="hero-img-btn" class="text-[9px] text-heritageCream hover:text-heritageRed uppercase tracking-widest font-bold border border-zinc-700 px-3 py-1.5 hover:border-heritageRed transition-colors text-left w-full">
-                            Upload Image
-                        </button>
-                        <button onclick="removeHeroImage()" id="hero-img-remove-btn" class="text-[9px] text-zinc-500 hover:text-red-500 uppercase tracking-widest font-bold hidden">Remove & Use SVG</button>
-                    </div>
-                </div>
-                <p class="text-[9px] text-zinc-500 leading-relaxed">Replaces the SVG trench silhouette on the homepage with your own product photo.</p>
-            </div>
-
-            <hr class="border-heritageCharcoal">
-
-            <!-- Products Configuration (Dynamic) -->
-            <div class="reveal reveal-delay-3">
-                <div class="flex justify-between items-center mb-4">
-                    <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] font-medium">— Product Portfolio</p>
-                    <button onclick="addProduct()" class="text-[10px] text-heritageCream hover:text-heritageRed uppercase tracking-widest font-bold border border-zinc-700 px-2 py-1 hover:border-heritageRed transition-colors">+ Add</button>
-                </div>
-                <div id="product-configs" class="space-y-4">
-                    <!-- Dynamic product configs injected here -->
-                </div>
-            </div>
-
-            <hr class="border-heritageCharcoal">
-
-            <!-- Analytics Configuration -->
-            <div class="reveal reveal-delay-3">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Analytics Preferences</p>
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Default Chart Type</label>
-                <select id="chart-type-select" onchange="updateChartType()" class="w-full bg-heritageCharcoal border border-zinc-700 p-2.5 text-white text-sm outline-none custom-select mb-3">
-                    <option value="bar">Bar Chart</option>
-                    <option value="line">Line Chart</option>
-                    <option value="doughnut">Doughnut</option>
-                </select>
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Currency Symbol</label>
-                <input type="text" id="currency-symbol" value="$" oninput="updateCurrency(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2.5 text-white outline-none text-sm" maxlength="3">
-            </div>
-
-            <hr class="border-heritageCharcoal">
-
-            <!-- About / Bio -->
-            <div class="reveal reveal-delay-4">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Brand Philosophy</p>
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Philosophy Tagline</label>
-                <input type="text" id="custom-tagline" value="Where sartorial heritage meets algorithmic precision." oninput="updateTagline(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2.5 text-white focus:border-heritageRed outline-none text-sm mb-3 font-serif italic">
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Heritage Statement</label>
-                <textarea id="custom-bio" rows="4" oninput="updateBio(this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-white focus:border-heritageRed outline-none text-sm leading-relaxed">Crafted at the intersection of sartorial heritage and digital innovation, our atelier delivers bespoke excellence through algorithmic precision and artisanal mastery.</textarea>
-            </div>
-
-            <hr class="border-heritageCharcoal">
-
-            <!-- Database API -->
-            <div class="reveal reveal-delay-4">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.25em] mb-4 font-medium">— Live Database API</p>
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">JSON Endpoint URL</label>
-                <input type="text" id="custom-db-api" placeholder="https://api.yourbrand.com/v1/metrics" class="w-full bg-heritageCharcoal border border-zinc-700 p-2.5 text-white focus:border-heritageRed outline-none mb-3 text-xs font-mono">
-                <button onclick="connectCustomAPI()" class="w-full bg-heritageCharcoal text-heritageTan font-bold text-[10px] uppercase tracking-[0.2em] py-2.5 border border-zinc-700 hover:bg-zinc-800 hover:text-heritageCream transition-colors">
-                    Establish Connection
+            <!-- Export Actions -->
+            <div class="pt-4 border-t border-heritageCharcoal">
+                <p class="text-[10px] text-heritageTan uppercase tracking-widest mb-2">👉 NO MORE LONG URLs</p>
+                <p class="text-[11px] text-zinc-400 mb-4 leading-relaxed">直接將映射設定打包進全新的獨立 HTML 中，客戶雙擊即可直接對接指定 API。</p>
+                <button onclick="exportBespokeHTML()" class="w-full bg-heritageCream text-heritageBlack border-2 border-heritageBlack py-4 font-bold uppercase tracking-widest text-xs hover:bg-heritageRed hover:text-white transition-all">
+                    Export Standalone HTML
                 </button>
             </div>
         </div>
-
-        <div class="p-6 border-t border-heritageCharcoal bg-black flex flex-col gap-3">
-            <button onclick="downloadPortfolio()" class="w-full bg-heritageRed text-white font-bold text-xs uppercase tracking-[0.2em] py-4 border border-transparent hover:border-heritageCream transition-all hover:bg-red-900">
-                Export Portfolio
-            </button>
-            <p class="text-[9px] text-zinc-500 text-center leading-relaxed">Generates a standalone HTML file with embedded data snapshot and custom configurations.</p>
-        </div>
     </div>
 
-    <!-- HOME TAB -->
-    <div id="tab-home" class="tab-content pt-20">
-        <!-- Hero Section -->
-        <header id="theme-header-bg" class="hero-luxury-bg text-white border-b-4 border-heritageBlack transition-all duration-700 relative overflow-hidden noise-overlay">
-            <!-- Subtle Check Pattern Overlay -->
-            <div class="absolute inset-0 opacity-5 burberry-check-bg"></div>
-            <!-- Decorative Gold Lines -->
-            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-heritageCamel to-transparent opacity-40"></div>
-            <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-heritageCamel to-transparent opacity-40"></div>
-            <div class="max-w-7xl mx-auto px-6 py-28 md:py-40 text-center relative z-10">
-                <div class="inline-block border border-white/40 px-5 py-1.5 mb-8 text-[10px] tracking-[0.3em] uppercase font-medium reveal" id="badge-top-tag">
-                    Autumn / Winter 2026
-                </div>
-                <h1 id="hero-headline" class="font-serif font-bold text-5xl md:text-8xl tracking-tight leading-none mb-6 reveal reveal-delay-1">
-                    The Heritage Collection
-                </h1>
-                <p id="hero-subhead" class="max-w-2xl mx-auto text-base md:text-lg font-light tracking-wide opacity-90 reveal reveal-delay-2" style="color: var(--theme-secondary-color, #F5EDE0);">
-                    Bespoke luxury engineered with algorithmic precision.
-                </p>
-                <div class="mt-12 flex flex-wrap justify-center gap-6 reveal reveal-delay-3">
-                    <button onclick="switchTab('catalog')" id="cta-button-1" class="btn-luxury-premium text-white font-bold text-xs uppercase tracking-[0.2em] py-4 px-10 transition-all duration-300 rounded-sm">
-                        Explore Collection
-                    </button>
-                    <button onclick="switchTab('analytics')" class="btn-luxury bg-transparent text-white hover:bg-white hover:text-heritageBlack border border-white/60 font-bold text-xs uppercase tracking-[0.2em] py-4 px-10 transition-all duration-300 rounded-sm">
-                        Intelligence Hub
-                    </button>
-                </div>
-            </div>
-            <!-- Decorative Bottom Line -->
-            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-heritageTan to-transparent opacity-50"></div>
-        </header>
-
-        <!-- Interactive Configurator Section -->
-        <section class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div class="space-y-6 reveal">
-                <div class="inline-block bg-heritageRed text-white text-[10px] font-bold uppercase tracking-[0.25em] px-4 py-1.5" id="section-badge-1">
-                    Atelier Configurator
-                </div>
-                <h2 class="font-serif font-bold text-3xl md:text-5xl tracking-tight leading-tight">Interactive Silhouette<br><span class="text-heritageRed">Sandbox</span></h2>
-                <p class="text-heritageCharcoal leading-relaxed text-lg">
-                    Witness your curated palette come alive on our signature architectural silhouette. Adjust colorways in the Design Workspace to see immediate, fluid translations across all vector assets.
-                </p>
-                <div class="pt-4">
-                    <button onclick="toggleCustomizer()" class="btn-luxury bg-heritageBlack text-white hover:bg-heritageRed font-bold text-xs uppercase tracking-[0.2em] py-4 px-8 border border-heritageBlack transition-all duration-300 shadow-[4px_4px_0px_#B89A7B]">
-                        Open Design Studio
-                    </button>
-                </div>
-            </div>
-
-            <!-- Canvas Box -->
-            <div class="border-2 border-heritageBlack p-10 flex flex-col items-center justify-center bg-heritageCream relative shadow-[8px_8px_0px_#121212] reveal reveal-delay-2">
-                <div class="absolute top-4 left-4 bg-heritageBlack text-heritageCream text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1">Interactive Canvas</div>
-                <div class="absolute top-4 right-4 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse-soft"></span>
-                    <span class="text-[9px] text-heritageCharcoal uppercase tracking-widest font-medium">Live</span>
-                </div>
-
-                <div id="hero-visual-container" class="w-72 h-72 md:w-80 md:h-80 flex items-center justify-center overflow-hidden">
-                    <svg id="vector-model" class="w-full h-full" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Trench Coat Body -->
-                        <path d="M45 28 L155 28 L175 185 L25 185 Z" id="svg-body" fill="#8B0000" stroke="#121212" stroke-width="3" />
-                        <!-- Lapel Collar -->
-                        <path d="M45 28 L100 85 L155 28 L100 48 Z" id="svg-collar" fill="#B89A7B" stroke="#121212" stroke-width="2.5" />
-                        <!-- Belt -->
-                        <rect x="35" y="110" width="130" height="8" fill="#121212" opacity="0.3" />
-                        <!-- Signature Crest -->
-                        <circle cx="100" cy="140" r="16" id="svg-accent" fill="#121212" stroke="#F5EDE0" stroke-width="2" />
-                        <path d="M100 128 L100 152 M88 140 L112 140" stroke="#F5EDE0" stroke-width="1.5" />
-                        <!-- Shoulder Epaulets -->
-                        <path d="M45 28 L35 38 L55 42 Z" fill="#121212" opacity="0.2" />
-                        <path d="M155 28 L165 38 L145 42 Z" fill="#121212" opacity="0.2" />
-                    </svg>
-                    <img id="hero-product-image-display" class="w-full h-full object-cover hidden" alt="Signature Product">
-                </div>
-
-                <p class="text-xs uppercase tracking-[0.2em] font-medium text-heritageCharcoal mt-8 text-center">
-                    Signature Trench — Color Blueprint
-                </p>
-                <div class="flex gap-3 mt-4">
-                    <div class="w-4 h-4 rounded-full border border-heritageBlack" id="swatch-primary" style="background-color: #8B0000;"></div>
-                    <div class="w-4 h-4 rounded-full border border-heritageBlack" id="swatch-secondary" style="background-color: #B89A7B;"></div>
-                    <span class="text-[10px] text-heritageCharcoal uppercase tracking-widest">Active Palette</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Feature Strip -->
-        <section class="bg-heritageCream border-y border-heritageStone py-16">
-            <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
-                <div class="text-center reveal metric-card p-6 rounded-lg bg-heritageIvory/50 border border-heritageStone/50">
-                    <div class="font-serif text-3xl md:text-4xl font-bold text-heritageRed mb-2 metric-value" id="stat-products">12+</div>
-                    <p class="text-[10px] uppercase tracking-[0.2em] text-heritageCharcoal font-medium">Bespoke Pieces</p>
-                </div>
-                <div class="text-center reveal reveal-delay-1 metric-card p-6 rounded-lg bg-heritageIvory/50 border border-heritageStone/50">
-                    <div class="font-serif text-3xl md:text-4xl font-bold text-heritageRed mb-2 metric-value" id="stat-clients">500+</div>
-                    <p class="text-[10px] uppercase tracking-[0.2em] text-heritageCharcoal font-medium">Global Clients</p>
-                </div>
-                <div class="text-center reveal reveal-delay-2 metric-card p-6 rounded-lg bg-heritageIvory/50 border border-heritageStone/50">
-                    <div class="font-serif text-3xl md:text-4xl font-bold text-heritageRed mb-2 metric-value" id="stat-data">2.4M</div>
-                    <p class="text-[10px] uppercase tracking-[0.2em] text-heritageCharcoal font-medium">Data Points Analyzed</p>
-                </div>
-                <div class="text-center reveal reveal-delay-3 metric-card p-6 rounded-lg bg-heritageIvory/50 border border-heritageStone/50">
-                    <div class="font-serif text-3xl md:text-4xl font-bold text-heritageRed mb-2 metric-value" id="stat-accuracy">99.7%</div>
-                    <p class="text-[10px] uppercase tracking-[0.2em] text-heritageCharcoal font-medium">Predictive Accuracy</p>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- CATALOG TAB -->
-    <div id="tab-catalog" class="tab-content hidden pt-32">
-        <div class="max-w-7xl mx-auto px-6 pb-24">
-            <div class="text-center mb-16 reveal">
-                <p class="text-[10px] text-heritageRed uppercase tracking-[0.3em] font-bold mb-4">— The Runway —</p>
-                <h1 class="font-serif font-bold text-4xl md:text-6xl tracking-tight mb-4">Curated Collection</h1>
-                <p class="text-heritageCharcoal uppercase tracking-[0.15em] text-xs font-medium max-w-xl mx-auto">Each piece fully customizable — set your pricing, payment routes, and product narrative</p>
-            </div>
-
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Dynamic product cards injected here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- ANALYTICS TAB -->
-    <div id="tab-analytics" class="tab-content hidden pt-32">
-        <div class="max-w-7xl mx-auto px-6 pb-24">
-            <div class="text-center mb-12 reveal">
-                <p class="text-[10px] text-heritageRed uppercase tracking-[0.3em] font-bold mb-4">— Intelligence Suite —</p>
-                <h1 class="font-serif font-bold text-4xl md:text-6xl tracking-tight mb-4">Analytics & Data</h1>
-                <p class="text-heritageCharcoal uppercase tracking-[0.15em] text-xs font-medium">Connect any database. Select your metrics. Get executive insights instantly.</p>
-            </div>
-
-            <!-- Control Panel -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-
-                <!-- Data Source Panel -->
-                <div class="border-2 border-heritageBlack bg-heritageIvory p-6 shadow-[6px_6px_0px_#121212] flex flex-col justify-between h-full reveal">
-                    <div>
-                        <h3 class="font-serif font-bold text-lg tracking-wide mb-2 text-heritageRed">01 — Connect Data</h3>
-                        <p class="text-heritageCharcoal text-xs mb-5 leading-relaxed">Link any enterprise data source. CSV upload or live JSON API. Your data, your rules.</p>
-
-                        <!-- CSV Upload -->
-                        <div class="mb-4">
-                            <label class="block text-[9px] uppercase tracking-[0.2em] font-bold text-heritageCharcoal mb-2">Upload CSV</label>
-                            <input type="file" id="db-csv-file" accept=".csv" class="hidden" onchange="handleCSVUpload(this)">
-                            <button onclick="document.getElementById('db-csv-file').click()" class="w-full bg-heritageCream text-heritageBlack border border-heritageBlack hover:bg-heritageStone transition-colors py-2.5 text-[10px] uppercase font-bold tracking-[0.15em] flex items-center justify-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                                Upload File
-                            </button>
-                        </div>
-
-                        <!-- API Input -->
-                        <div class="mb-4">
-                            <label class="block text-[9px] uppercase tracking-[0.2em] font-bold text-heritageCharcoal mb-2">JSON API Endpoint</label>
-                            <div class="flex gap-2">
-                                <input type="text" id="analytics-db-api" placeholder="https://..." class="flex-1 text-xs border border-heritageBlack p-2.5 outline-none bg-white">
-                                <button onclick="triggerAPILoad()" class="bg-heritageBlack text-white px-4 text-[10px] font-bold uppercase tracking-widest hover:bg-heritageRed transition-colors">Link</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Presets -->
-                    <div class="border-t border-heritageStone pt-4 mt-4">
-                        <span class="block text-[9px] uppercase tracking-[0.2em] font-bold text-heritageTan mb-3">Quick Presets</span>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button onclick="loadMockDataset('ecommerce')" class="bg-heritageBlack text-white hover:bg-heritageRed transition-colors py-2 px-3 text-[9px] uppercase font-bold tracking-[0.15em]">E-Commerce</button>
-                            <button onclick="loadMockDataset('saas')" class="bg-heritageBlack text-white hover:bg-heritageRed transition-colors py-2 px-3 text-[9px] uppercase font-bold tracking-[0.15em]">SaaS Growth</button>
-                            <button onclick="loadMockDataset('fashion')" class="bg-heritageBlack text-white hover:bg-heritageRed transition-colors py-2 px-3 text-[9px] uppercase font-bold tracking-[0.15em]">Fashion Sales</button>
-                            <button onclick="loadMockDataset('inventory')" class="bg-heritageBlack text-white hover:bg-heritageRed transition-colors py-2 px-3 text-[9px] uppercase font-bold tracking-[0.15em]">Inventory</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Metrics Panel -->
-                <div class="border-2 border-heritageBlack bg-heritageIvory p-6 shadow-[6px_6px_0px_#121212] flex flex-col justify-between h-full reveal reveal-delay-1">
-                    <div>
-                        <h3 class="font-serif font-bold text-lg tracking-wide mb-2 text-heritageRed">02 — Live Metrics</h3>
-                        <p class="text-heritageCharcoal text-xs mb-5 leading-relaxed">Auto-calculated KPIs based on your selected data column.</p>
-
-                        <!-- Metric Field Selector -->
-                        <div class="mb-4">
-                            <label class="block text-[9px] uppercase tracking-[0.2em] font-bold text-heritageCharcoal mb-2">Analyze Column</label>
-                            <select id="metric-column-select" onchange="recalculateMetrics()" class="w-full bg-white border border-heritageBlack p-2 text-xs outline-none custom-select">
-                                <option value="">Load data first...</option>
-                            </select>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <div class="border border-heritageStone p-3 bg-heritageCream">
-                                <span class="block text-[8px] text-heritageTan font-bold uppercase tracking-[0.15em]">Total</span>
-                                <span id="data-metric-gross" class="font-serif font-bold text-xl tracking-tight block mt-1">$0</span>
-                            </div>
-                            <div class="border border-heritageStone p-3 bg-heritageCream">
-                                <span class="block text-[8px] text-heritageTan font-bold uppercase tracking-[0.15em]">Average</span>
-                                <span id="data-metric-avg" class="font-serif font-bold text-xl tracking-tight block mt-1">0</span>
-                            </div>
-                            <div class="border border-heritageStone p-3 bg-heritageCream">
-                                <span class="block text-[8px] text-heritageTan font-bold uppercase tracking-[0.15em]">Records</span>
-                                <span id="data-metric-count" class="font-serif font-bold text-xl tracking-tight block mt-1">0</span>
-                            </div>
-                            <div class="border border-heritageStone p-3 bg-heritageCream">
-                                <span class="block text-[8px] text-heritageTan font-bold uppercase tracking-[0.15em]">Trend</span>
-                                <span id="data-metric-trend" class="font-serif font-bold text-xl tracking-tight block mt-1 text-green-700">—</span>
-                            </div>
-                            <div class="border border-heritageStone p-3 bg-heritageCream">
-                                <span class="block text-[8px] text-heritageTan font-bold uppercase tracking-[0.15em]">Peak</span>
-                                <span id="data-metric-max" class="font-serif font-bold text-xl tracking-tight block mt-1">0</span>
-                            </div>
-                            <div class="border border-heritageStone p-3 bg-heritageCream">
-                                <span class="block text-[8px] text-heritageTan font-bold uppercase tracking-[0.15em]">Median</span>
-                                <span id="data-metric-median" class="font-serif font-bold text-xl tracking-tight block mt-1">0</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text-[9px] text-heritageCharcoal font-bold uppercase tracking-[0.15em] border-t border-heritageStone pt-3 mt-4">
-                        Status: <span id="db-status-badge" class="text-heritageRed">Awaiting Data</span>
-                    </div>
-                </div>
-
-                <!-- AI Analysis Panel -->
-                <div class="border-2 border-heritageBlack bg-heritageIvory p-6 shadow-[6px_6px_0px_#121212] flex flex-col justify-between h-full reveal reveal-delay-2">
-                    <div>
-                        <h3 class="font-serif font-bold text-lg tracking-wide mb-2 text-heritageRed">03 — AI Insight</h3>
-                        <p class="text-heritageCharcoal text-xs mb-4 leading-relaxed">Executive-grade analysis generated from your active dataset.</p>
-
-                        <div id="ai-insight-output" class="bg-heritageBlack text-heritageCream p-4 font-mono text-[10px] leading-relaxed h-36 overflow-y-auto border border-heritageCharcoal rounded-sm">
-                            <span class="text-heritageTan">SYSTEM:</span> Connect a dataset and select a metric column to generate executive analysis...
-                        </div>
-                    </div>
-
-                    <div class="mt-4 space-y-2">
-                        <div class="flex gap-2">
-                            <select id="ai-tone-select" class="flex-1 bg-white border border-heritageBlack p-2 text-[10px] outline-none custom-select uppercase tracking-widest font-bold">
-                                <option value="luxury">Luxury Brand Tone</option>
-                                <option value="mckinsey">McKinsey Style</option>
-                                <option value="direct">Direct & Punchy</option>
-                            </select>
-                        </div>
-                        <button onclick="triggerAIAnalysis()" id="run-ai-btn" class="w-full bg-heritageRed text-white hover:bg-red-900 transition-all py-3 text-[10px] font-bold uppercase tracking-[0.2em] border border-heritageBlack">
-                            Generate Analysis
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chart Area -->
-            <div class="border-2 border-heritageBlack bg-heritageIvory p-8 shadow-[8px_8px_0px_#121212] relative mb-12 reveal">
-                <div class="absolute top-4 left-4 bg-heritageBlack text-heritageCream text-[9px] font-bold uppercase tracking-[0.2em] px-3 py-1">Data Visualization</div>
-                <div class="absolute top-4 right-4 flex gap-2">
-                    <button onclick="setChartType('bar')" class="chart-type-btn text-[9px] uppercase tracking-widest font-bold px-3 py-1 border border-heritageBlack bg-heritageRed text-white" data-type="bar">Bar</button>
-                    <button onclick="setChartType('line')" class="chart-type-btn text-[9px] uppercase tracking-widest font-bold px-3 py-1 border border-heritageBlack bg-heritageCream text-heritageBlack hover:bg-heritageStone" data-type="line">Line</button>
-                    <button onclick="setChartType('doughnut')" class="chart-type-btn text-[9px] uppercase tracking-widest font-bold px-3 py-1 border border-heritageBlack bg-heritageCream text-heritageBlack hover:bg-heritageStone" data-type="doughnut">Donut</button>
-                </div>
-
-                <div class="w-full h-80 mt-8">
-                    <canvas id="luxuryAnalyticsChart" class="w-full max-h-full"></canvas>
-                </div>
-            </div>
-
-            <!-- Data Table -->
-            <div class="border-2 border-heritageBlack bg-heritageIvory p-6 shadow-[6px_6px_0px_#121212] reveal">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-serif font-bold text-lg tracking-wide">Raw Data View</h3>
-                    <span class="text-[9px] text-heritageCharcoal uppercase tracking-widest font-medium" id="row-count-display">0 rows loaded</span>
-                </div>
-                <div class="overflow-x-auto max-h-64 overflow-y-auto border border-heritageStone">
-                    <table class="w-full text-left text-xs">
-                        <thead class="sticky top-0 bg-heritageCream z-10">
-                            <tr class="border-b-2 border-heritageBlack uppercase tracking-[0.15em] font-bold text-[10px]" id="db-table-headers">
-                                <th class="py-3 px-4 text-heritageCharcoal">Load data to preview...</th>
-                            </tr>
-                        </thead>
-                        <tbody id="db-table-body" class="divide-y divide-heritageStone">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ABOUT TAB -->
-    <div id="tab-about" class="tab-content hidden pt-32">
-        <div class="max-w-4xl mx-auto px-6 pb-24 text-center">
-            <p class="text-[10px] text-heritageRed uppercase tracking-[0.3em] font-bold mb-4 reveal">— Our Heritage —</p>
-            <h1 class="font-serif font-bold text-4xl md:text-6xl tracking-tight mb-8 reveal reveal-delay-1">Brand Philosophy</h1>
-            <div class="w-16 h-px bg-heritageRed mx-auto mb-12 reveal reveal-delay-2"></div>
-            <p id="about-tagline" class="font-serif text-2xl md:text-3xl leading-relaxed text-heritageBlack mb-10 italic reveal reveal-delay-2">
-                "Where sartorial heritage meets algorithmic precision."
-            </p>
-            <div id="about-bio-display" class="text-heritageCharcoal space-y-6 text-base md:text-lg leading-relaxed text-left max-w-2xl mx-auto reveal reveal-delay-3">
-                <p>
-                    Crafted at the intersection of sartorial heritage and digital innovation, our atelier delivers bespoke excellence through algorithmic precision and artisanal mastery.
-                </p>
-                <p>
-                    Every piece in our collection is engineered with the same meticulous attention to detail that defines the great couture houses — enhanced by data-driven insights that ensure each creation resonates with its intended audience.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- CONTACT TAB -->
-    <div id="tab-contact" class="tab-content hidden pt-32">
-        <div class="max-w-2xl mx-auto px-6 pb-24">
-            <div class="text-center mb-12 reveal">
-                <p class="text-[10px] text-heritageRed uppercase tracking-[0.3em] font-bold mb-4">— The Atelier —</p>
-                <h1 class="font-serif font-bold text-4xl md:text-6xl tracking-tight mb-4">Private Inquiries</h1>
-                <p class="text-heritageCharcoal uppercase tracking-[0.15em] text-xs font-medium">Bespoke consultation channels</p>
-            </div>
-
-            <form onsubmit="handleFormSubmit(event)" class="border-2 border-heritageBlack bg-heritageIvory p-8 md:p-12 shadow-[8px_8px_0px_#121212] reveal reveal-delay-1">
-                <div class="mb-6">
-                    <label class="block text-[10px] uppercase tracking-[0.2em] font-bold mb-2 text-heritageCharcoal">Client Name</label>
-                    <input type="text" placeholder="Your full name" required class="w-full border-2 border-heritageBlack p-3 outline-none focus:bg-heritageCream text-sm bg-white">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-[10px] uppercase tracking-[0.2em] font-bold mb-2 text-heritageCharcoal">Contact Email</label>
-                    <input type="email" placeholder="your@email.com" required class="w-full border-2 border-heritageBlack p-3 outline-none focus:bg-heritageCream text-sm bg-white">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-[10px] uppercase tracking-[0.2em] font-bold mb-2 text-heritageCharcoal">Bespoke Request</label>
-                    <textarea rows="4" placeholder="Describe your custom commission..." required class="w-full border-2 border-heritageBlack p-3 outline-none focus:bg-heritageCream text-sm bg-white"></textarea>
-                </div>
-                <button type="submit" id="submit-form-btn" class="w-full bg-heritageRed text-white hover:bg-red-900 font-bold text-xs uppercase tracking-[0.2em] py-4 transition-all duration-300 border border-heritageBlack btn-luxury">
-                    Submit Inquiry
-                </button>
-            </form>
-            <div id="submission-confirmation" class="hidden mt-6 p-4 border-2 border-heritageRed bg-heritageCream text-heritageRed font-bold text-xs uppercase tracking-[0.15em] text-center">
-                ✓ Inquiry Received — Our Atelier Will Respond Shortly
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast -->
-    <div id="custom-toast" class="fixed bottom-6 right-6 bg-heritageBlack text-heritageCream border-2 border-heritageRed p-4 font-bold text-xs uppercase tracking-[0.15em] hidden z-50 shadow-[4px_4px_0px_#8B0000]">
-        Action Executed
-    </div>
-
-    <!-- Footer -->
-    <footer class="border-t border-heritageStone bg-heritageIvory mt-12">
-        <div class="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-heritageCharcoal">
-                &copy; 2026 <span id="footer-brand-text">ATELIER</span>. All Rights Reserved.
-            </p>
-            <p class="text-[10px] uppercase tracking-[0.2em] font-bold text-heritageRed" id="footer-version-tag">
-                Digital Atelier v4.2
-            </p>
-        </div>
-    </footer>
-
+    <!-- Operational Core Scripts -->
     <script>
-        // ==========================================
-        // GLOBAL STATE
-        // ==========================================
-        let currentDataset = [];
-        let globalChartInstance = null;
-        let selectedPrimaryColor = '#8B0000';
-        let selectedSecondaryColor = '#B89A7B';
-        let currentChartType = 'bar';
-        let selectedMetricColumn = '';
-        let currencySymbol = '$';
-        let heroProductImage = '';
-
-        // Product data store
-        let products = [
-            {
-                id: 1,
-                title: 'Heritage Trench Coat',
-                price: '$2,850',
-                description: 'Signature water-resistant cotton gabardine with hand-finished topstitching and iconic check lining.',
-                link: '#',
-                tag: 'Signature Piece',
-                image: ''
-            },
-            {
-                id: 2,
-                title: 'Camel Cashmere Scarf',
-                price: '$680',
-                description: '100% Scottish cashmere in heritage camel. Woven on traditional looms with hand-rolled edges.',
-                link: '#',
-                tag: 'Accessory',
-                image: ''
-            },
-            {
-                id: 3,
-                title: 'Leather Wellington Boots',
-                price: '$590',
-                description: 'Handcrafted calfskin leather boots with signature check detail and durable rubber soles.',
-                link: '#',
-                tag: 'Footwear',
-                image: ''
-            },
-            {
-                id: 4,
-                title: 'Wool Check Blazer',
-                price: '$1,450',
-                description: 'Italian virgin wool blazer featuring the iconic house check motif. Fully canvassed construction.',
-                link: '#',
-                tag: 'Tailoring',
-                image: ''
-            }
-        ];
-
-        let nextProductId = 5;
-
-        // ==========================================
-        // TAB SWITCHING
-        // ==========================================
-        function switchTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.add('hidden'));
-
-            const target = document.getElementById('tab-' + tabId);
-            if (target) {
-                target.classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                // Re-trigger reveal animations
-                setTimeout(() => initRevealAnimations(), 100);
-                // Re-init tilt effect for product cards
-                if (tabId === 'catalog') {
-                    setTimeout(() => initTiltEffect(), 150);
-                }
-            }
-
-            const navButtons = document.querySelectorAll('.nav-btn');
-            navButtons.forEach(btn => {
-                btn.classList.remove('text-heritageRed', 'border-heritageRed');
-            });
-
-            const tabMap = {
-                'home': 'Home',
-                'catalog': 'Collection',
-                'analytics': 'Intelligence',
-                'about': 'Heritage',
-                'contact': 'Atelier'
-            };
-
-            navButtons.forEach(btn => {
-                if (btn.innerText.trim() === tabMap[tabId]) {
-                    btn.classList.add('text-heritageRed', 'border-heritageRed');
-                }
-            });
-        }
-
-        // ==========================================
-        // CUSTOMIZER DRAWER
-        // ==========================================
+        // 1. Drawer Controls
         function toggleCustomizer() {
             const drawer = document.getElementById('customizer-drawer');
             const overlay = document.getElementById('drawer-overlay');
             drawer.classList.toggle('translate-x-full');
-            overlay.classList.toggle('active');
+            overlay.classList.toggle('hidden');
         }
 
-        // ==========================================
-        // BRAND / HERO / BIO SYNCHRONIZERS
-        // ==========================================
-        function updateBrandName(value) {
-            const cleanVal = value.trim() === "" ? "ATELIER" : value.toUpperCase();
-            document.getElementById('brand-logo-text').innerText = cleanVal;
-            document.getElementById('footer-brand-text').innerText = cleanVal;
-        }
-
-        function updateStat(statKey, value) {
-            const idMap = {
-                'pieces': 'stat-products',
-                'clients': 'stat-clients',
-                'data': 'stat-data',
-                'accuracy': 'stat-accuracy'
-            };
-            const elementId = idMap[statKey];
-            if (elementId) {
-                const el = document.getElementById(elementId);
-                if (el) {
-                    el.innerText = value || '0';
-                    el.classList.add('live-updating');
-                    setTimeout(() => el.classList.remove('live-updating'), 1500);
-                }
-            }
-        }
-
-        function updateHeadline(value) {
-            document.getElementById('hero-headline').innerText = value;
-        }
-
-        function updateSubhead(value) {
-            document.getElementById('hero-subhead').innerText = value;
-        }
-
-        function updateBio(value) {
-            const bioDisplay = document.getElementById('about-bio-display');
-            const paragraphs = value.split('\n').filter(p => p.trim());
-            bioDisplay.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
-        }
-
-        function updateTagline(value) {
-            const taglineEl = document.getElementById('about-tagline');
-            const cleanVal = value.trim() === "" ? "Your brand philosophy goes here" : value;
-            // Add quotes if not already present
-            const quoted = cleanVal.startsWith('"') && cleanVal.endsWith('"')
-                ? cleanVal
-                : `"${cleanVal}"`;
-            taglineEl.innerText = quoted;
-        }
-
-        function updateCurrency(symbol) {
-            currencySymbol = symbol || '$';
-            if (currentDataset.length > 0 && selectedMetricColumn) {
-                recalculateMetrics();
-            }
-        }
-
-        // ==========================================
-        // PRODUCT MANAGEMENT
-        // ==========================================
-        function renderProductConfigs() {
-            const container = document.getElementById('product-configs');
-            container.innerHTML = products.map((p, idx) => `
-                <div class="p-4 border border-heritageCharcoal rounded bg-zinc-950" data-product-id="${p.id}">
-                    <div class="flex justify-between items-center mb-3">
-                        <p class="text-[10px] text-heritageRed uppercase font-bold tracking-widest">Item ${idx + 1}</p>
-                        <button onclick="removeProduct(${p.id})" class="text-zinc-500 hover:text-red-500 text-xs font-bold">&times;</button>
-                    </div>
-                    <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Product Image</label>
-                    <div class="mb-3 flex items-center gap-3">
-                        <div class="w-14 h-14 border border-zinc-700 bg-zinc-900 flex items-center justify-center overflow-hidden flex-shrink-0">
-                            ${p.image ? `<img src="${p.image}" class="w-full h-full object-cover" alt="${p.title}">` : '<span class="text-zinc-600 text-[10px] uppercase tracking-widest">IMG</span>'}
-                        </div>
-                        <div class="flex flex-col gap-1.5 flex-1">
-                            <input type="file" id="prod-img-${p.id}" accept="image/*" class="hidden" onchange="handleProductImageUpload(${p.id}, this)">
-                            <button onclick="document.getElementById('prod-img-${p.id}').click()" class="text-[9px] text-heritageCream hover:text-heritageRed uppercase tracking-widest font-bold border border-zinc-700 px-3 py-1.5 hover:border-heritageRed transition-colors text-left w-full">
-                                ${p.image ? 'Change Image' : 'Upload Image'}
-                            </button>
-                            ${p.image ? `<button onclick="removeProductImage(${p.id})" class="text-[9px] text-zinc-500 hover:text-red-500 uppercase tracking-widest font-bold">Remove</button>` : ''}
-                        </div>
-                    </div>
-                    <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Title</label>
-                    <input type="text" value="${p.title}" oninput="updateProductField(${p.id}, 'title', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm mb-2">
-                    <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Description</label>
-                    <textarea rows="3" oninput="updateProductField(${p.id}, 'description', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-xs leading-relaxed mb-2 resize-none">${p.description}</textarea>
-                    <label class="block text-[9px] uppercase tracking-widest text-zinc-400 font-bold mb-1">Price</label>
-                    <input type="text" value="${p.price}" oninput="updateProductField(${p.id}, 'price', this.value)" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-sm mb-2">
-                    <label class="block text-[9px] uppercase tracking-widest text-heritageTan font-bold mb-1">Payment Link (Stripe/PayPal)</label>
-                    <input type="text" value="${p.link}" oninput="updateProductField(${p.id}, 'link', this.value)" placeholder="https://..." class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-white outline-none text-xs">
-                </div>
-            `).join('');
-        }
-
-        function renderProductCards() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = products.map((p, idx) => `
-                <div class="tilt-card reveal" style="transition-delay: ${idx * 0.08}s" data-tilt>
-                    <div class="tilt-card-inner product-card border-2 border-heritageBlack bg-heritageIvory overflow-hidden shadow-[6px_6px_0px_#121212] hover:shadow-[12px_12px_0px_#8B0000] flex flex-col justify-between">
-                        <div class="tilt-shine"></div>
-                        <div class="relative">
-                            <div class="h-56 bg-heritageCream relative overflow-hidden border-b-2 border-heritageBlack">
-                                ${p.image
-                                    ? `<img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105">`
-                                    : `<div class="w-full h-full burberry-check-bg opacity-20 flex items-center justify-center">
-                                         <span class="font-serif text-5xl font-bold text-heritageBlack/15">${p.title.charAt(0)}</span>
-                                       </div>`
-                                }
-                            </div>
-                            <div class="absolute top-3 left-3">
-                                <span class="bg-heritageBlack/85 text-heritageCream text-[8px] tracking-[0.2em] uppercase font-bold px-2.5 py-1 backdrop-blur-sm">${p.tag}</span>
-                            </div>
-                        </div>
-                        <div class="p-8">
-                            <h3 class="font-serif font-bold text-2xl mb-3 text-heritageBlack">${p.title}</h3>
-                            <p class="text-heritageCharcoal text-sm leading-relaxed mb-6">${p.description}</p>
-                        </div>
-                        <div class="p-6 border-t-2 border-heritageBlack bg-heritageCream flex justify-between items-center">
-                            <span class="font-serif font-bold text-2xl text-heritageBlack">${p.price}</span>
-                            <a href="${p.link}" target="_blank" class="btn-luxury bg-heritageBlack text-white text-[10px] uppercase font-bold tracking-[0.2em] py-2.5 px-5 hover:bg-heritageRed transition-colors border border-heritageBlack">
-                                ${p.link && p.link !== '#' ? 'Buy Now' : 'Inquire'}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            
-            // Re-init tilt effect
-            initTiltEffect();
-        }
-
-        function updateProductField(id, field, value) {
-            const product = products.find(p => p.id === id);
-            if (product) {
-                product[field] = value;
-                renderProductCards();
-            }
-        }
-
-        function addProduct() {
-            products.push({
-                id: nextProductId++,
-                title: 'New Bespoke Piece',
-                price: '$0',
-                description: 'Describe your custom product here...',
-                link: '#',
-                tag: 'New Arrival',
-                image: ''
-            });
-            renderProductConfigs();
-            renderProductCards();
-            showToast('Product Added');
-        }
-
-        function removeProduct(id) {
-            if (products.length <= 1) {
-                showToast('Keep at least one product');
-                return;
-            }
-            products = products.filter(p => p.id !== id);
-            renderProductConfigs();
-            renderProductCards();
-            showToast('Product Removed');
-        }
-
-        // ==========================================
-        // HERO PRODUCT IMAGE UPLOAD
-        // ==========================================
-        function handleHeroImageUpload(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            if (!file.type.startsWith('image/')) {
-                showToast('Please upload an image file');
-                return;
-            }
-
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('Image must be under 5MB');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                heroProductImage = e.target.result;
-
-                // Update display
-                const imgEl = document.getElementById('hero-product-image-display');
-                const svgEl = document.getElementById('vector-model');
-                const thumbEl = document.getElementById('hero-img-thumb');
-                const btnEl = document.getElementById('hero-img-btn');
-                const removeBtn = document.getElementById('hero-img-remove-btn');
-
-                imgEl.src = heroProductImage;
-                imgEl.classList.remove('hidden');
-                svgEl.classList.add('hidden');
-
-                // Update thumbnail
-                thumbEl.outerHTML = `<img src="${heroProductImage}" class="w-full h-full object-cover" id="hero-img-thumb">`;
-
-                btnEl.innerText = 'Change Image';
-                removeBtn.classList.remove('hidden');
-
-                showToast('Hero image updated');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function removeHeroImage() {
-            heroProductImage = '';
-
-            const imgEl = document.getElementById('hero-product-image-display');
-            const svgEl = document.getElementById('vector-model');
-            const thumbEl = document.getElementById('hero-img-thumb');
-            const btnEl = document.getElementById('hero-img-btn');
-            const removeBtn = document.getElementById('hero-img-remove-btn');
-
-            imgEl.classList.add('hidden');
-            svgEl.classList.remove('hidden');
-
-            // Restore thumbnail placeholder
-            thumbEl.outerHTML = `<span id="hero-img-thumb" class="text-zinc-600 text-[9px] uppercase tracking-widest text-center leading-tight">SVG<br>Model</span>`;
-
-            btnEl.innerText = 'Upload Image';
-            removeBtn.classList.add('hidden');
-
-            showToast('Reverted to SVG model');
-        }
-
-        // ==========================================
-        // PRODUCT IMAGE UPLOAD
-        // ==========================================
-        function handleProductImageUpload(productId, input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            // Validate file type
-            if (!file.type.startsWith('image/')) {
-                showToast('Please upload an image file');
-                return;
-            }
-
-            // Limit file size (5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('Image must be under 5MB');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const product = products.find(p => p.id === productId);
-                if (product) {
-                    product.image = e.target.result; // base64 data URL
-                    renderProductConfigs();
-                    renderProductCards();
-                    showToast('Image uploaded');
-                }
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function removeProductImage(productId) {
-            const product = products.find(p => p.id === productId);
-            if (product) {
-                product.image = '';
-                renderProductConfigs();
-                renderProductCards();
-                showToast('Image removed');
-            }
-        }
-
-        // ==========================================
-        // THEME / COLOR SYSTEM
-        // ==========================================
-        function setTheme(themeId, primaryColor, secondaryColor) {
-            selectedPrimaryColor = primaryColor;
-            selectedSecondaryColor = secondaryColor;
-
-            document.documentElement.style.setProperty('--theme-primary-color', primaryColor);
-            document.documentElement.style.setProperty('--theme-secondary-color', secondaryColor);
-
-            // Header
-            const headerBg = document.getElementById('theme-header-bg');
-            if (headerBg) {
-                // Update luxury gradient hero
-                headerBg.style.background = `
-                    radial-gradient(ellipse at top, ${hexToRgba(secondaryColor, 0.15)} 0%, transparent 50%),
-                    radial-gradient(ellipse at bottom right, ${hexToRgba(primaryColor, 0.1)} 0%, transparent 50%),
-                    linear-gradient(180deg, ${primaryColor} 0%, ${adjustBrightness(primaryColor, -20)} 100%)
-                `;
-                const isLight = isLightColor(primaryColor);
-                headerBg.style.color = isLight ? '#121212' : '#ffffff';
-            }
-
-            // SVG
-            const svgBody = document.getElementById('svg-body');
-            const svgCollar = document.getElementById('svg-collar');
-            if (svgBody) svgBody.setAttribute('fill', primaryColor);
-            if (svgCollar) svgCollar.setAttribute('fill', secondaryColor);
-
-            // Swatches
-            const swatch1 = document.getElementById('swatch-primary');
-            const swatch2 = document.getElementById('swatch-secondary');
-            if (swatch1) swatch1.style.backgroundColor = primaryColor;
-            if (swatch2) swatch2.style.backgroundColor = secondaryColor;
-
-            // Badge
-            const badge = document.getElementById('badge-top-tag');
-            if (badge) {
-                const isLight = isLightColor(primaryColor);
-                badge.style.borderColor = isLight ? '#121212' : 'rgba(255,255,255,0.4)';
-            }
-
-            // Buttons
-            const primaryBtns = document.querySelectorAll('#submit-form-btn, #cta-button-1, #customizer-nav-btn, .bg-heritageRed:not(.chart-type-btn)');
-            primaryBtns.forEach(btn => {
-                btn.style.backgroundColor = primaryColor;
-                btn.style.color = isLightColor(primaryColor) ? '#121212' : '#ffffff';
-            });
-
-            // Section badges
-            const sectionBadges = document.querySelectorAll('#section-badge-1');
-            sectionBadges.forEach(b => {
-                b.style.backgroundColor = primaryColor;
-                b.style.color = isLightColor(primaryColor) ? '#121212' : '#ffffff';
-            });
-
-            // Chart
-            if (globalChartInstance) {
-                updateChartColors();
-            }
-
-            // Update color pickers
-            document.getElementById('custom-primary-color').value = primaryColor;
-            document.getElementById('custom-secondary-color').value = secondaryColor;
-
-            showToast(`Theme: ${themeId.charAt(0).toUpperCase() + themeId.slice(1)}`);
-        }
-
-        function applyCustomColor() {
-            const primary = document.getElementById('custom-primary-color').value;
-            const secondary = document.getElementById('custom-secondary-color').value;
-            setTheme('custom', primary, secondary);
-        }
-
-        function isLightColor(hex) {
-            const r = parseInt(hex.slice(1, 3), 16);
-            const g = parseInt(hex.slice(3, 5), 16);
-            const b = parseInt(hex.slice(5, 7), 16);
-            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-            return brightness > 155;
-        }
-
-        function adjustBrightness(hex, percent) {
-            const r = parseInt(hex.slice(1, 3), 16);
-            const g = parseInt(hex.slice(3, 5), 16);
-            const b = parseInt(hex.slice(5, 7), 16);
-            
-            const adjust = (c) => {
-                const adjusted = Math.round(c * (100 + percent) / 100);
-                return Math.min(255, Math.max(0, adjusted));
-            };
-            
-            const newR = adjust(r).toString(16).padStart(2, '0');
-            const newG = adjust(g).toString(16).padStart(2, '0');
-            const newB = adjust(b).toString(16).padStart(2, '0');
-            
-            return `#${newR}${newG}${newB}`;
-        }
-
-        // ==========================================
-        // TOAST NOTIFICATIONS
-        // ==========================================
-        function showToast(message) {
-            const toast = document.getElementById('custom-toast');
-            toast.innerText = message;
-            toast.classList.remove('hidden');
-            toast.classList.add('animate-fade-in');
-            setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 2500);
-        }
-
-        // ==========================================
-        // FORM SUBMISSION
-        // ==========================================
-        function handleFormSubmit(event) {
-            event.preventDefault();
-            const confirmationBox = document.getElementById('submission-confirmation');
-            confirmationBox.classList.remove('hidden');
-            confirmationBox.classList.add('animate-fade-in');
-            setTimeout(() => {
-                confirmationBox.classList.add('hidden');
-                event.target.reset();
-            }, 4000);
-        }
-
-        // ==========================================
-        // CSV PARSING (Cross-Platform Enhanced)
-        // ==========================================
-        function handleCSVUpload(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                // Handle BOM for Windows Excel files
-                let text = e.target.result;
-                if (text.charCodeAt(0) === 0xFEFF) {
-                    text = text.slice(1);
-                }
-                const data = parseCSVToJSON(text);
-                if (data && data.length > 0) {
-                    processDatabase(data, `File: ${file.name}`);
-                } else {
-                    showToast("CSV parse error — check structure");
-                }
-            };
-            reader.readAsText(file, 'UTF-8');
-        }
-
-        function parseCSVToJSON(text) {
-            // Handle both \n and \r\n (Windows)
-            const lines = text.replace(/\r\n/g, '\n').split('\n').map(l => l.trim()).filter(l => l !== '');
-            if (lines.length < 2) return null;
-
-            const headers = parseCSVLine(lines[0]);
-            const rows = [];
-
-            for (let i = 1; i < lines.length; i++) {
-                const values = parseCSVLine(lines[i]);
-                if (values.length === headers.length) {
-                    const obj = {};
-                    headers.forEach((h, index) => {
-                        obj[h] = values[index];
-                    });
-                    rows.push(obj);
-                }
-            }
-            return rows;
-        }
-
-        function parseCSVLine(line) {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
-
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
-                if (char === '"') {
-                    if (inQuotes && line[i + 1] === '"') {
-                        current += '"';
-                        i++;
-                    } else {
-                        inQuotes = !inQuotes;
-                    }
-                } else if (char === ',' && !inQuotes) {
-                    result.push(current.trim());
-                    current = '';
-                } else {
-                    current += char;
-                }
-            }
-            result.push(current.trim());
-            return result;
-        }
-
-        // ==========================================
-        // API LOADING
-        // ==========================================
-        async function triggerAPILoad() {
-            const urlInput = document.getElementById('analytics-db-api');
-            const url = urlInput.value.trim();
-            if (!url) {
-                showToast("Enter an API URL first");
-                return;
-            }
-            showToast("Connecting to dataset...");
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const data = await response.json();
-                const cleanArray = Array.isArray(data) ? data : (data.data || data.results || Object.values(data)[0]);
-                if (Array.isArray(cleanArray) && cleanArray.length > 0) {
-                    processDatabase(cleanArray, `API: ${url.substring(0, 30)}...`);
-                } else {
-                    showToast("API did not return a valid array");
-                }
-            } catch (err) {
-                showToast("Connection failed — check CORS");
-            }
-        }
-
-        function connectCustomAPI() {
-            const url = document.getElementById('custom-db-api').value.trim();
-            document.getElementById('analytics-db-api').value = url;
-            toggleCustomizer();
-            switchTab('analytics');
-            if (url) triggerAPILoad();
-        }
-
-        // ==========================================
-        // MOCK DATASETS
-        // ==========================================
-        const mockPresets = {
-            ecommerce: [
-                { Month: "Jan", Revenue: 42000, Orders: 312, AOV: 134.6, Returns: "4.2%" },
-                { Month: "Feb", Revenue: 38500, Orders: 287, AOV: 134.1, Returns: "3.8%" },
-                { Month: "Mar", Revenue: 51200, Orders: 374, AOV: 136.9, Returns: "4.5%" },
-                { Month: "Apr", Revenue: 47800, Orders: 351, AOV: 136.2, Returns: "4.1%" },
-                { Month: "May", Revenue: 62400, Orders: 448, AOV: 139.3, Returns: "3.9%" },
-                { Month: "Jun", Revenue: 78500, Orders: 562, AOV: 139.7, Returns: "3.6%" },
-                { Month: "Jul", Revenue: 71200, Orders: 509, AOV: 139.9, Returns: "3.4%" },
-                { Month: "Aug", Revenue: 65800, Orders: 471, AOV: 139.7, Returns: "3.7%" }
-            ],
-            saas: [
-                { Month: "Jan", MRR: 24000, Users: 1240, Churn: "2.1%", ARPU: 19.4 },
-                { Month: "Feb", MRR: 28500, Users: 1470, Churn: "1.9%", ARPU: 19.4 },
-                { Month: "Mar", MRR: 35200, Users: 1810, Churn: "1.7%", ARPU: 19.4 },
-                { Month: "Apr", MRR: 41800, Users: 2140, Churn: "1.8%", ARPU: 19.5 },
-                { Month: "May", MRR: 52400, Users: 2680, Churn: "1.5%", ARPU: 19.6 },
-                { Month: "Jun", MRR: 67800, Users: 3450, Churn: "1.3%", ARPU: 19.7 }
-            ],
-            fashion: [
-                { Category: "Outerwear", Sales: 128000, Units: 245, Margin: "68%", Returns: "5.2%" },
-                { Category: "Knitwear", Sales: 89400, Units: 612, Margin: "72%", Returns: "4.8%" },
-                { Category: "Tailoring", Sales: 156000, Units: 187, Margin: "74%", Returns: "3.1%" },
-                { Category: "Accessories", Sales: 72500, Units: 890, Margin: "78%", Returns: "2.4%" },
-                { Category: "Footwear", Sales: 94200, Units: 356, Margin: "65%", Returns: "6.7%" },
-                { Category: "Leather Goods", Sales: 134000, Units: 142, Margin: "71%", Returns: "2.8%" },
-                { Category: "Dresses", Sales: 112000, Units: 428, Margin: "70%", Returns: "8.3%" }
-            ],
-            inventory: [
-                { SKU: "TR-001", Stock: 47, Sold: 153, Price: 2850, Category: "Outerwear" },
-                { SKU: "SC-002", Stock: 124, Sold: 312, Price: 680, Category: "Accessories" },
-                { SKU: "WB-003", Stock: 89, Sold: 201, Price: 590, Category: "Footwear" },
-                { SKU: "BL-004", Stock: 36, Sold: 98, Price: 1450, Category: "Tailoring" },
-                { SKU: "SH-005", Stock: 156, Sold: 423, Price: 420, Category: "Knitwear" },
-                { SKU: "BG-006", Stock: 28, Sold: 76, Price: 1890, Category: "Leather Goods" },
-                { SKU: "DR-007", Stock: 62, Sold: 184, Price: 1250, Category: "Dresses" },
-                { SKU: "BT-008", Stock: 210, Sold: 567, Price: 195, Category: "Accessories" }
-            ]
-        };
-
-        function loadMockDataset(presetName) {
-            const dataset = mockPresets[presetName];
-            if (dataset) {
-                processDatabase(dataset, `Preset: ${presetName.toUpperCase()}`);
-                showToast(`Loaded: ${presetName.toUpperCase()}`);
-            }
-        }
-
-        // ==========================================
-        // DATABASE PROCESSING
-        // ==========================================
-        function processDatabase(data, label) {
-            currentDataset = data;
-
-            // Status
-            const badge = document.getElementById('db-status-badge');
-            badge.innerText = `LINKED — ${label}`;
-            badge.className = "text-green-700 font-bold";
-
-            // Table
-            const headersRow = document.getElementById('db-table-headers');
-            const tbody = document.getElementById('db-table-body');
-            headersRow.innerHTML = '';
-            tbody.innerHTML = '';
-
-            const keys = Object.keys(data[0]);
-            keys.forEach(key => {
-                const th = document.createElement('th');
-                th.className = "py-3 px-4 text-heritageCharcoal";
-                th.innerText = key;
-                headersRow.appendChild(th);
-            });
-
-            const displayLimit = Math.min(data.length, 50);
-            for (let i = 0; i < displayLimit; i++) {
-                const row = data[i];
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-heritageCream transition-colors";
-                keys.forEach(key => {
-                    const td = document.createElement('td');
-                    td.className = "py-2.5 px-4 font-medium text-heritageCharcoal";
-                    td.innerText = row[key];
-                    tr.appendChild(td);
-                });
-                tbody.appendChild(tr);
-            }
-
-            document.getElementById('row-count-display').innerText = `${data.length} rows loaded`;
-
-            // Populate metric column selector
-            const select = document.getElementById('metric-column-select');
-            select.innerHTML = '';
-            const numericKeys = keys.filter(k => {
-                const val = parseFloat(data[0][k]);
-                return !isNaN(val) && data[0][k] !== '';
-            });
-
-            numericKeys.forEach(key => {
-                const opt = document.createElement('option');
-                opt.value = key;
-                opt.innerText = key;
-                select.appendChild(opt);
-            });
-
-            // Auto-select first numeric column
-            if (numericKeys.length > 0) {
-                selectedMetricColumn = numericKeys[0];
-                select.value = selectedMetricColumn;
-                recalculateMetrics();
-            }
-
-            // Chart
-            updateAnalyticsChart();
-        }
-
-        // ==========================================
-        // METRICS CALCULATION
-        // ==========================================
-        function recalculateMetrics() {
-            const column = document.getElementById('metric-column-select').value;
-            if (!column || currentDataset.length === 0) return;
-
-            selectedMetricColumn = column;
-            const values = currentDataset.map(r => parseFloat(r[column])).filter(v => !isNaN(v));
-
-            if (values.length === 0) return;
-
-            const total = values.reduce((a, b) => a + b, 0);
-            const avg = total / values.length;
-            const max = Math.max(...values);
-            const sorted = [...values].sort((a, b) => a - b);
-            const median = sorted.length % 2 === 0
-                ? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2
-                : sorted[Math.floor(sorted.length / 2)];
-
-            // Format numbers
-            const formatNum = (n) => {
-                if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
-                if (n >= 1000) return n.toLocaleString(undefined, { maximumFractionDigits: 0 });
-                return n.toLocaleString(undefined, { maximumFractionDigits: 1 });
-            };
-
-            const grossEl = document.getElementById('data-metric-gross');
-            const avgEl = document.getElementById('data-metric-avg');
-            const countEl = document.getElementById('data-metric-count');
-            const maxEl = document.getElementById('data-metric-max');
-            const medianEl = document.getElementById('data-metric-median');
-
-            // Animate number change
-            [grossEl, avgEl, maxEl, medianEl].forEach(el => {
-                el.classList.add('live-updating');
-                setTimeout(() => el.classList.remove('live-updating'), 1500);
-            });
-
-            grossEl.innerText = `${currencySymbol}${formatNum(total)}`;
-            avgEl.innerText = formatNum(avg);
-            countEl.innerText = values.length;
-            maxEl.innerText = `${currencySymbol}${formatNum(max)}`;
-            medianEl.innerText = `${currencySymbol}${formatNum(median)}`;
-
-            // Trend
-            const trendEl = document.getElementById('data-metric-trend');
-            if (values.length >= 2) {
-                const first = values[0];
-                const last = values[values.length - 1];
-                if (first !== 0) {
-                    const pct = ((last - first) / Math.abs(first)) * 100;
-                    const sign = pct >= 0 ? '+' : '';
-                    trendEl.innerText = `${sign}${pct.toFixed(1)}%`;
-                    trendEl.className = `font-serif font-bold text-xl tracking-tight block mt-1 ${pct >= 0 ? 'text-green-700' : 'text-red-700'}`;
-                } else {
-                    trendEl.innerText = '—';
-                }
-            }
-
-            // Update chart
-            updateAnalyticsChart();
-        }
-
-        // ==========================================
-        // CHARTING
-        // ==========================================
-        function updateAnalyticsChart() {
-            if (currentDataset.length === 0 || !selectedMetricColumn) return;
-
-            const ctx = document.getElementById('luxuryAnalyticsChart').getContext('2d');
-            const keys = Object.keys(currentDataset[0]);
-            const labelKey = keys[0];
-            const labels = currentDataset.map(r => r[labelKey]);
-            const dataValues = currentDataset.map(r => parseFloat(r[selectedMetricColumn]) || 0);
-
-            if (globalChartInstance) {
-                globalChartInstance.destroy();
-            }
-
-            const chartConfig = {
-                type: currentChartType,
+        // 2. Luxury Dynamic Cursor Tracking
+        const cursor = document.getElementById('custom-cursor');
+        const cursorDot = document.getElementById('custom-cursor-dot');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
+
+        // 3. Chart.js Management
+        let myChart = null;
+        let currentChartType = 'bar';
+        let chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+        let chartDataPoints = [120000, 150000, 112000, 156000, 134000, 112300, 142000];
+
+        function renderChart(type = 'bar') {
+            currentChartType = type;
+            const ctx = document.getElementById('atelierChart').getContext('2d');
+            if (myChart) { myChart.destroy(); }
+
+            myChart = new Chart(ctx, {
+                type: type,
                 data: {
-                    labels: labels,
+                    labels: chartLabels,
                     datasets: [{
-                        label: selectedMetricColumn,
-                        data: dataValues,
-                        backgroundColor: currentChartType === 'doughnut'
-                            ? generateColorPalette(dataValues.length)
-                            : selectedPrimaryColor,
-                        borderColor: selectedPrimaryColor,
-                        borderWidth: 2,
-                        borderRadius: currentChartType === 'bar' ? 4 : 0,
-                        barThickness: 36,
-                        fill: currentChartType === 'line',
-                        tension: 0.4,
-                        pointBackgroundColor: selectedPrimaryColor,
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
+                        label: 'Executive Performance',
+                        data: chartDataPoints,
+                        backgroundColor: '#8B0000',
+                        borderColor: '#8B0000',
+                        borderWidth: 1.5,
+                        tension: 0.25
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    animation: {
-                        duration: 1200,
-                        easing: 'easeOutQuart'
-                    },
-                    plugins: {
-                        legend: {
-                            display: currentChartType === 'doughnut',
-                            position: 'right',
-                            labels: {
-                                font: { family: 'Space Grotesk', size: 11 },
-                                padding: 16,
-                                usePointStyle: true,
-                                pointStyle: 'circle'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: '#121212',
-                            titleFont: { family: 'Space Grotesk', size: 12, weight: 'bold' },
-                            bodyFont: { family: 'Space Grotesk', size: 11 },
-                            padding: 12,
-                            cornerRadius: 2,
-                            displayColors: false,
-                            callbacks: {
-                                label: function(context) {
-                                    return `${currencySymbol}${context.parsed.y.toLocaleString()}`;
-                                }
-                            }
-                        }
-                    },
-                    scales: currentChartType === 'doughnut' ? {} : {
-                        y: {
-                            grid: {
-                                borderDash: [4, 4],
-                                color: '#E8DFD0'
-                            },
-                            ticks: {
-                                font: { family: 'Space Grotesk', size: 10 },
-                                color: '#666',
-                                callback: function(value) {
-                                    return currencySymbol + value.toLocaleString();
-                                }
-                            }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: {
-                                font: { family: 'Space Grotesk', size: 10 },
-                                color: '#666'
-                            }
-                        }
+                    plugins: { legend: { display: false } },
+                    scales: type === 'doughnut' ? {} : {
+                        y: { grid: { color: '#E8DFD0' }, ticks: { font: { family: 'Space Grotesk', size: 10 } } },
+                        x: { grid: { display: false }, ticks: { font: { family: 'Space Grotesk', size: 10 } } }
                     }
                 }
-            };
-
-            if (currentChartType === 'line') {
-                chartConfig.data.datasets[0].backgroundColor = hexToRgba(selectedPrimaryColor, 0.1);
-            }
-
-            globalChartInstance = new Chart(ctx, chartConfig);
+            });
         }
 
-        function generateColorPalette(count) {
-            const base = selectedPrimaryColor;
-            const colors = [];
-            for (let i = 0; i < count; i++) {
-                const opacity = 1 - (i * 0.12);
-                colors.push(hexToRgba(base, Math.max(0.3, opacity)));
-            }
-            return colors;
-        }
-
-        function hexToRgba(hex, alpha) {
-            const r = parseInt(hex.slice(1, 3), 16);
-            const g = parseInt(hex.slice(3, 5), 16);
-            const b = parseInt(hex.slice(5, 7), 16);
-            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-        }
-
-        function updateChartColors() {
-            if (!globalChartInstance) return;
-            if (currentChartType === 'doughnut') {
-                globalChartInstance.data.datasets[0].backgroundColor = generateColorPalette(globalChartInstance.data.datasets[0].data.length);
-            } else {
-                globalChartInstance.data.datasets[0].backgroundColor = currentChartType === 'line'
-                    ? hexToRgba(selectedPrimaryColor, 0.1)
-                    : selectedPrimaryColor;
-                globalChartInstance.data.datasets[0].borderColor = selectedPrimaryColor;
-                globalChartInstance.data.datasets[0].pointBackgroundColor = selectedPrimaryColor;
-            }
-            globalChartInstance.update();
-        }
-
-        function setChartType(type) {
-            currentChartType = type;
-            document.querySelectorAll('.chart-type-btn').forEach(btn => {
-                if (btn.dataset.type === type) {
-                    btn.classList.add('bg-heritageRed', 'text-white');
-                    btn.classList.remove('bg-heritageCream', 'text-heritageBlack');
-                } else {
-                    btn.classList.remove('bg-heritageRed', 'text-white');
-                    btn.classList.add('bg-heritageCream', 'text-heritageBlack');
+        function changeChartType(type) {
+            renderChart(type);
+            ['bar', 'line', 'doughnut'].forEach(t => {
+                const btn = document.getElementById(`btn-${t}`);
+                if (btn) {
+                    btn.className = t === type 
+                        ? "border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-heritageRed text-white transition-all"
+                        : "border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-white text-heritageBlack hover:bg-heritageCream transition-all";
                 }
             });
-            if (currentDataset.length > 0) {
-                updateAnalyticsChart();
-            }
         }
 
-        function updateChartType() {
-            const type = document.getElementById('chart-type-select').value;
-            setChartType(type);
+        // 4. 🔥 CORE ENGINE: OBJECT PATH RESOLVER (無代碼映射演算法)
+        // 允許使用者利用 'result.data.total' 這種字串點擊路徑，安全遞迴讀取巢狀物件深度節點
+        function getValueByPath(obj, path) {
+            if (!path || !obj) return undefined;
+            return path.split('.').reduce((acc, part) => acc && acc[part], obj);
         }
 
-        // ==========================================
-        // AI ANALYSIS (Simulated Executive Insight)
-        // ==========================================
-        async function triggerAIAnalysis() {
-            if (currentDataset.length === 0) {
-                showToast("Load a dataset first");
+        const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+        async function connectAPI() {
+            const urlInput = document.getElementById('api-url');
+            const apiBtn = document.getElementById('api-btn');
+            const statusLabel = document.getElementById('api-status');
+
+            const url = urlInput.value.trim();
+
+            apiBtn.innerText = "LINKING...";
+            apiBtn.disabled = true;
+            statusLabel.innerText = "STATUS: INITIALIZING NO-CODE MAPPING MATRIX...";
+            statusLabel.className = "text-amber-700 font-bold uppercase animate-pulse";
+
+            // 判斷邏輯：如果不是真實的網址，則執行高階「行銷展示用」模擬跳動數據
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                setTimeout(() => {
+                    executeSandboxSimulation(url || "https://api.luxury-retail.com/demo", statusLabel, apiBtn);
+                }, 1200);
                 return;
             }
 
-            const aiOutput = document.getElementById('ai-insight-output');
-            const tone = document.getElementById('ai-tone-select').value;
-            const brandName = document.getElementById('custom-brand').value;
+            // 真實連線模式：利用無代碼映射路徑抓取真實後端 API 資料
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP Session Failed (${response.status})`);
+                const data = await response.json();
 
-            aiOutput.innerHTML = '<span class="text-heritageTan">ANALYZING</span> ' +
-                '<span class="animate-pulse-soft">████████████████</span>';
+                // 從使用者介面的配置框讀取特定的 JSON 物件欄位映射路徑
+                const pathTotal = document.getElementById('map-total').value;
+                const pathAverage = document.getElementById('map-average').value;
+                const pathRecords = document.getElementById('map-records').value;
+                const pathTrend = document.getElementById('map-trend').value;
+                const pathPeak = document.getElementById('map-peak').value;
+                const pathMedian = document.getElementById('map-median').value;
+                const pathChart = document.getElementById('map-chart').value;
 
-            // Simulate processing delay
-            await new Promise(r => setTimeout(r, 1200));
+                // 執行動態路徑解算
+                const rawTotal = getValueByPath(data, pathTotal) ?? 0;
+                const rawAverage = getValueByPath(data, pathAverage) ?? 0;
+                const rawRecords = getValueByPath(data, pathRecords) ?? 0;
+                const rawTrend = getValueByPath(data, pathTrend) ?? 0;
+                const rawPeak = getValueByPath(data, pathPeak) ?? 0;
+                const rawMedian = getValueByPath(data, pathMedian) ?? 0;
+                const rawChart = getValueByPath(data, pathChart) ?? [];
 
-            const grossVal = document.getElementById('data-metric-gross').innerText;
-            const avgVal = document.getElementById('data-metric-avg').innerText;
-            const countVal = document.getElementById('data-metric-count').innerText;
-            const trendVal = document.getElementById('data-metric-trend').innerText;
-            const maxVal = document.getElementById('data-metric-max').innerText;
-            const medianVal = document.getElementById('data-metric-median').innerText;
+                // 渲染更新主矩陣
+                document.getElementById('m-total').innerText = typeof rawTotal === 'number' ? currencyFormatter.format(rawTotal) : rawTotal;
+                document.getElementById('m-average').innerText = typeof rawAverage === 'number' ? currencyFormatter.format(rawAverage) : rawAverage;
+                document.getElementById('m-records').innerText = rawRecords;
+                document.getElementById('m-peak').innerText = typeof rawPeak === 'number' ? currencyFormatter.format(rawPeak) : rawPeak;
+                document.getElementById('m-median').innerText = typeof rawMedian === 'number' ? currencyFormatter.format(rawMedian) : rawMedian;
 
-            const analyses = {
-                luxury: `EXECUTIVE BRIEF — ${brandName.toUpperCase()}
+                const trendEl = document.getElementById('m-trend');
+                trendEl.innerText = typeof rawTrend === 'number' ? `${rawTrend > 0 ? '+' : ''}${rawTrend}%` : rawTrend;
+                trendEl.className = parseFloat(rawTrend) >= 0 ? "text-xl font-serif font-bold mt-1 text-emerald-700" : "text-xl font-serif font-bold mt-1 text-heritageRed";
 
-Performance Overview:
-Total audited value of ${grossVal} across ${countVal} data points, with a median performance of ${medianVal}. The ${selectedMetricColumn} metric demonstrates a ${trendVal} trajectory, signaling strong market momentum.
+                // 圖表動態同步
+                if (Array.isArray(rawChart) && rawChart.length > 0) {
+                    chartDataPoints = rawChart;
+                    renderChart(currentChartType);
+                }
 
-Strategic Directives:
-1. Double down on peak performers (${maxVal}) — allocate premium shelf space and marketing visibility.
-2. The median-to-mean spread indicates healthy distribution; consider tiered pricing strategy.
-3. Current trajectory supports aggressive Q4 expansion — recommend 20% inventory increase.
+                // 備份輸入狀態
+                document.getElementById('custom-total').value = document.getElementById('m-total').innerText;
 
-Brand positioning remains strong. The data validates our premium pricing thesis.`,
+                apiBtn.innerText = "SUCCESS";
+                statusLabel.innerText = `STATUS: LIVE ACTIVE — MAPPED TO REMOTE RESOURCE`;
+                statusLabel.className = "text-emerald-700 font-bold uppercase";
+                
+                setTimeout(() => { apiBtn.innerText = "LINK"; }, 2000);
 
-                mckinsey: `EXECUTIVE SUMMARY — ${selectedMetricColumn} Analysis
-
-KEY FINDINGS:
-• Aggregate value: ${grossVal} (n=${countVal})
-• Mean performance: ${avgVal}
-• Median: ${medianVal} (skew: ${avgVal > medianVal ? 'positive — long tail' : 'negative — top-heavy'})
-• Period-over-period trend: ${trendVal}
-
-RECOMMENDATIONS:
-1. Scale the top quartile — these drivers account for disproportionate value creation.
-2. Address the bottom decile — rationalization could improve portfolio efficiency by 8-12%.
-3. The current growth trajectory, if sustained, implies a ${trendVal.startsWith('+') ? 'bull case achievable by Q4' : 'need for course correction within 90 days'}.
-
-CONFIDENCE: HIGH — Dataset sufficiently robust for strategic decision-making.`,
-
-                direct: `FAX — ${brandName}
-
-${selectedMetricColumn}: ${grossVal} total. ${avgVal} avg. ${trendVal} trend.
-
-DO THIS:
-→ Push the ${maxVal} performers. Hard.
-→ ${trendVal.startsWith('+') ? 'Growth is real. Scale faster.' : 'Decline detected. Fix now.'}
-→ Median ${medianVal} vs average ${avgVal} tells you everything about distribution.
-
-Bottom line: ${trendVal.startsWith('+') ? 'Green light. Invest.' : 'Red flag. Act.'}`
-            };
-
-            // Typewriter effect
-            const text = analyses[tone] || analyses.luxury;
-            aiOutput.innerText = '';
-            let i = 0;
-            const typeInterval = setInterval(() => {
-                aiOutput.innerText += text[i];
-                aiOutput.scrollTop = aiOutput.scrollHeight;
-                i++;
-                if (i >= text.length) clearInterval(typeInterval);
-            }, 8);
+            } catch (error) {
+                // 如果客戶輸入的真實 API 因為跨網域 (CORS) 或掛掉，自動平滑切換至 Sandbox 避免介面卡死破圖
+                statusLabel.innerText = `CORS/FETCH ERROR. SWITCHING AUTO-SANDBOX SIMULATION...`;
+                setTimeout(() => {
+                    executeSandboxSimulation(url, statusLabel, apiBtn);
+                }, 1000);
+            }
         }
 
-        // ==========================================
-        // PORTFOLIO EXPORT
-        // ==========================================
-        function downloadPortfolio() {
-            const clone = document.documentElement.cloneNode(true);
-            const cloneBody = clone.querySelector('body');
+        // 行銷與沙盒測試專用動態數據跳動生成器
+        function executeSandboxSimulation(url, statusLabel, apiBtn) {
+            const randomTotal = Math.floor(Math.random() * (1600000 - 400000) + 400000);
+            const randomRecords = Math.floor(Math.random() * (25 - 5) + 5);
+            const randomAvg = Math.floor(randomTotal / randomRecords);
+            const randomTrend = (Math.random() * (45 - (-20)) + (-20)).toFixed(1);
+            const randomPeak = Math.floor(randomAvg * (Math.random() * (1.8 - 1.2) + 1.2));
+            const randomMedian = Math.floor(randomAvg * (Math.random() * (1.1 - 0.8) + 0.8));
 
-            // Embed current data
-            const dataScript = document.createElement('script');
-            dataScript.innerText = `
-                (function() {
-                    const savedData = ${JSON.stringify(currentDataset)};
-                    const savedProducts = ${JSON.stringify(products)};
-                    const savedHeroImage = ${JSON.stringify(heroProductImage)};
-                    const savedPrimary = '${selectedPrimaryColor}';
-                    const savedSecondary = '${selectedSecondaryColor}';
-                    const savedBrand = '${document.getElementById('custom-brand').value}';
-                    const savedChartType = '${currentChartType}';
-                    const savedCurrency = '${currencySymbol}';
-                    const savedMetric = '${selectedMetricColumn}';
-                    const savedHeadline = '${document.getElementById('custom-headline').value}';
-                    const savedSubhead = '${document.getElementById('custom-subhead').value}';
-                    const savedTagline = '${document.getElementById('custom-tagline').value}';
-                    const savedBio = ${JSON.stringify(document.getElementById('custom-bio').value)};
+            document.getElementById('m-total').innerText = currencyFormatter.format(randomTotal);
+            document.getElementById('m-average').innerText = currencyFormatter.format(randomAvg);
+            document.getElementById('m-records').innerText = randomRecords;
+            
+            const trendEl = document.getElementById('m-trend');
+            trendEl.innerText = `${randomTrend > 0 ? '+' : ''}${randomTrend}%`;
+            trendEl.className = randomTrend > 0 ? "text-xl font-serif font-bold mt-1 text-emerald-700" : "text-xl font-serif font-bold mt-1 text-heritageRed";
 
-                    function restoreState() {
-                        // Restore products
-                        if (typeof savedProducts !== 'undefined' && savedProducts.length > 0) {
-                            products = savedProducts;
-                            if (typeof renderProductCards === 'function') {
-                                renderProductCards();
-                            }
-                        }
+            document.getElementById('m-peak').innerText = currencyFormatter.format(randomPeak);
+            document.getElementById('m-median').innerText = currencyFormatter.format(randomMedian);
 
-                        // Restore data
-                        if (typeof savedData !== 'undefined' && savedData.length > 0) {
-                            if (typeof processDatabase === 'function') {
-                                processDatabase(savedData, "Embedded Data");
-                            }
-                        }
+            chartDataPoints = Array.from({length: 7}, () => Math.floor(Math.random() * (randomPeak - (randomTotal/50)) + (randomTotal/50)));
+            renderChart(currentChartType);
 
-                        // Restore hero image
-                        if (savedHeroImage) {
-                            const heroImg = document.getElementById('hero-product-image-display');
-                            const heroSvg = document.getElementById('vector-model');
-                            if (heroImg) {
-                                heroImg.src = savedHeroImage;
-                                heroImg.classList.remove('hidden');
-                            }
-                            if (heroSvg) heroSvg.classList.add('hidden');
-                        }
+            document.getElementById('custom-total').value = currencyFormatter.format(randomTotal);
 
-                        // Restore theme
-                        if (typeof setTheme === 'function') {
-                            setTheme('custom', savedPrimary, savedSecondary);
-                        }
+            apiBtn.innerText = "LINKED";
+            apiBtn.disabled = false;
+            const displayUrl = url.length > 30 ? url.substring(0, 27) + "..." : url;
+            statusLabel.innerText = `STATUS: DEMO MOCKED — LISTENING VIA SUITE: ${displayUrl}`;
+            statusLabel.className = "text-emerald-700 font-bold uppercase";
+            setTimeout(() => { apiBtn.innerText = "LINK"; }, 2000);
+        }
 
-                        // Restore chart type
-                        if (savedChartType && typeof setChartType === 'function') {
-                            currentChartType = savedChartType;
-                        }
+        function applyPreset(presetName) {
+            document.getElementById('api-url').value = `https://api.atelier-matrix.io/v3/presets/${presetName.toLowerCase().replace(/\s+/g, '-')}`;
+            connectAPI();
+        }
 
-                        // Restore currency
-                        if (savedCurrency) {
-                            currencySymbol = savedCurrency;
-                        }
-                    }
+        // 5. Secured Serverless AI Request Architecture
+        async function triggerAIAnalysis() {
+            const aiBtn = document.getElementById('ai-btn');
+            const aiOutput = document.getElementById('ai-output');
+            const tone = document.getElementById('ai-tone').value;
+            const totalVal = document.getElementById('m-total').innerText;
 
-                    if (document.readyState === 'loading') {
-                        document.addEventListener('DOMContentLoaded', function() {
-                            setTimeout(restoreState, 300);
-                        });
+            aiBtn.innerText = "ALGORITHMIC PROCESSING...";
+            aiBtn.disabled = true;
+            aiOutput.classList.remove('hidden');
+            aiOutput.innerText = "Connecting to ATELIER Intelligence Engine via Vercel...";
+
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tone: tone, total: totalVal })
+                });
+
+                if (!response.ok) throw new Error('API Endpoint Offline');
+                const result = await response.json();
+                aiOutput.innerText = result.analysis;
+
+            } catch (error) {
+                setTimeout(() => {
+                    if(tone === 'luxury') {
+                        aiOutput.innerHTML = `<strong>[Luxury Engine Mode]</strong><br>The executive summary establishes an elevated performance vector. Capital velocity remains optimized with a total asset baseline scaling gracefully at ${totalVal}.`;
+                    } else if(tone === 'avant-garde') {
+                        aiOutput.innerHTML = `<strong>[Avant-Garde Mode]</strong><br>Breaking traditional paradigms. The metric layout rejects standard industry limits, subverting the expected quarterly trends into a bold statement.`;
                     } else {
-                        setTimeout(restoreState, 300);
+                        aiOutput.innerHTML = `<strong>[Minimalist Mode]</strong><br>Performance stable. Revenue baseline: ${totalVal}. Anomalies: None. System operates within expected parameters.`;
                     }
-                })();
-            `;
-            cloneBody.appendChild(dataScript);
-
-            // Remove customizer for clean client version
-            const drawer = clone.querySelector('#customizer-drawer');
-            const toggleBtn = clone.querySelector('#customizer-nav-btn');
-            const overlay = clone.querySelector('#drawer-overlay');
-            if (drawer) drawer.remove();
-            if (toggleBtn) toggleBtn.remove();
-            if (overlay) overlay.remove();
-
-            const toast = clone.querySelector('#custom-toast');
-            if (toast) toast.remove();
-
-            const finalHtml = "<!DOCTYPE html>\n" + clone.outerHTML;
-            const blob = new Blob([finalHtml], { type: 'text/html;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement('a');
-            a.href = url;
-            const brandName = document.getElementById('custom-brand').value.toLowerCase().replace(/\s+/g, '-');
-            a.download = `${brandName || 'portfolio'}.html`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showToast("Portfolio Exported ✓");
-        }
-
-        // ==========================================
-        // 3D TILT EFFECT (C4D Style)
-        // ==========================================
-        function initTiltEffect() {
-            const cards = document.querySelectorAll('[data-tilt]');
-            
-            cards.forEach(card => {
-                const inner = card.querySelector('.tilt-card-inner');
-                const shine = card.querySelector('.tilt-shine');
-                
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = ((y - centerY) / centerY) * -8;
-                    const rotateY = ((x - centerX) / centerX) * 8;
-                    
-                    if (inner) {
-                        inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px) scale(1.02)`;
-                    }
-                    
-                    if (shine) {
-                        const shineX = (x / rect.width) * 100;
-                        const shineY = (y / rect.height) * 100;
-                        shine.style.background = `radial-gradient(circle at ${shineX}% ${shineY}%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)`;
-                    }
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    if (inner) {
-                        inner.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0) scale(1)';
-                    }
-                    if (shine) {
-                        shine.style.background = 'linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%)';
-                    }
-                });
-            });
-        }
-
-        // ==========================================
-        // 3D TILT EFFECT (C4D Style)
-        // ==========================================
-        function initTiltEffect() {
-            const cards = document.querySelectorAll('[data-tilt]');
-            cards.forEach(card => {
-                const inner = card.querySelector('.tilt-card-inner');
-                const shine = card.querySelector('.tilt-shine');
-                
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = (y - centerY) / centerY * -8;
-                    const rotateY = (x - centerX) / centerX * 8;
-                    
-                    if (inner) {
-                        inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px) scale(1.02)`;
-                    }
-                    
-                    if (shine) {
-                        const shineX = (x / rect.width) * 100;
-                        const shineY = (y / rect.height) * 100;
-                        shine.style.background = `radial-gradient(circle at ${shineX}% ${shineY}%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)`;
-                    }
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    if (inner) {
-                        inner.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0) scale(1)';
-                    }
-                    if (shine) {
-                        shine.style.background = 'linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%)';
-                    }
-                });
-            });
-        }
-
-        // ==========================================
-        // LUXURY CUSTOM CURSOR
-        // ==========================================
-        function initCustomCursor() {
-            const cursor = document.getElementById('custom-cursor');
-            const cursorDot = document.getElementById('custom-cursor-dot');
-            
-            if (!cursor || !cursorDot) return;
-            
-            // Skip on touch devices
-            if ('ontouchstart' in window) return;
-            
-            let mouseX = 0, mouseY = 0;
-            let cursorX = 0, cursorY = 0;
-            let dotX = 0, dotY = 0;
-            
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-            
-            function animate() {
-                // Outer ring — smooth follow
-                cursorX += (mouseX - cursorX) * 0.15;
-                cursorY += (mouseY - cursorY) * 0.15;
-                cursor.style.left = cursorX + 'px';
-                cursor.style.top = cursorY + 'px';
-                
-                // Inner dot — tighter follow
-                dotX += (mouseX - dotX) * 0.35;
-                dotY += (mouseY - dotY) * 0.35;
-                cursorDot.style.left = dotX + 'px';
-                cursorDot.style.top = dotY + 'px';
-                
-                requestAnimationFrame(animate);
+                }, 1200);
+            } finally {
+                setTimeout(() => {
+                    aiBtn.innerText = "GENERATE ANALYSIS";
+                    aiBtn.disabled = false;
+                }, 1200);
             }
-            animate();
-            
-            // Hover effect on interactive elements
-            const hoverElements = document.querySelectorAll('a, button, input, textarea, select, [data-tilt], .product-card');
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-            });
-            
-            // Click effect
-            document.addEventListener('mousedown', () => cursor.classList.add('click'));
-            document.addEventListener('mouseup', () => cursor.classList.remove('click'));
-            
-            // Hide when leaving window
-            document.addEventListener('mouseleave', () => {
-                cursor.style.opacity = '0';
-                cursorDot.style.opacity = '0';
-            });
-            document.addEventListener('mouseenter', () => {
-                cursor.style.opacity = '1';
-                cursorDot.style.opacity = '1';
-            });
         }
 
-        // ==========================================
-        // SCROLL PROGRESS BAR
-        // ==========================================
-        function initScrollProgress() {
-            const progressBar = document.getElementById('scroll-progress');
-            if (!progressBar) return;
+        // 6. Optimized State Hydration & HTML Export Function
+        // 🔥 全面升級：下載時，連同「無代碼映射路徑配置」也一併封裝寫入原始碼
+        function exportBespokeHTML() {
+            const brandInput = document.getElementById('custom-brand');
+            const totalInput = document.getElementById('custom-total');
             
-            window.addEventListener('scroll', () => {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = (scrollTop / docHeight) * 100;
-                progressBar.style.width = progress + '%';
-            });
+            // 抓取所有無代碼映射輸入框
+            const mTotal = document.getElementById('map-total');
+            const mAverage = document.getElementById('map-average');
+            const mRecords = document.getElementById('map-records');
+            const mTrend = document.getElementById('map-trend');
+            const mPeak = document.getElementById('map-peak');
+            const mMedian = document.getElementById('map-median');
+            const mChart = document.getElementById('map-chart');
+
+            // 狀態完全水合化 (State Hydration)
+            brandInput.setAttribute('value', brandInput.value);
+            totalInput.setAttribute('value', totalInput.value);
+            mTotal.setAttribute('value', mTotal.value);
+            mAverage.setAttribute('value', mAverage.value);
+            mRecords.setAttribute('value', mRecords.value);
+            mTrend.setAttribute('value', mTrend.value);
+            mPeak.setAttribute('value', mPeak.value);
+            mMedian.setAttribute('value', mMedian.value);
+            mChart.setAttribute('value', mChart.value);
+
+            document.getElementById('brand-logo-text').innerText = brandInput.value;
+            document.getElementById('m-total').innerText = totalInput.value;
+
+            const customBrand = brandInput.value;
+            let exportedCode = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            exportedCode = exportedCode.replace('translate-x-full', ''); 
+            
+            const blob = new Blob([exportedCode], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${customBrand.toLowerCase().trim().replace(/\s+/g, '-')}-engine.html`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
-        // ==========================================
-        // PARALLAX SCROLL EFFECT
-        // ==========================================
-        function initParallax() {
-            const heroSection = document.getElementById('theme-header-bg');
-            const heroHeadline = document.getElementById('hero-headline');
-            const heroSubhead = document.getElementById('hero-subhead');
-            const heroVisual = document.getElementById('hero-visual-container');
-            
-            if (!heroSection) return;
-            
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                const heroHeight = heroSection.offsetHeight;
-                
-                if (scrollY < heroHeight + 200) {
-                    // Background parallax (slow)
-                    const bgOffset = scrollY * 0.3;
-                    heroSection.style.backgroundPositionY = bgOffset + 'px';
-                    
-                    // Headline parallax (medium)
-                    if (heroHeadline) {
-                        heroHeadline.style.transform = `translateY(${scrollY * 0.15}px)`;
-                        heroHeadline.style.opacity = Math.max(0, 1 - scrollY / 500);
-                    }
-                    
-                    // Subhead parallax (faster)
-                    if (heroSubhead) {
-                        heroSubhead.style.transform = `translateY(${scrollY * 0.25}px)`;
-                        heroSubhead.style.opacity = Math.max(0, 1 - scrollY / 400);
-                    }
-                    
-                    // Visual parallax (slowest, 3D depth)
-                    if (heroVisual) {
-                        heroVisual.style.transform = `translateY(${scrollY * 0.1}px) scale(${1 - scrollY * 0.0003})`;
-                    }
-                }
-            }, { passive: true });
-        }
-
-        // ==========================================
-        // NUMBER COUNTER ANIMATION
-        // ==========================================
-        function initNumberCounters() {
-            const counters = document.querySelectorAll('.metric-value');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !entry.target.dataset.counted) {
-                        entry.target.dataset.counted = 'true';
-                        animateCounter(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            counters.forEach(counter => observer.observe(counter));
-        }
-
-        function animateCounter(element) {
-            const targetText = element.innerText;
-            const numericValue = parseFloat(targetText.replace(/[^0-9.]/g, ''));
-            const suffix = targetText.replace(/[0-9.]/g, '');
-            const prefix = targetText.match(/^[^0-9]*/)?.[0] || '';
-            
-            if (isNaN(numericValue) || numericValue === 0) return;
-            
-            const duration = 1500;
-            const startTime = performance.now();
-            const hasDecimal = targetText.includes('.');
-            const decimalPlaces = hasDecimal ? (targetText.split('.')[1]?.match(/\d/)?.length || 1) : 0;
-            
-            function update(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                // Ease out cubic
-                const eased = 1 - Math.pow(1 - progress, 3);
-                
-                const currentValue = numericValue * eased;
-                
-                let formatted;
-                if (numericValue >= 1000000) {
-                    formatted = (currentValue / 1000000).toFixed(1) + 'M';
-                } else if (numericValue >= 1000) {
-                    formatted = Math.floor(currentValue).toLocaleString();
-                } else if (hasDecimal) {
-                    formatted = currentValue.toFixed(decimalPlaces);
-                } else {
-                    formatted = Math.floor(currentValue).toString();
-                }
-                
-                element.innerText = prefix + formatted + suffix.replace(prefix, '');
-                
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                } else {
-                    element.innerText = targetText;
-                }
-            }
-            
-            requestAnimationFrame(update);
-        }
-
-        // ==========================================
-        // SCROLL REVEAL ANIMATIONS
-        // ==========================================
-        function initRevealAnimations() {
-            const reveals = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                    }
-                });
-            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-            reveals.forEach(el => observer.observe(el));
-        }
-
-        // ==========================================
-        // INITIALIZATION
-        // ==========================================
-        window.addEventListener('DOMContentLoaded', function() {
-            // Render products
-            renderProductConfigs();
-            renderProductCards();
-
-            // Load default dataset
-            loadMockDataset('fashion');
-
-            // Set default theme
-            setTheme('heritage', '#8B0000', '#B89A7B');
-
-            // Init scroll reveals
-            setTimeout(initRevealAnimations, 200);
-        });
-
-        // Also init on load for safety
-        window.onload = function() {
-            initRevealAnimations();
-            if (typeof initTiltEffect === 'function') {
-                initTiltEffect();
-            }
-            // Add glass effect to nav
-            const nav = document.querySelector('nav');
-            if (nav) nav.classList.add('glass-nav');
-            // Add luxury hero background
-            const heroHeader = document.getElementById('theme-header-bg');
-            if (heroHeader) {
-                heroHeader.classList.add('hero-luxury-bg', 'noise-overlay');
-            }
-            // Add metric card hover effects
-            document.querySelectorAll('.metric-card').forEach(card => {
-                card.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-4px)';
-                    this.style.boxShadow = '0 12px 30px rgba(139, 0, 0, 0.1)';
-                });
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = '';
-                });
-            });
-            // Init new premium effects
-            if (typeof initCustomCursor === 'function') initCustomCursor();
-            if (typeof initScrollProgress === 'function') initScrollProgress();
-            if (typeof initParallax === 'function') initParallax();
-            if (typeof initNumberCounters === 'function') initNumberCounters();
-        };
+        // Initialize Chart on Load
+        window.addEventListener('DOMContentLoaded', () => { renderChart('bar'); });
     </script>
 </body>
 </html>
+      
+           
+        
 
-                  
-                       
+       
