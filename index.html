@@ -1,565 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ATELIER — Bespoke Luxury Portfolio, Intelligent Database Connector & Executive Analytics Engine">
-    <title>THE ATELIER | Luxury Portfolio, Database Connector & AI Engine</title>
-
-    <!-- Cross-Platform Optimized Font Loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
-
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        heritageTan: '#B89A7B',
-                        heritageCamel: '#C9A96E',
-                        heritageCream: '#F5EDE0',
-                        heritageRed: '#8B0000',
-                        heritageBlack: '#121212',
-                        heritageCharcoal: '#2A2A2A',
-                        heritageIvory: '#FDF8F2',
-                        heritageStone: '#E8DFD0',
-                        brightBase: '#FDF8F2',
-                    },
-                    fontFamily: {
-                        sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
-                        syne: ['Syne', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif']
-                    }
-                }
-            }
+{
+  "name": "The Algorithmic E-Com Fraud & Vector Analytics Engine (v3.0-Enterprise)",
+  "description": "Enterprise automated cluster incorporating multi-line item mapping, regex phone number flattening, and secure localized ledger synchronization.",
+  "flow": [
+    {
+      "id": 1,
+      "module": "shopify:watchOrders",
+      "version": 3,
+      "parameters": { "status": "paid", "fulfillment_status": "unfulfilled" },
+      "mapper": {},
+      "metadata": { "designer": { "x": 100, "y": 150 } }
+    },
+    {
+      "id": 2,
+      "module": "iterator:lineItemIterator",
+      "version": 1,
+      "parameters": { "array": "{{1.line_items}}" },
+      "mapper": {},
+      "metadata": { "designer": { "x": 280, "y": 150 } }
+    },
+    {
+      "id": 3,
+      "module": "string:regexSanitizer",
+      "version": 2,
+      "parameters": {
+        "text": "{{1.customer.phone}}",
+        "pattern": "^(?:\\+?852)?(?:\\s|-)?(\\d{7})$",
+        "global": true,
+        "insensitive": true
+      },
+      "mapper": {},
+      "metadata": { "designer": { "x": 460, "y": 150 } }
+    },
+    {
+      "id": 4,
+      "module": "router:conditionalRouter",
+      "version": 1,
+      "routes": [
+        {
+          "id": 41,
+          "label": "High-Value Discrepancy Matrix",
+          "filter": {
+            "operator": "AND",
+            "conditions": [
+              { "field": "{{1.total_price}}", "operator": "gte", "value": 250 },
+              { "field": "{{1.billing_address.country_code}}", "operator": "not_equal", "value": "{{1.shipping_address.country_code}}" }
+            ]
+          }
+        },
+        {
+          "id": 42,
+          "label": "Standard Algorithmic Pipeline",
+          "filter": {
+            "operator": "AND",
+            "conditions": [
+              { "field": "{{1.total_price}}", "operator": "lt", "value": 250 }
+            ]
+          }
         }
-    </script>
-
-    <style>
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #FDF8F2; }
-        ::-webkit-scrollbar-thumb { background: #B89A7B; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8B0000; }
-        
-        .burberry-check-subtle {
-            background-image: linear-gradient(90deg, rgba(184,154,123,0.08) 1px, transparent 1px), linear-gradient(rgba(184,154,123,0.08) 1px, transparent 1px);
-            background-size: 40px 40px;
+      ],
+      "metadata": { "designer": { "x": 640, "y": 150 } }
+    },
+    {
+      "id": 5,
+      "module": "openai-gpt-4:createChatCompletion",
+      "version": 2,
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": [
+          { "role": "system", "content": "You are an advanced quantitative financial parser specializing in local currency margins." },
+          { "role": "user", "content": "Process item: {{2.value.title}} priced at {{2.value.price}} {{1.currency}}. Apply an explicit dynamic tax allocation multiplier of 1.05 if destination is non-US, otherwise output raw integers." }
+        ]
+      },
+      "mapper": {},
+      "metadata": { "designer": { "x": 850, "y": 50 } }
+    },
+    {
+      "id": 6,
+      "module": "whatsapp-business-cloud:sendMessage",
+      "version": 1,
+      "parameters": {
+        "messaging_product": "whatsapp",
+        "type": "text",
+        "text": { "body": "{{5.choices[].message.content}}" }
+      },
+      "mapper": { "to": "{{3.result}}" },
+      "metadata": { "designer": { "x": 1050, "y": 50 } }
+    },
+    {
+      "id": 7,
+      "module": "google-sheets:addRow",
+      "version": 4,
+      "parameters": {
+        "values": {
+          "A": "{{1.created_at}}",
+          "B": "🚨 FRAUD ESCALATION BLOCK",
+          "C": "{{2.value.title}} (Qty: {{2.value.quantity}})",
+          "D": "{{1.total_price}}",
+          "E": "Discrepancy: {{1.billing_address.country}} vs {{1.shipping_address.country}}"
         }
-        .glass-nav {
-            background: rgba(253, 248, 242, 0.85) !important;
-            backdrop-filter: blur(20px) saturate(180%) !important;
-            -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-            border-bottom: 1px solid rgba(184, 154, 123, 0.3) !important;
-        }
-        .btn-luxury-premium {
-            background: linear-gradient(180deg, #8B0000 0%, #6B0000 100%);
-            border: 1px solid rgba(201, 169, 110, 0.5);
-        }
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: #8B0000 !important;
-            box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.08);
-        }
-        .custom-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23B89A7B' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-        }
-        .custom-cursor {
-            width: 12px; height: 12px; border: 2px solid #C9A96E; border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
-            mix-blend-mode: difference; transition: width 0.2s, height 0.2s;
-        }
-        .custom-cursor-dot {
-            width: 4px; height: 4px; background: #C9A96E; border-radius: 50%;
-            position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
-        }
-    </style>
-</head>
-<body class="bg-brightBase font-sans text-heritageBlack overflow-x-hidden burberry-check-subtle pt-24">
-
-    <!-- Custom Cursor -->
-    <div class="custom-cursor" id="custom-cursor"></div>
-    <div class="custom-cursor-dot" id="custom-cursor-dot"></div>
-
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full glass-nav z-50">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="logo">
-                <a href="#" class="text-2xl font-serif font-bold tracking-[0.15em] text-heritageBlack">
-                    <span id="brand-logo-text">ATELIER</span>
-                </a>
-            </div>
-            <ul class="hidden md:flex items-center space-x-10">
-                <li><button class="font-medium tracking-[0.15em] text-xs uppercase text-heritageRed border-b border-heritageRed py-2">Home</button></li>
-                <li><button class="font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed py-2">Collection</button></li>
-                <li><button class="font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed py-2">Intelligence</button></li>
-                <li><button class="font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed py-2">Heritage</button></li>
-                <li><button class="font-medium tracking-[0.15em] text-xs uppercase hover:text-heritageRed py-2">Atelier</button></li>
-            </ul>
-            <div>
-                <button onclick="toggleCustomizer()" class="btn-luxury-premium text-heritageCream font-bold text-xs uppercase tracking-[0.15em] py-3 px-6 rounded-sm">
-                    Design Studio
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Dashboard Section -->
-    <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-            
-            <!-- Left Column: API Endpoint Connector -->
-            <div class="border-2 border-heritageBlack p-6 bg-white shadow-[4px_4px_0px_#121212]">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.2em] font-bold mb-2">JOIN LIVE API ENDPOINT</p>
-                <div class="flex gap-2 mb-6">
-                    <input type="text" id="api-url" placeholder="https://api.yourdomain.com/v1/sales" class="flex-1 bg-heritageIvory border border-heritageStone p-2 text-xs font-mono">
-                    <button onclick="connectAPI()" id="api-btn" class="bg-heritageBlack text-white text-xs font-bold uppercase px-4 tracking-wider hover:bg-heritageRed transition-colors whitespace-nowrap">LINK</button>
-                </div>
-
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.2em] font-bold mb-3">QUICK SIMULATION PRESETS</p>
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="applyPreset('E-COMMERCE')" class="bg-heritageBlack text-white text-[10px] font-bold uppercase tracking-widest py-3 hover:bg-heritageRed transition-colors">E-COMMERCE</button>
-                    <button onclick="applyPreset('SAAS GROWTH')" class="bg-heritageBlack text-white text-[10px] font-bold uppercase tracking-widest py-3 hover:bg-heritageRed transition-colors">SAAS GROWTH</button>
-                    <button onclick="applyPreset('FASHION SALES')" class="bg-heritageBlack text-white text-[10px] font-bold uppercase tracking-widest py-3 hover:bg-heritageRed transition-colors">FASHION SALES</button>
-                    <button onclick="applyPreset('INVENTORY')" class="bg-heritageBlack text-white text-[10px] font-bold uppercase tracking-widest py-3 hover:bg-heritageRed transition-colors">INVENTORY</button>
-                </div>
-            </div>
-
-            <!-- Middle Column: Metrics Grid Matrix -->
-            <div class="border-2 border-heritageBlack p-6 bg-white shadow-[4px_4px_0px_#121212] space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
-                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">TOTAL</p>
-                        <p class="text-xl font-serif font-bold mt-1" id="m-total">$786,100</p>
-                    </div>
-                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
-                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">AVERAGE</p>
-                        <p class="text-xl font-serif font-bold mt-1" id="m-average">$112,300</p>
-                    </div>
-                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
-                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">RECORDS</p>
-                        <p class="text-xl font-serif font-bold mt-1" id="m-records">7</p>
-                    </div>
-                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
-                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">TREND</p>
-                        <p class="text-xl font-serif font-bold mt-1 text-heritageRed" id="m-trend">-12.5%</p>
-                    </div>
-                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
-                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">PEAK</p>
-                        <p class="text-xl font-serif font-bold mt-1" id="m-peak">$156,000</p>
-                    </div>
-                    <div class="bg-heritageCream/40 p-4 border border-heritageStone">
-                        <p class="text-[9px] text-zinc-500 uppercase tracking-widest">MEDIAN</p>
-                        <p class="text-xl font-serif font-bold mt-1" id="m-median">$112,000</p>
-                    </div>
-                </div>
-                <div class="pt-2 border-t border-heritageStone flex justify-between items-center text-[10px] font-bold tracking-wider">
-                    <span id="api-status" class="text-emerald-700 uppercase">STATUS: SYSTEM READY — NO LIVE LINK DETECTED</span>
-                </div>
-            </div>
-
-            <!-- Right Column: AI Analysis Engine -->
-            <div class="border-2 border-heritageBlack p-6 bg-white shadow-[4px_4px_0px_#121212] flex flex-col justify-between min-h-[250px]">
-                <div>
-                    <p class="text-[10px] text-heritageTan uppercase tracking-[0.2em] font-bold mb-3">AI EXECUTIVE ANALYSIS</p>
-                    <select id="ai-tone" class="w-full bg-heritageIvory border border-heritageStone p-3 text-xs uppercase font-bold tracking-wider mb-4 custom-select cursor-pointer">
-                        <option value="luxury">Luxury Brand Tone</option>
-                        <option value="avant-garde">Avant-Garde Style</option>
-                        <option value="minimalist">Minimalist Modern</option>
-                    </select>
-                </div>
-                
-                <div>
-                    <div id="ai-output" class="mb-4 p-3 bg-heritageIvory text-xs leading-relaxed border border-dashed border-heritageTan hidden max-h-32 overflow-y-auto"></div>
-                    <button onclick="triggerAIAnalysis()" id="ai-btn" class="w-full bg-heritageRed text-white p-3 text-xs font-bold uppercase tracking-widest hover:bg-heritageBlack transition-colors">
-                        GENERATE ANALYSIS
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bottom Chart Visualization Section -->
-        <div class="border-2 border-heritageBlack p-6 bg-white shadow-[4px_4px_0px_#121212]">
-            <div class="flex justify-between items-center mb-6">
-                <span class="bg-heritageBlack text-white text-[10px] uppercase tracking-widest px-3 py-1 font-bold">DATA VISUALIZATION</span>
-                <div class="flex space-x-1">
-                    <button onclick="changeChartType('bar')" class="border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-heritageRed text-white transition-all" id="btn-bar">BAR</button>
-                    <button onclick="changeChartType('line')" class="border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-white text-heritageBlack hover:bg-heritageCream transition-all" id="btn-line">LINE</button>
-                    <button onclick="changeChartType('doughnut')" class="border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-white text-heritageBlack hover:bg-heritageCream transition-all" id="btn-doughnut">DONUT</button>
-                </div>
-            </div>
-            <div class="h-80 w-full relative">
-                <canvas id="atelierChart"></canvas>
-            </div>
-        </div>
-    </main>
-
-    <!-- Drawer Overlay -->
-    <div id="drawer-overlay" class="fixed inset-0 bg-black/40 z-40 hidden" onclick="toggleCustomizer()"></div>
-
-    <!-- Customizer Drawer -->
-    <div id="customizer-drawer" class="fixed top-0 right-0 h-full w-full max-w-lg bg-heritageBlack text-white z-50 border-l border-heritageCharcoal shadow-2xl transform translate-x-full transition-transform duration-500 flex flex-col">
-        <div class="p-6 border-b border-heritageCharcoal flex justify-between items-center bg-gradient-to-r from-heritageBlack to-heritageCharcoal">
-            <div>
-                <h3 class="font-serif font-bold text-lg tracking-wider text-heritageCream">Design Workspace</h3>
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.2em] mt-1">Bespoke Configuration Suite</p>
-            </div>
-            <button onclick="toggleCustomizer()" class="text-heritageCream hover:text-heritageRed text-2xl font-light transition-colors">&times;</button>
-        </div>
-
-        <div class="flex-1 overflow-y-auto p-6 space-y-6">
-            <!-- Identity Section -->
-            <div>
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Brand Title</label>
-                <input type="text" id="custom-brand" value="ATELIER" oninput="document.getElementById('brand-logo-text').innerText = this.value" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-heritageCream focus:border-heritageRed font-serif text-lg tracking-wider">
-            </div>
-            
-            <!-- Manual Overrides -->
-            <div>
-                <label class="block text-[10px] uppercase tracking-[0.2em] text-heritageCream font-medium mb-2">Total Metrics Manual Value</label>
-                <input type="text" id="custom-total" value="$786,100" oninput="document.getElementById('m-total').innerText = this.value" class="w-full bg-heritageCharcoal border border-zinc-700 p-3 text-white text-sm font-mono">
-            </div>
-
-            <!-- 🔥 NEW FEATURE: NO-CODE FIELD MAPPING ENGINE PANEL -->
-            <div class="pt-4 border-t border-heritageCharcoal space-y-3">
-                <p class="text-[10px] text-heritageTan uppercase tracking-[0.2em] font-bold">🔌 NO-CODE API FIELD MAPPING</p>
-                <p class="text-[11px] text-zinc-400 leading-relaxed">不必修改原始碼。請在下方輸入您的 API JSON 回傳物件的欄位路徑（支援點擊巢狀結構，例如 <span class="text-heritageCamel font-mono">result.summary.total_revenue</span>）：</p>
-                
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Total (總額)</label>
-                        <input type="text" id="map-total" value="total" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
-                    </div>
-                    <div>
-                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Average (平均)</label>
-                        <input type="text" id="map-average" value="average" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
-                    </div>
-                    <div>
-                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Records (筆數)</label>
-                        <input type="text" id="map-records" value="records" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
-                    </div>
-                    <div>
-                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Trend (趨勢%)</label>
-                        <input type="text" id="map-trend" value="trend" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
-                    </div>
-                    <div>
-                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Peak (峰值)</label>
-                        <input type="text" id="map-peak" value="peak" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
-                    </div>
-                    <div>
-                        <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Median (中位數)</label>
-                        <input type="text" id="map-median" value="median" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
-                    </div>
-                </div>
-                <div class="pt-1">
-                    <label class="block text-[9px] uppercase text-zinc-400 tracking-wider mb-1">Chart Data Array Path (圖表陣列路徑)</label>
-                    <input type="text" id="map-chart" value="chartData" class="w-full bg-heritageCharcoal border border-zinc-700 p-2 text-xs text-white font-mono rounded-xs">
-                </div>
-            </div>
-
-            <!-- Export Actions -->
-            <div class="pt-4 border-t border-heritageCharcoal">
-                <p class="text-[10px] text-heritageTan uppercase tracking-widest mb-2">👉 NO MORE LONG URLs</p>
-                <p class="text-[11px] text-zinc-400 mb-4 leading-relaxed">直接將映射設定打包進全新的獨立 HTML 中，客戶雙擊即可直接對接指定 API。</p>
-                <button onclick="exportBespokeHTML()" class="w-full bg-heritageCream text-heritageBlack border-2 border-heritageBlack py-4 font-bold uppercase tracking-widest text-xs hover:bg-heritageRed hover:text-white transition-all">
-                    Export Standalone HTML
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Operational Core Scripts -->
-    <script>
-        // 1. Drawer Controls
-        function toggleCustomizer() {
-            const drawer = document.getElementById('customizer-drawer');
-            const overlay = document.getElementById('drawer-overlay');
-            drawer.classList.toggle('translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
-
-        // 2. Luxury Dynamic Cursor Tracking
-        const cursor = document.getElementById('custom-cursor');
-        const cursorDot = document.getElementById('custom-cursor-dot');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
-        });
-
-        // 3. Chart.js Management
-        let myChart = null;
-        let currentChartType = 'bar';
-        let chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
-        let chartDataPoints = [120000, 150000, 112000, 156000, 134000, 112300, 142000];
-
-        function renderChart(type = 'bar') {
-            currentChartType = type;
-            const ctx = document.getElementById('atelierChart').getContext('2d');
-            if (myChart) { myChart.destroy(); }
-
-            myChart = new Chart(ctx, {
-                type: type,
-                data: {
-                    labels: chartLabels,
-                    datasets: [{
-                        label: 'Executive Performance',
-                        data: chartDataPoints,
-                        backgroundColor: '#8B0000',
-                        borderColor: '#8B0000',
-                        borderWidth: 1.5,
-                        tension: 0.25
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: type === 'doughnut' ? {} : {
-                        y: { grid: { color: '#E8DFD0' }, ticks: { font: { family: 'Space Grotesk', size: 10 } } },
-                        x: { grid: { display: false }, ticks: { font: { family: 'Space Grotesk', size: 10 } } }
-                    }
-                }
-            });
-        }
-
-        function changeChartType(type) {
-            renderChart(type);
-            ['bar', 'line', 'doughnut'].forEach(t => {
-                const btn = document.getElementById(`btn-${t}`);
-                if (btn) {
-                    btn.className = t === type 
-                        ? "border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-heritageRed text-white transition-all"
-                        : "border border-heritageBlack px-4 py-1 text-[10px] font-bold uppercase tracking-wider bg-white text-heritageBlack hover:bg-heritageCream transition-all";
-                }
-            });
-        }
-
-        // 4. 🔥 CORE ENGINE: OBJECT PATH RESOLVER (無代碼映射演算法)
-        // 允許使用者利用 'result.data.total' 這種字串點擊路徑，安全遞迴讀取巢狀物件深度節點
-        function getValueByPath(obj, path) {
-            if (!path || !obj) return undefined;
-            return path.split('.').reduce((acc, part) => acc && acc[part], obj);
-        }
-
-        const currencyFormatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-
-        async function connectAPI() {
-            const urlInput = document.getElementById('api-url');
-            const apiBtn = document.getElementById('api-btn');
-            const statusLabel = document.getElementById('api-status');
-
-            const url = urlInput.value.trim();
-
-            apiBtn.innerText = "LINKING...";
-            apiBtn.disabled = true;
-            statusLabel.innerText = "STATUS: INITIALIZING NO-CODE MAPPING MATRIX...";
-            statusLabel.className = "text-amber-700 font-bold uppercase animate-pulse";
-
-            // 判斷邏輯：如果不是真實的網址，則執行高階「行銷展示用」模擬跳動數據
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                setTimeout(() => {
-                    executeSandboxSimulation(url || "https://api.luxury-retail.com/demo", statusLabel, apiBtn);
-                }, 1200);
-                return;
-            }
-
-            // 真實連線模式：利用無代碼映射路徑抓取真實後端 API 資料
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP Session Failed (${response.status})`);
-                const data = await response.json();
-
-                // 從使用者介面的配置框讀取特定的 JSON 物件欄位映射路徑
-                const pathTotal = document.getElementById('map-total').value;
-                const pathAverage = document.getElementById('map-average').value;
-                const pathRecords = document.getElementById('map-records').value;
-                const pathTrend = document.getElementById('map-trend').value;
-                const pathPeak = document.getElementById('map-peak').value;
-                const pathMedian = document.getElementById('map-median').value;
-                const pathChart = document.getElementById('map-chart').value;
-
-                // 執行動態路徑解算
-                const rawTotal = getValueByPath(data, pathTotal) ?? 0;
-                const rawAverage = getValueByPath(data, pathAverage) ?? 0;
-                const rawRecords = getValueByPath(data, pathRecords) ?? 0;
-                const rawTrend = getValueByPath(data, pathTrend) ?? 0;
-                const rawPeak = getValueByPath(data, pathPeak) ?? 0;
-                const rawMedian = getValueByPath(data, pathMedian) ?? 0;
-                const rawChart = getValueByPath(data, pathChart) ?? [];
-
-                // 渲染更新主矩陣
-                document.getElementById('m-total').innerText = typeof rawTotal === 'number' ? currencyFormatter.format(rawTotal) : rawTotal;
-                document.getElementById('m-average').innerText = typeof rawAverage === 'number' ? currencyFormatter.format(rawAverage) : rawAverage;
-                document.getElementById('m-records').innerText = rawRecords;
-                document.getElementById('m-peak').innerText = typeof rawPeak === 'number' ? currencyFormatter.format(rawPeak) : rawPeak;
-                document.getElementById('m-median').innerText = typeof rawMedian === 'number' ? currencyFormatter.format(rawMedian) : rawMedian;
-
-                const trendEl = document.getElementById('m-trend');
-                trendEl.innerText = typeof rawTrend === 'number' ? `${rawTrend > 0 ? '+' : ''}${rawTrend}%` : rawTrend;
-                trendEl.className = parseFloat(rawTrend) >= 0 ? "text-xl font-serif font-bold mt-1 text-emerald-700" : "text-xl font-serif font-bold mt-1 text-heritageRed";
-
-                // 圖表動態同步
-                if (Array.isArray(rawChart) && rawChart.length > 0) {
-                    chartDataPoints = rawChart;
-                    renderChart(currentChartType);
-                }
-
-                // 備份輸入狀態
-                document.getElementById('custom-total').value = document.getElementById('m-total').innerText;
-
-                apiBtn.innerText = "SUCCESS";
-                statusLabel.innerText = `STATUS: LIVE ACTIVE — MAPPED TO REMOTE RESOURCE`;
-                statusLabel.className = "text-emerald-700 font-bold uppercase";
-                
-                setTimeout(() => { apiBtn.innerText = "LINK"; }, 2000);
-
-            } catch (error) {
-                // 如果客戶輸入的真實 API 因為跨網域 (CORS) 或掛掉，自動平滑切換至 Sandbox 避免介面卡死破圖
-                statusLabel.innerText = `CORS/FETCH ERROR. SWITCHING AUTO-SANDBOX SIMULATION...`;
-                setTimeout(() => {
-                    executeSandboxSimulation(url, statusLabel, apiBtn);
-                }, 1000);
-            }
-        }
-
-        // 行銷與沙盒測試專用動態數據跳動生成器
-        function executeSandboxSimulation(url, statusLabel, apiBtn) {
-            const randomTotal = Math.floor(Math.random() * (1600000 - 400000) + 400000);
-            const randomRecords = Math.floor(Math.random() * (25 - 5) + 5);
-            const randomAvg = Math.floor(randomTotal / randomRecords);
-            const randomTrend = (Math.random() * (45 - (-20)) + (-20)).toFixed(1);
-            const randomPeak = Math.floor(randomAvg * (Math.random() * (1.8 - 1.2) + 1.2));
-            const randomMedian = Math.floor(randomAvg * (Math.random() * (1.1 - 0.8) + 0.8));
-
-            document.getElementById('m-total').innerText = currencyFormatter.format(randomTotal);
-            document.getElementById('m-average').innerText = currencyFormatter.format(randomAvg);
-            document.getElementById('m-records').innerText = randomRecords;
-            
-            const trendEl = document.getElementById('m-trend');
-            trendEl.innerText = `${randomTrend > 0 ? '+' : ''}${randomTrend}%`;
-            trendEl.className = randomTrend > 0 ? "text-xl font-serif font-bold mt-1 text-emerald-700" : "text-xl font-serif font-bold mt-1 text-heritageRed";
-
-            document.getElementById('m-peak').innerText = currencyFormatter.format(randomPeak);
-            document.getElementById('m-median').innerText = currencyFormatter.format(randomMedian);
-
-            chartDataPoints = Array.from({length: 7}, () => Math.floor(Math.random() * (randomPeak - (randomTotal/50)) + (randomTotal/50)));
-            renderChart(currentChartType);
-
-            document.getElementById('custom-total').value = currencyFormatter.format(randomTotal);
-
-            apiBtn.innerText = "LINKED";
-            apiBtn.disabled = false;
-            const displayUrl = url.length > 30 ? url.substring(0, 27) + "..." : url;
-            statusLabel.innerText = `STATUS: DEMO MOCKED — LISTENING VIA SUITE: ${displayUrl}`;
-            statusLabel.className = "text-emerald-700 font-bold uppercase";
-            setTimeout(() => { apiBtn.innerText = "LINK"; }, 2000);
-        }
-
-        function applyPreset(presetName) {
-            document.getElementById('api-url').value = `https://api.atelier-matrix.io/v3/presets/${presetName.toLowerCase().replace(/\s+/g, '-')}`;
-            connectAPI();
-        }
-
-        // 5. Secured Serverless AI Request Architecture
-        async function triggerAIAnalysis() {
-            const aiBtn = document.getElementById('ai-btn');
-            const aiOutput = document.getElementById('ai-output');
-            const tone = document.getElementById('ai-tone').value;
-            const totalVal = document.getElementById('m-total').innerText;
-
-            aiBtn.innerText = "ALGORITHMIC PROCESSING...";
-            aiBtn.disabled = true;
-            aiOutput.classList.remove('hidden');
-            aiOutput.innerText = "Connecting to ATELIER Intelligence Engine via Vercel...";
-
-            try {
-                const response = await fetch('/api/analyze', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tone: tone, total: totalVal })
-                });
-
-                if (!response.ok) throw new Error('API Endpoint Offline');
-                const result = await response.json();
-                aiOutput.innerText = result.analysis;
-
-            } catch (error) {
-                setTimeout(() => {
-                    if(tone === 'luxury') {
-                        aiOutput.innerHTML = `<strong>[Luxury Engine Mode]</strong><br>The executive summary establishes an elevated performance vector. Capital velocity remains optimized with a total asset baseline scaling gracefully at ${totalVal}.`;
-                    } else if(tone === 'avant-garde') {
-                        aiOutput.innerHTML = `<strong>[Avant-Garde Mode]</strong><br>Breaking traditional paradigms. The metric layout rejects standard industry limits, subverting the expected quarterly trends into a bold statement.`;
-                    } else {
-                        aiOutput.innerHTML = `<strong>[Minimalist Mode]</strong><br>Performance stable. Revenue baseline: ${totalVal}. Anomalies: None. System operates within expected parameters.`;
-                    }
-                }, 1200);
-            } finally {
-                setTimeout(() => {
-                    aiBtn.innerText = "GENERATE ANALYSIS";
-                    aiBtn.disabled = false;
-                }, 1200);
-            }
-        }
-
-        // 6. Optimized State Hydration & HTML Export Function
-        // 🔥 全面升級：下載時，連同「無代碼映射路徑配置」也一併封裝寫入原始碼
-        function exportBespokeHTML() {
-            const brandInput = document.getElementById('custom-brand');
-            const totalInput = document.getElementById('custom-total');
-            
-            // 抓取所有無代碼映射輸入框
-            const mTotal = document.getElementById('map-total');
-            const mAverage = document.getElementById('map-average');
-            const mRecords = document.getElementById('map-records');
-            const mTrend = document.getElementById('map-trend');
-            const mPeak = document.getElementById('map-peak');
-            const mMedian = document.getElementById('map-median');
-            const mChart = document.getElementById('map-chart');
-
-            // 狀態完全水合化 (State Hydration)
-            brandInput.setAttribute('value', brandInput.value);
-            totalInput.setAttribute('value', totalInput.value);
-            mTotal.setAttribute('value', mTotal.value);
-            mAverage.setAttribute('value', mAverage.value);
-            mRecords.setAttribute('value', mRecords.value);
-            mTrend.setAttribute('value', mTrend.value);
-            mPeak.setAttribute('value', mPeak.value);
-            mMedian.setAttribute('value', mMedian.value);
-            mChart.setAttribute('value', mChart.value);
-
-            document.getElementById('brand-logo-text').innerText = brandInput.value;
-            document.getElementById('m-total').innerText = totalInput.value;
-
-            const customBrand = brandInput.value;
-            let exportedCode = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-            exportedCode = exportedCode.replace('translate-x-full', ''); 
-            
-            const blob = new Blob([exportedCode], { type: 'text/html' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `${customBrand.toLowerCase().trim().replace(/\s+/g, '-')}-engine.html`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // Initialize Chart on Load
-        window.addEventListener('DOMContentLoaded', () => { renderChart('bar'); });
-    </script>
-</body>
-</html>
-      
-           
-        
-
-       
+      },
+      "mapper": {},
+      "metadata": { "designer": { "x": 850, "y": 280 } }
+    }
+  ],
+  "connections": {
+    "1-2": { "from": 1, "to": 2, "type": "data" },
+    "2-3": { "from": 2, "to": 3, "type": "data" },
+    "3-4": { "from": 3, "to": 4, "type": "data" },
+    "4-5": { "from": 4, "to": 5, "type": "data", "route_id": 42 },
+    "5-6": { "from": 5, "to": 6, "type": "data" },
+    "4-7": { "from": 4, "to": 7, "type": "data", "route_id": 41 }
+  }
+}
