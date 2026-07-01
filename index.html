@@ -1,114 +1,839 @@
-{
-  "name": "The Algorithmic E-Com Fraud & Vector Analytics Engine (v3.0-Enterprise)",
-  "description": "Enterprise automated cluster incorporating multi-line item mapping, regex phone number flattening, and secure localized ledger synchronization.",
-  "flow": [
-    {
-      "id": 1,
-      "module": "shopify:watchOrders",
-      "version": 3,
-      "parameters": { "status": "paid", "fulfillment_status": "unfulfilled" },
-      "mapper": {},
-      "metadata": { "designer": { "x": 100, "y": 150 } }
-    },
-    {
-      "id": 2,
-      "module": "iterator:lineItemIterator",
-      "version": 1,
-      "parameters": { "array": "{{1.line_items}}" },
-      "mapper": {},
-      "metadata": { "designer": { "x": 280, "y": 150 } }
-    },
-    {
-      "id": 3,
-      "module": "string:regexSanitizer",
-      "version": 2,
-      "parameters": {
-        "text": "{{1.customer.phone}}",
-        "pattern": "^(?:\\+?852)?(?:\\s|-)?(\\d{7})$",
-        "global": true,
-        "insensitive": true
-      },
-      "mapper": {},
-      "metadata": { "designer": { "x": 460, "y": 150 } }
-    },
-    {
-      "id": 4,
-      "module": "router:conditionalRouter",
-      "version": 1,
-      "routes": [
-        {
-          "id": 41,
-          "label": "High-Value Discrepancy Matrix",
-          "filter": {
-            "operator": "AND",
-            "conditions": [
-              { "field": "{{1.total_price}}", "operator": "gte", "value": 250 },
-              { "field": "{{1.billing_address.country_code}}", "operator": "not_equal", "value": "{{1.shipping_address.country_code}}" }
-            ]
-          }
-        },
-        {
-          "id": 42,
-          "label": "Standard Algorithmic Pipeline",
-          "filter": {
-            "operator": "AND",
-            "conditions": [
-              { "field": "{{1.total_price}}", "operator": "lt", "value": 250 }
-            ]
-          }
-        }
-      ],
-      "metadata": { "designer": { "x": 640, "y": 150 } }
-    },
-    {
-      "id": 5,
-      "module": "openai-gpt-4:createChatCompletion",
-      "version": 2,
-      "parameters": {
-        "model": "gpt-4o",
-        "messages": [
-          { "role": "system", "content": "You are an advanced quantitative financial parser specializing in local currency margins." },
-          { "role": "user", "content": "Process item: {{2.value.title}} priced at {{2.value.price}} {{1.currency}}. Apply an explicit dynamic tax allocation multiplier of 1.05 if destination is non-US, otherwise output raw integers." }
-        ]
-      },
-      "mapper": {},
-      "metadata": { "designer": { "x": 850, "y": 50 } }
-    },
-    {
-      "id": 6,
-      "module": "whatsapp-business-cloud:sendMessage",
-      "version": 1,
-      "parameters": {
-        "messaging_product": "whatsapp",
-        "type": "text",
-        "text": { "body": "{{5.choices[].message.content}}" }
-      },
-      "mapper": { "to": "{{3.result}}" },
-      "metadata": { "designer": { "x": 1050, "y": 50 } }
-    },
-    {
-      "id": 7,
-      "module": "google-sheets:addRow",
-      "version": 4,
-      "parameters": {
-        "values": {
-          "A": "{{1.created_at}}",
-          "B": "🚨 FRAUD ESCALATION BLOCK",
-          "C": "{{2.value.title}} (Qty: {{2.value.quantity}})",
-          "D": "{{1.total_price}}",
-          "E": "Discrepancy: {{1.billing_address.country}} vs {{1.shipping_address.country}}"
-        }
-      },
-      "mapper": {},
-      "metadata": { "designer": { "x": 850, "y": 280 } }
-    }
-  ],
-  "connections": {
-    "1-2": { "from": 1, "to": 2, "type": "data" },
-    "2-3": { "from": 2, "to": 3, "type": "data" },
-    "3-4": { "from": 3, "to": 4, "type": "data" },
-    "4-5": { "from": 4, "to": 5, "type": "data", "route_id": 42 },
-    "5-6": { "from": 5, "to": 6, "type": "data" },
-    "4-7": { "from": 4, "to": 7, "type": "data", "route_id": 41 }
-  }
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Acme • Enterprise Dashboard</title>
+<style>
+/* ============================================================
+   1. DESIGN TOKENS  (CSS Custom Properties)
+   ============================================================ */
+:root {
+  /* Color palette — brand */
+  --primary-50:#eef2ff; --primary-100:#e0e7ff; --primary-300:#a5b4fc;
+  --primary-500:#6366f1; --primary-600:#4f46e5; --primary-700:#4338ca;
+  --secondary-500:#8b5cf6; --secondary-600:#7c3aed;
+  /* Semantic */
+  --success-500:#10b981; --success-bg:#ecfdf5;
+  --warning-500:#f59e0b; --warning-bg:#fffbeb;
+  --danger-500:#ef4444;  --danger-bg:#fef2f2;
+  --info-500:#0ea5e9;    --info-bg:#f0f9ff;
+  /* Surfaces & text (LIGHT defaults) */
+  --bg:#f6f7fb; --surface:#ffffff; --surface-2:#f9fafb;
+  --border:#e5e7eb; --border-strong:#d1d5db;
+  --text:#111827; --text-muted:#6b7280; --text-soft:#9ca3af;
+  --sidebar-bg:#0f172a; --sidebar-text:#cbd5e1; --sidebar-active:#1e293b;
+  /* Typography */
+  --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --fs-xs:0.75rem; --fs-sm:0.875rem; --fs-md:1rem; --fs-lg:1.125rem;
+  --fs-xl:1.375rem; --fs-2xl:1.75rem; --fs-3xl:2.25rem;
+  --fw-normal:400; --fw-medium:500; --fw-semibold:600; --fw-bold:700;
+  --lh-tight:1.2; --lh-normal:1.5;
+  /* Spacing scale */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px;
+  --sp-6:24px; --sp-8:32px; --sp-10:40px; --sp-12:48px;
+  /* Radii */
+  --r-sm:6px; --r-md:10px; --r-lg:14px; --r-xl:20px; --r-full:999px;
+  /* Shadows */
+  --shadow-xs:0 1px 2px rgba(16,24,40,.05);
+  --shadow-sm:0 1px 3px rgba(16,24,40,.1),0 1px 2px rgba(16,24,40,.06);
+  --shadow-md:0 4px 12px rgba(16,24,40,.08);
+  --shadow-lg:0 12px 32px rgba(16,24,40,.14);
+  /* Z-index scale */
+  --z-sidebar:100; --z-topbar:90; --z-dropdown:200;
+  --z-overlay:900; --z-modal:1000; --z-toast:1100;
+  /* Motion */
+  --ease:cubic-bezier(.4,0,.2,1); --dur:.25s;
+  --sidebar-w:264px;
 }
+
+/* DARK MODE overrides */
+[data-theme="dark"] {
+  --bg:#0b1120; --surface:#111827; --surface-2:#1a2333;
+  --border:#1f2937; --border-strong:#334155;
+  --text:#f1f5f9; --text-muted:#94a3b8; --text-soft:#64748b;
+  --sidebar-bg:#020617; --sidebar-text:#94a3b8; --sidebar-active:#1e293b;
+  --primary-50:#1e1b4b; --primary-100:#312e81;
+  --success-bg:#052e2b; --warning-bg:#3a2a05; --danger-bg:#3b0d0d; --info-bg:#082f49;
+  --shadow-md:0 4px 12px rgba(0,0,0,.4);
+  --shadow-lg:0 12px 32px rgba(0,0,0,.55);
+}
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{
+  font-family:var(--font-sans);color:var(--text);background:var(--bg);
+  line-height:var(--lh-normal);-webkit-font-smoothing:antialiased;
+  transition:background var(--dur) var(--ease),color var(--dur) var(--ease);
+}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font-family:inherit;font-size:var(--fs-sm)}
+
+/* ============================================================
+   3. UTILITY CLASSES  (Tailwind-style)
+   ============================================================ */
+/* display / flex / grid */
+.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}
+.hidden{display:none!important}.block{display:block}
+.items-center{align-items:center}.items-start{align-items:flex-start}
+.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.justify-end{justify-content:flex-end}.flex-col{flex-direction:column}
+.flex-wrap{flex-wrap:wrap}.flex-1{flex:1}.gap-1{gap:4px}.gap-2{gap:8px}
+.gap-3{gap:12px}.gap-4{gap:16px}.gap-6{gap:24px}
+.grid-2{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+/* spacing */
+.m-0{margin:0}.mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-4{margin-top:16px}
+.mt-6{margin-top:24px}.mb-1{margin-bottom:4px}.mb-2{margin-bottom:8px}
+.mb-4{margin-bottom:16px}.mb-6{margin-bottom:24px}.ml-auto{margin-left:auto}
+.p-2{padding:8px}.p-3{padding:12px}.p-4{padding:16px}.p-6{padding:24px}
+.px-3{padding:0 12px}.py-2{padding:8px 0}
+/* typography */
+.text-xs{font-size:var(--fs-xs)}.text-sm{font-size:var(--fs-sm)}
+.text-md{font-size:var(--fs-md)}.text-lg{font-size:var(--fs-lg)}
+.text-xl{font-size:var(--fs-xl)}.text-2xl{font-size:var(--fs-2xl)}
+.font-medium{font-weight:var(--fw-medium)}.font-semibold{font-weight:var(--fw-semibold)}
+.font-bold{font-weight:var(--fw-bold)}.text-muted{color:var(--text-muted)}
+.text-soft{color:var(--text-soft)}.text-center{text-align:center}
+.uppercase{text-transform:uppercase;letter-spacing:.05em}
+.w-full{width:100%}.rounded{border-radius:var(--r-md)}.rounded-full{border-radius:var(--r-full)}
+.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ============================================================
+   4. LAYOUT SHELL
+   ============================================================ */
+#app{display:flex;min-height:100vh}
+
+/* --- Sidebar --- */
+.sidebar{
+  width:var(--sidebar-w);background:var(--sidebar-bg);color:var(--sidebar-text);
+  display:flex;flex-direction:column;position:fixed;inset:0 auto 0 0;
+  z-index:var(--z-sidebar);transition:transform var(--dur) var(--ease);
+}
+.sidebar-brand{display:flex;align-items:center;gap:10px;padding:20px 22px;color:#fff}
+.brand-logo{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--primary-500),var(--secondary-500));font-weight:700}
+.brand-name{font-size:var(--fs-lg);font-weight:700}
+.nav{flex:1;overflow-y:auto;padding:8px 12px}
+.nav-section{margin-top:14px;padding:0 10px 6px;font-size:var(--fs-xs);
+  text-transform:uppercase;letter-spacing:.08em;color:var(--text-soft)}
+.nav-link{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);
+  color:var(--sidebar-text);font-size:var(--fs-sm);font-weight:500;cursor:pointer;
+  transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.nav-link:hover{background:var(--sidebar-active);color:#fff}
+.nav-link.active{background:linear-gradient(90deg,var(--primary-600),var(--secondary-600));color:#fff}
+.nav-link .ico{width:20px;text-align:center}
+/* Accordion nested menu */
+.nav-group>.nav-link .chevron{margin-left:auto;transition:transform var(--dur) var(--ease);font-size:.7rem}
+.nav-group.open>.nav-link .chevron{transform:rotate(90deg)}
+.nav-sub{max-height:0;overflow:hidden;transition:max-height var(--dur) var(--ease);
+  padding-left:20px;display:flex;flex-direction:column;gap:2px}
+.nav-group.open .nav-sub{max-height:320px;margin-top:2px}
+.nav-sub .nav-link{padding:8px 12px;font-size:var(--fs-sm);font-weight:400}
+
+/* --- Main --- */
+.main{flex:1;margin-left:var(--sidebar-w);display:flex;flex-direction:column;min-width:0}
+.topbar{position:sticky;top:0;z-index:var(--z-topbar);display:flex;align-items:center;
+  gap:16px;padding:12px 24px;background:var(--surface);border-bottom:1px solid var(--border)}
+.icon-btn{width:40px;height:40px;border-radius:var(--r-md);display:grid;place-items:center;
+  color:var(--text-muted);transition:background var(--dur) var(--ease)}
+.icon-btn:hover{background:var(--surface-2);color:var(--text)}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--surface-2);
+  border:1px solid var(--border);border-radius:var(--r-full);padding:8px 14px;max-width:340px;flex:1}
+.search-box input{border:none;background:none;outline:none;color:var(--text);width:100%}
+.hamburger{display:none}
+.content{padding:28px 24px;flex:1}
+.page-view{display:none;animation:fadeIn .3s var(--ease)}
+.page-view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.page-head{margin-bottom:24px}
+.page-title{font-size:var(--fs-2xl);font-weight:700}
+.page-sub{color:var(--text-muted);margin-top:4px}
+
+/* ============================================================
+   5. COMPONENTS
+   ============================================================ */
+/* Cards & stats */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm)}
+.card-pad{padding:20px}
+.stat{padding:20px;display:flex;flex-direction:column;gap:6px}
+.stat-top{display:flex;align-items:center;justify-content:space-between}
+.stat-ico{width:42px;height:42px;border-radius:var(--r-md);display:grid;place-items:center;font-size:1.1rem}
+.stat-val{font-size:var(--fs-2xl);font-weight:700}
+.trend{font-size:var(--fs-xs);font-weight:600;display:inline-flex;gap:4px;align-items:center}
+.trend.up{color:var(--success-500)}.trend.down{color:var(--danger-500)}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 16px;
+  border-radius:var(--r-md);font-size:var(--fs-sm);font-weight:600;
+  transition:filter var(--dur) var(--ease),background var(--dur) var(--ease);border:1px solid transparent}
+.btn:hover{filter:brightness(.96)}
+.btn-primary{background:var(--primary-600);color:#fff}
+.btn-secondary{background:var(--surface-2);color:var(--text);border-color:var(--border)}
+.btn-danger{background:var(--danger-500);color:#fff}
+.btn-ghost{background:transparent;color:var(--text-muted)}
+.btn-ghost:hover{background:var(--surface-2)}
+.btn-sm{padding:6px 12px;font-size:var(--fs-xs)}
+/* Badges */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:var(--r-full);
+  font-size:var(--fs-xs);font-weight:600}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.badge-active{color:var(--success-500);background:var(--success-bg)}
+.badge-pending{color:var(--warning-500);background:var(--warning-bg)}
+.badge-churned{color:var(--danger-500);background:var(--danger-bg)}
+/* Form fields */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.field label{font-size:var(--fs-sm);font-weight:500;color:var(--text)}
+.input{display:flex;align-items:center;gap:8px;background:var(--surface);
+  border:1px solid var(--border-strong);border-radius:var(--r-md);padding:10px 12px;
+  transition:border-color var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
+.input:focus-within{border-color:var(--primary-500);box-shadow:0 0 0 3px var(--primary-100)}
+.input input,.input select{border:none;outline:none;background:none;width:100%;color:var(--text)}
+/* Toggle switch */
+.switch{position:relative;width:44px;height:24px;flex:none}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:var(--border-strong);border-radius:var(--r-full);
+  transition:background var(--dur) var(--ease)}
+.slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;top:3px;
+  background:#fff;border-radius:50%;transition:transform var(--dur) var(--ease)}
+.switch input:checked+.slider{background:var(--primary-600)}
+.switch input:checked+.slider::before{transform:translateX(20px)}
+
+/* ============================================================
+   6. DATA TABLE
+   ============================================================ */
+.table-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.select{background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--r-md);
+  padding:9px 12px;color:var(--text);outline:none}
+.bulk-toolbar{display:none;align-items:center;gap:12px;padding:10px 16px;margin-bottom:14px;
+  background:var(--primary-50);border:1px solid var(--primary-300);border-radius:var(--r-md)}
+.bulk-toolbar.show{display:flex}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--r-lg)}
+table{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
+thead th{text-align:left;padding:12px 16px;background:var(--surface-2);color:var(--text-muted);
+  font-weight:600;font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.04em;
+  border-bottom:1px solid var(--border)}
+tbody td{padding:14px 16px;border-bottom:1px solid var(--border)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background var(--dur) var(--ease)}
+tbody tr:hover{background:var(--surface-2)}
+tbody tr.selected{background:var(--primary-50)}
+.cust{display:flex;align-items:center;gap:10px}
+.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:600;
+  font-size:var(--fs-xs);color:#fff;background:linear-gradient(135deg,var(--primary-500),var(--secondary-500))}
+.mrr-cell{cursor:pointer;border-radius:var(--r-sm);padding:2px 6px;transition:background var(--dur) var(--ease)}
+.mrr-cell:hover{background:var(--primary-50);outline:1px dashed var(--primary-300)}
+.mrr-input{width:90px;padding:4px 8px;border:1px solid var(--primary-500);border-radius:var(--r-sm);
+  outline:none;background:var(--surface);color:var(--text)}
+.pagination{display:flex;align-items:center;justify-content:space-between;margin-top:16px;flex-wrap:wrap;gap:10px}
+.pager{display:flex;gap:4px}
+.pager button{min-width:34px;height:34px;border-radius:var(--r-md);border:1px solid var(--border);
+  background:var(--surface);color:var(--text);font-size:var(--fs-sm);transition:all var(--dur) var(--ease)}
+.pager button:hover:not(:disabled){border-color:var(--primary-500);color:var(--primary-600)}
+.pager button.active{background:var(--primary-600);color:#fff;border-color:var(--primary-600)}
+.pager button:disabled{opacity:.4;cursor:not-allowed}
+
+/* ============================================================
+   7. DROPDOWN / MODAL / TOASTS
+   ============================================================ */
+.dropdown{position:relative}
+.dropdown-menu{position:absolute;right:0;top:calc(100% + 8px);min-width:220px;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);
+  z-index:var(--z-dropdown);padding:8px;opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity var(--dur) var(--ease),transform var(--dur) var(--ease),visibility var(--dur)}
+.dropdown.open .dropdown-menu{opacity:1;visibility:visible;transform:none}
+.dropdown-head{display:flex;align-items:center;gap:10px;padding:8px;border-bottom:1px solid var(--border);margin-bottom:6px}
+.dropdown-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r-md);
+  font-size:var(--fs-sm);color:var(--text);cursor:pointer;width:100%;text-align:left}
+.dropdown-item:hover{background:var(--surface-2)}
+.dropdown-item.danger{color:var(--danger-500)}
+
+.overlay{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(3px);
+  z-index:var(--z-overlay);display:none;align-items:center;justify-content:center;padding:20px}
+.overlay.open{display:flex;animation:fadeIn .2s var(--ease)}
+.modal{background:var(--surface);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);
+  width:100%;max-width:480px;overflow:hidden;transform:scale(.94);opacity:0;
+  transition:transform var(--dur) var(--ease),opacity var(--dur) var(--ease)}
+.overlay.open .modal{transform:scale(1);opacity:1}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;
+  border-bottom:1px solid var(--border)}
+.modal-title{font-size:var(--fs-lg);font-weight:700}
+.modal-body{padding:22px}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 22px;
+  border-top:1px solid var(--border);background:var(--surface-2)}
+
+.toast-stack{position:fixed;top:20px;right:20px;z-index:var(--z-toast);display:flex;
+  flex-direction:column;gap:12px}
+.toast{display:flex;align-items:center;gap:12px;min-width:300px;max-width:380px;padding:14px 16px;
+  background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--text-muted);
+  border-radius:var(--r-md);box-shadow:var(--shadow-lg);position:relative;overflow:hidden;
+  animation:toastIn .3s var(--ease)}
+.toast.success{border-left-color:var(--success-500)}
+.toast.error{border-left-color:var(--danger-500)}
+.toast.info{border-left-color:var(--info-500)}
+.toast .t-icon{font-size:1.1rem}
+.toast.success .t-icon{color:var(--success-500)}
+.toast.error .t-icon{color:var(--danger-500)}
+.toast.info .t-icon{color:var(--info-500)}
+.toast .progress{position:absolute;bottom:0;left:0;height:3px;width:100%;background:currentColor;
+  opacity:.5;animation:toastProgress 3s linear forwards}
+.toast.success .progress{color:var(--success-500)}
+.toast.error .progress{color:var(--danger-500)}
+.toast.info .progress{color:var(--info-500)}
+.toast.leaving{animation:toastOut .3s var(--ease) forwards}
+@keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateX(40px)}}
+@keyframes toastProgress{from{width:100%}to{width:0}}
+
+/* ============================================================
+   8. SETTINGS VIEW
+   ============================================================ */
+.settings-grid{display:grid;grid-template-columns:220px 1fr;gap:24px}
+.vtabs{display:flex;flex-direction:column;gap:4px}
+.vtab{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:var(--r-md);
+  color:var(--text-muted);font-size:var(--fs-sm);font-weight:500;cursor:pointer;text-align:left}
+.vtab:hover{background:var(--surface-2);color:var(--text)}
+.vtab.active{background:var(--primary-50);color:var(--primary-600);font-weight:600}
+.settings-panel{display:none}.settings-panel.active{display:block;animation:fadeIn .25s var(--ease)}
+.avatar-upload{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.avatar-lg{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:1.5rem;
+  font-weight:700;color:#fff;background:linear-gradient(135deg,var(--primary-500),var(--secondary-500))}
+.pref-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.pref-row:last-child{border-bottom:none}
+
+/* ============================================================
+   9. AUTH VIEW (split screen)
+   ============================================================ */
+.auth-screen.active{display:grid}
+.auth-screen{grid-template-columns:1fr 1fr;min-height:100vh;position:fixed;inset:0;z-index:var(--z-modal);background:var(--bg)}
+.auth-left{display:flex;align-items:center;justify-content:center;padding:40px}
+.auth-form-card{width:100%;max-width:380px}
+.auth-right{background:linear-gradient(135deg,var(--primary-600),var(--secondary-600));
+  display:flex;align-items:center;justify-content:center;padding:60px;color:#fff}
+.auth-quote{max-width:420px}
+.social-btns{display:grid;gap:10px;margin-top:8px}
+.divider{display:flex;align-items:center;gap:12px;color:var(--text-soft);font-size:var(--fs-xs);margin:18px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* ============================================================
+   10. RESPONSIVE
+   ============================================================ */
+@media(max-width:1024px){.grid-4{grid-template-columns:repeat(2,1fr)}.settings-grid{grid-template-columns:1fr}}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  #app.mobile-open .sidebar{transform:none;box-shadow:var(--shadow-lg)}
+  .main{margin-left:0}.hamburger{display:grid}
+  .grid-4,.grid-2,.grid-3{grid-template-columns:1fr}
+  .auth-screen{grid-template-columns:1fr}.auth-right{display:none}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo">A</div>
+      <span class="brand-name">Acme</span>
+    </div>
+    <nav class="nav">
+      <div class="nav-section">Main</div>
+      <div class="nav-link active" data-view="dashboard"><span class="ico">▤</span> Dashboard</div>
+      <!-- Accordion group -->
+      <div class="nav-group">
+        <div class="nav-link" data-accordion><span class="ico">◪</span> Customers <span class="chevron">▶</span></div>
+        <div class="nav-sub">
+          <div class="nav-link" data-view="dashboard">All Customers</div>
+          <div class="nav-link" data-view="dashboard">Segments</div>
+          <div class="nav-link" data-view="dashboard">Churn Risk</div>
+        </div>
+      </div>
+      <div class="nav-group">
+        <div class="nav-link" data-accordion><span class="ico">◱</span> Analytics <span class="chevron">▶</span></div>
+        <div class="nav-sub">
+          <div class="nav-link" data-view="dashboard">Revenue</div>
+          <div class="nav-link" data-view="dashboard">Cohorts</div>
+        </div>
+      </div>
+      <div class="nav-section">Account</div>
+      <div class="nav-link" data-view="settings"><span class="ico">⚙</span> Settings</div>
+      <div class="nav-link" data-view="auth"><span class="ico">⇥</span> Sign in page</div>
+    </nav>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+    <!-- Topbar -->
+    <header class="topbar">
+      <button class="icon-btn hamburger" id="sidebarToggle">☰</button>
+      <div class="search-box"><span>🔍</span><input placeholder="Search anything…" /></div>
+      <div class="ml-auto flex items-center gap-2">
+        <button class="icon-btn" id="themeToggle" title="Toggle theme">🌗</button>
+        <button class="icon-btn" data-modal-open="quickModal" title="New">＋</button>
+        <button class="icon-btn">🔔</button>
+        <!-- Profile dropdown -->
+        <div class="dropdown" id="profileDropdown">
+          <button class="flex items-center gap-2" data-dropdown-toggle>
+            <span class="avatar">JD</span>
+          </button>
+          <div class="dropdown-menu">
+            <div class="dropdown-head">
+              <span class="avatar">JD</span>
+              <div><div class="font-semibold text-sm">Jane Doe</div>
+              <div class="text-xs text-muted">jane@acme.io</div></div>
+            </div>
+            <button class="dropdown-item" data-view="settings">👤 Profile</button>
+            <button class="dropdown-item">💳 Billing</button>
+            <button class="dropdown-item">❓ Help</button>
+            <button class="dropdown-item danger" data-view="auth">⇥ Sign out</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- ============ DASHBOARD VIEW ============ -->
+      <section class="page-view active" id="view-dashboard">
+        <div class="page-head">
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-sub">Welcome back, here's what's happening today.</p>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="grid grid-4 gap-4 mb-6">
+          <div class="card stat">
+            <div class="stat-top"><span class="text-sm text-muted">MRR</span>
+              <span class="stat-ico" style="background:var(--success-bg);color:var(--success-500)">$</span></div>
+            <div class="stat-val">$48,290</div><span class="trend up">▲ 12.5% vs last month</span>
+          </div>
+          <div class="card stat">
+            <div class="stat-top"><span class="text-sm text-muted">Active Users</span>
+              <span class="stat-ico" style="background:var(--info-bg);color:var(--info-500)">◔</span></div>
+            <div class="stat-val">8,432</div><span class="trend up">▲ 4.2% vs last month</span>
+          </div>
+          <div class="card stat">
+            <div class="stat-top"><span class="text-sm text-muted">Churn Rate</span>
+              <span class="stat-ico" style="background:var(--danger-bg);color:var(--danger-500)">▼</span></div>
+            <div class="stat-val">2.1%</div><span class="trend down">▼ 0.3% vs last month</span>
+          </div>
+          <div class="card stat">
+            <div class="stat-top"><span class="text-sm text-muted">New Signups</span>
+              <span class="stat-ico" style="background:var(--warning-bg);color:var(--warning-500)">✦</span></div>
+            <div class="stat-val">312</div><span class="trend up">▲ 8.1% vs last month</span>
+          </div>
+        </div>
+
+        <!-- Data table card -->
+        <div class="card card-pad">
+          <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+            <div><h2 class="text-lg font-bold">Recent Customers</h2>
+              <p class="text-sm text-muted">Manage and review your latest accounts.</p></div>
+            <button class="btn btn-primary" data-modal-open="quickModal">＋ Add customer</button>
+          </div>
+
+          <!-- Bulk actions toolbar -->
+          <div class="bulk-toolbar" id="bulkToolbar">
+            <span class="text-sm font-medium"><span id="bulkCount">0</span> selected</span>
+            <button class="btn btn-sm btn-secondary" id="bulkExport">⬇ Export</button>
+            <button class="btn btn-sm btn-danger" id="bulkDelete">🗑 Delete</button>
+          </div>
+
+          <!-- Tools -->
+          <div class="table-tools">
+            <div class="search-box" style="max-width:260px"><span>🔍</span>
+              <input id="tableSearch" placeholder="Search customers…" /></div>
+            <select class="select" id="statusFilter">
+              <option value="all">All statuses</option>
+              <option value="Active">Active</option>
+              <option value="Pending">Pending</option>
+              <option value="Churned">Churned</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:40px"><input type="checkbox" id="masterCheck" /></th>
+                  <th>Customer</th><th>Status</th><th>Plan</th>
+                  <th>MRR</th><th>Signup date</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="pagination">
+            <span class="text-sm text-muted" id="rangeInfo">Showing 0 of 0</span>
+            <div class="pager" id="pagination"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SETTINGS VIEW ============ -->
+      <section class="page-view" id="view-settings">
+        <div class="page-head"><h1 class="page-title">Settings</h1>
+          <p class="page-sub">Manage your account preferences.</p></div>
+        <div class="settings-grid">
+          <div class="vtabs">
+            <button class="vtab active" data-tab="profile">👤 Profile</button>
+            <button class="vtab" data-tab="billing">💳 Billing</button>
+            <button class="vtab" data-tab="security">🔒 Security</button>
+            <button class="vtab" data-tab="notifications">🔔 Notifications</button>
+          </div>
+          <div class="card card-pad">
+            <!-- Profile panel -->
+            <div class="settings-panel active" data-panel="profile">
+              <h3 class="text-lg font-bold mb-4">Profile</h3>
+              <div class="avatar-upload">
+                <div class="avatar-lg">JD</div>
+                <div><button class="btn btn-secondary btn-sm">Upload new photo</button>
+                  <p class="text-xs text-muted mt-1">JPG or PNG, max 2MB.</p></div>
+              </div>
+              <div class="grid grid-2 gap-4">
+                <div class="field"><label>First name</label>
+                  <div class="input"><input value="Jane" /></div></div>
+                <div class="field"><label>Last name</label>
+                  <div class="input"><input value="Doe" /></div></div>
+              </div>
+              <div class="field"><label>Email</label>
+                <div class="input"><input type="email" value="jane@acme.io" /></div></div>
+              <div class="field"><label>Bio</label>
+                <div class="input"><input placeholder="Tell us about yourself" /></div></div>
+              <button class="btn btn-primary" onclick="showToast('success','Profile saved successfully')">Save changes</button>
+            </div>
+            <!-- Billing panel -->
+            <div class="settings-panel" data-panel="billing">
+              <h3 class="text-lg font-bold mb-4">Billing</h3>
+              <div class="card card-pad mb-4" style="background:var(--surface-2)">
+                <div class="flex items-center justify-between">
+                  <div><div class="font-semibold">Pro plan</div>
+                    <div class="text-sm text-muted">$49 / month · renews Aug 1</div></div>
+                  <span class="badge badge-active">Active</span></div>
+              </div>
+              <button class="btn btn-secondary">Manage subscription</button>
+            </div>
+            <!-- Security panel -->
+            <div class="settings-panel" data-panel="security">
+              <h3 class="text-lg font-bold mb-4">Security</h3>
+              <div class="field"><label>Current password</label>
+                <div class="input"><input type="password" placeholder="••••••••" /></div></div>
+              <div class="field"><label>New password</label>
+                <div class="input"><input type="password" placeholder="••••••••" /></div></div>
+              <div class="pref-row"><div><div class="font-medium">Two-factor authentication</div>
+                <div class="text-sm text-muted">Add an extra layer of security.</div></div>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+              <button class="btn btn-primary mt-4" onclick="showToast('success','Security settings updated')">Update</button>
+            </div>
+            <!-- Notifications panel -->
+            <div class="settings-panel" data-panel="notifications">
+              <h3 class="text-lg font-bold mb-4">Notifications</h3>
+              <div class="pref-row"><div><div class="font-medium">Email notifications</div>
+                <div class="text-sm text-muted">Product updates and news.</div></div>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+              <div class="pref-row"><div><div class="font-medium">Push notifications</div>
+                <div class="text-sm text-muted">Real-time alerts on your device.</div></div>
+                <label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+              <div class="pref-row"><div><div class="font-medium">Weekly digest</div>
+                <div class="text-sm text-muted">A summary every Monday.</div></div>
+                <label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ AUTH VIEW ============ -->
+      <section class="page-view auth-screen" id="view-auth">
+        <div class="auth-left">
+          <div class="auth-form-card">
+            <div class="flex items-center gap-2 mb-6">
+              <div class="brand-logo">A</div><span class="text-xl font-bold">Acme</span></div>
+            <h1 class="text-2xl font-bold mb-1">Welcome back</h1>
+            <p class="text-muted mb-6">Sign in to continue to your dashboard.</p>
+            <div class="field"><label>Email</label>
+              <div class="input"><span>✉</span><input type="email" placeholder="you@company.com" /></div></div>
+            <div class="field"><label>Password</label>
+              <div class="input"><span>🔒</span><input type="password" placeholder="••••••••" /></div></div>
+            <button class="btn btn-primary w-full" onclick="showToast('success','Signed in — welcome!'); switchView('dashboard')">Sign in</button>
+            <div class="divider">OR</div>
+            <div class="social-btns">
+              <button class="btn btn-secondary w-full">G  Sign in with Google</button>
+              <button class="btn btn-secondary w-full">  Sign in with Apple</button>
+            </div>
+            <p class="text-sm text-muted text-center mt-4">Don't have an account?
+              <a style="color:var(--primary-600);font-weight:600">Sign up</a></p>
+          </div>
+        </div>
+        <div class="auth-right">
+          <div class="auth-quote">
+            <div class="text-2xl font-bold mb-4">"The best way to predict the future is to build it."</div>
+            <p style="opacity:.85">Acme helps thousands of teams ship faster, stay organized, and grow revenue — all from one beautiful workspace.</p>
+            <div class="flex items-center gap-3 mt-6">
+              <span class="avatar">SP</span>
+              <div><div class="font-semibold">Sam Park</div>
+                <div class="text-sm" style="opacity:.8">Head of Product, Northwind</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="overlay" id="quickModal" data-modal>
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Add new customer</span>
+      <button class="icon-btn" data-modal-close>✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field"><label>Full name</label>
+        <div class="input"><input placeholder="e.g. Alex Rivera" /></div></div>
+      <div class="field"><label>Email</label>
+        <div class="input"><input type="email" placeholder="alex@company.com" /></div></div>
+      <div class="grid grid-2 gap-4">
+        <div class="field"><label>Plan</label>
+          <div class="input"><select><option>Starter</option><option>Pro</option><option>Enterprise</option></select></div></div>
+        <div class="field"><label>MRR ($)</label>
+          <div class="input"><input type="number" placeholder="49" /></div></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary" data-modal-close>Cancel</button>
+      <button class="btn btn-primary" onclick="showToast('success','Customer added'); closeModal(document.getElementById('quickModal'))">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   APP LOGIC — modular vanilla ES6
+   ============================================================ */
+
+/* ---------- 1. Theme (persisted in localStorage) ---------- */
+const html = document.documentElement;
+html.dataset.theme = localStorage.getItem('theme') || 'light';
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const next = html.dataset.theme === 'light' ? 'dark' : 'light';
+  html.dataset.theme = next;
+  localStorage.setItem('theme', next);
+});
+
+/* ---------- 2. Sidebar toggle (mobile) ---------- */
+document.getElementById('sidebarToggle').addEventListener('click', () => {
+  document.getElementById('app').classList.toggle('mobile-open');
+});
+
+/* ---------- 3. Accordion nested menus ---------- */
+document.querySelectorAll('[data-accordion]').forEach(t => {
+  t.addEventListener('click', () => t.parentElement.classList.toggle('open'));
+});
+
+/* ---------- 4. Profile dropdown ---------- */
+const dd = document.getElementById('profileDropdown');
+dd.querySelector('[data-dropdown-toggle]').addEventListener('click', e => {
+  e.stopPropagation(); dd.classList.toggle('open');
+});
+document.addEventListener('click', e => { if (!dd.contains(e.target)) dd.classList.remove('open'); });
+
+/* ---------- 5. View routing ---------- */
+function switchView(name) {
+  document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById('view-' + name);
+  if (target) target.classList.add('active');
+  document.querySelectorAll('.nav-link[data-view]').forEach(l =>
+    l.classList.toggle('active', l.dataset.view === name));
+  document.getElementById('app').classList.remove('mobile-open');
+  dd.classList.remove('open');
+}
+document.querySelectorAll('[data-view]').forEach(l =>
+  l.addEventListener('click', () => switchView(l.dataset.view)));
+
+/* ---------- 6. Settings vertical tabs ---------- */
+document.querySelectorAll('.vtab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.vtab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelector('.settings-panel[data-panel="' + tab.dataset.tab + '"]').classList.add('active');
+  });
+});
+
+/* ---------- 7. Modals (event delegation) ---------- */
+function openModal(m){ m.classList.add('open'); }
+function closeModal(m){ m.classList.remove('open'); }
+document.addEventListener('click', e => {
+  const opener = e.target.closest('[data-modal-open]');
+  if (opener) openModal(document.getElementById(opener.dataset.modalOpen));
+  if (e.target.closest('[data-modal-close]')) closeModal(e.target.closest('[data-modal]'));
+  if (e.target.classList.contains('overlay')) closeModal(e.target);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.overlay.open').forEach(closeModal);
+});
+
+/* ---------- 8. Toast system ---------- */
+function showToast(type, message) {
+  let stack = document.querySelector('.toast-stack');
+  if (!stack) { stack = document.createElement('div'); stack.className = 'toast-stack'; document.body.appendChild(stack); }
+  const icons = { success: '✔', error: '✕', info: 'ℹ' };
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  toast.innerHTML = "<span class='t-icon'>" + (icons[type] || 'ℹ') + "</span><div>" + message + "</div><div class='progress'></div>";
+  stack.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('leaving');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+/* ============================================================
+   DATA TABLE — mock data, render, filter, paginate, bulk, edit
+   ============================================================ */
+const CUSTOMERS = [
+  {id:1,name:'Alice Johnson',email:'alice@lumen.io',status:'Active',plan:'Pro',mrr:99,date:'2026-01-14'},
+  {id:2,name:'Marcus Lee',email:'marcus@nova.co',status:'Pending',plan:'Starter',mrr:29,date:'2026-02-02'},
+  {id:3,name:'Priya Nair',email:'priya@orbit.dev',status:'Active',plan:'Enterprise',mrr:499,date:'2026-01-28'},
+  {id:4,name:'Diego Santos',email:'diego@fluxx.app',status:'Churned',plan:'Pro',mrr:0,date:'2025-11-19'},
+  {id:5,name:'Emma Wilson',email:'emma@drift.io',status:'Active',plan:'Pro',mrr:99,date:'2026-03-05'},
+  {id:6,name:'Kenji Tanaka',email:'kenji@zephyr.jp',status:'Active',plan:'Starter',mrr:29,date:'2026-02-18'},
+  {id:7,name:'Sofia Rossi',email:'sofia@volt.it',status:'Pending',plan:'Pro',mrr:99,date:'2026-03-11'},
+  {id:8,name:'Liam O\\'Brien',email:'liam@peak.ie',status:'Active',plan:'Enterprise',mrr:499,date:'2026-01-09'},
+  {id:9,name:'Amara Okafor',email:'amara@sable.ng',status:'Churned',plan:'Starter',mrr:0,date:'2025-12-22'},
+  {id:10,name:'Noah Schmidt',email:'noah@arc.de',status:'Active',plan:'Pro',mrr:99,date:'2026-02-27'},
+  {id:11,name:'Yuki Sato',email:'yuki@mist.jp',status:'Active',plan:'Pro',mrr:129,date:'2026-03-01'},
+  {id:12,name:'Olivia Brown',email:'olivia@echo.co',status:'Pending',plan:'Enterprise',mrr:0,date:'2026-03-14'},
+  {id:13,name:'Hassan Ali',email:'hassan@dune.ae',status:'Active',plan:'Starter',mrr:29,date:'2026-01-31'},
+  {id:14,name:'Chloe Martin',email:'chloe@bloom.fr',status:'Churned',plan:'Pro',mrr:0,date:'2025-10-30'},
+  {id:15,name:'Ravi Kapoor',email:'ravi@grid.in',status:'Active',plan:'Enterprise',mrr:599,date:'2026-02-12'}
+];
+
+let filtered = [...CUSTOMERS];
+let currentPage = 1;
+const PER_PAGE = 5;
+const selected = new Set();
+
+const tbody = document.getElementById('tableBody');
+const badgeClass = s => 'badge badge-' + s.toLowerCase();
+const initials = n => n.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+
+function render() {
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage - 1) * PER_PAGE;
+  const pageRows = filtered.slice(start, start + PER_PAGE);
+
+  tbody.innerHTML = pageRows.map(c => `
+    <tr data-id="${c.id}" class="${selected.has(c.id) ? 'selected' : ''}">
+      <td><input type="checkbox" class="rowCheck" ${selected.has(c.id) ? 'checked' : ''} /></td>
+      <td><div class="cust"><span class="avatar">${initials(c.name)}</span>
+        <div><div class="font-medium">${c.name}</div>
+        <div class="text-xs text-muted">${c.email}</div></div></div></td>
+      <td><span class="${badgeClass(c.status)}">${c.status}</span></td>
+      <td>${c.plan}</td>
+      <td><span class="mrr-cell" data-id="${c.id}">$${c.mrr}</span></td>
+      <td class="text-muted">${c.date}</td>
+    </tr>`).join('') || `<tr><td colspan="6" class="text-center text-muted p-6">No customers found.</td></tr>`;
+
+  // Range info
+  const from = filtered.length ? start + 1 : 0;
+  const to = Math.min(start + PER_PAGE, filtered.length);
+  document.getElementById('rangeInfo').textContent = `Showing ${from}-${to} of ${filtered.length}`;
+
+  renderPager(totalPages);
+  syncBulk();
+}
+
+function renderPager(totalPages) {
+  const pager = document.getElementById('pagination');
+  let html = `<button ${currentPage===1?'disabled':''} data-page="prev">‹</button>`;
+  for (let i = 1; i <= totalPages; i++)
+    html += `<button class="${i===currentPage?'active':''}" data-page="${i}">${i}</button>`;
+  html += `<button ${currentPage===totalPages?'disabled':''} data-page="next">›</button>`;
+  pager.innerHTML = html;
+  pager.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const p = b.dataset.page;
+    if (p === 'prev') currentPage--;
+    else if (p === 'next') currentPage++;
+    else currentPage = +p;
+    render();
+  }));
+}
+
+/* Search + status filter */
+function applyFilters() {
+  const q = document.getElementById('tableSearch').value.toLowerCase();
+  const status = document.getElementById('statusFilter').value;
+  filtered = CUSTOMERS.filter(c =>
+    (c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q)) &&
+    (status === 'all' || c.status === status));
+  currentPage = 1;
+  render();
+}
+document.getElementById('tableSearch').addEventListener('input', applyFilters);
+document.getElementById('statusFilter').addEventListener('change', applyFilters);
+
+/* Bulk selection */
+function syncBulk() {
+  const toolbar = document.getElementById('bulkToolbar');
+  toolbar.classList.toggle('show', selected.size > 0);
+  document.getElementById('bulkCount').textContent = selected.size;
+  const visibleIds = filtered.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE).map(c => c.id);
+  const master = document.getElementById('masterCheck');
+  master.checked = visibleIds.length > 0 && visibleIds.every(id => selected.has(id));
+}
+tbody.addEventListener('change', e => {
+  if (e.target.classList.contains('rowCheck')) {
+    const id = +e.target.closest('tr').dataset.id;
+    e.target.checked ? selected.add(id) : selected.delete(id);
+    render();
+  }
+});
+document.getElementById('masterCheck').addEventListener('change', e => {
+  const visibleIds = filtered.slice((currentPage-1)*PER_PAGE, currentPage*PER_PAGE).map(c => c.id);
+  visibleIds.forEach(id => e.target.checked ? selected.add(id) : selected.delete(id));
+  render();
+});
+document.getElementById('bulkDelete').addEventListener('click', () => {
+  showToast('error', selected.size + ' customer(s) deleted');
+  selected.clear(); render();
+});
+document.getElementById('bulkExport').addEventListener('click', () =>
+  showToast('info', 'Exporting ' + selected.size + ' customer(s)…'));
+
+/* Inline MRR editing (double-click) */
+tbody.addEventListener('dblclick', e => {
+  const cell = e.target.closest('.mrr-cell');
+  if (!cell) return;
+  const id = +cell.dataset.id;
+  const cust = CUSTOMERS.find(c => c.id === id);
+  const input = document.createElement('input');
+  input.type = 'number'; input.className = 'mrr-input'; input.value = cust.mrr;
+  cell.replaceWith(input); input.focus(); input.select();
+  const save = () => {
+    cust.mrr = Math.max(0, +input.value || 0);
+    showToast('success', 'MRR updated for ' + cust.name);
+    render();
+  };
+  input.addEventListener('blur', save);
+  input.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter') input.blur();
+    if (ev.key === 'Escape') render();
+  });
+});
+
+/* Init */
+render();
+</script>
+</body>
+</html>
+      
+
